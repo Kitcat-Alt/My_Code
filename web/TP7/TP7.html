@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>texte1</title>
+    <meta charset="utf-8">
+    <link href="positionnement.css" rel="stylesheet" >
+  </head>
+  <body>
+    <header>
+        <h1>Soirée bowling</h1>
+        <p>inscriptions</p>
+    </header>
+    <main>
+        <section>
+            <fieldset>
+              <legend>Je m'identifie</legend>
+              <div>
+                <label for="Prénom">Mon Prénom</label>
+                <input type="text" id="Prénom" placeholder="Ex = Me">
+              </div>
+              <div>
+                <label for="groupe">Mon groupe </label>
+                <select id="groupe">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </div>
+            <div>
+                <label for="mail">Mon adresse mail</label>
+                <input type="email" id="mail" placeholder="blehbleh@gmail.com">
+            </div>
+            <div>
+                <label for="passwd">Mon mot de passe</label>
+                <input type="password" id="passwd">
+            </div>
+        </fieldset>
+        </section>
+        <section>
+            <fieldset>
+                <legend>J'informe</legend>
+                  <div>
+                    <p>Cochez les aliments que vous aimez manger :</p>
+                    <ul>
+                        <li>
+                            <input type="checkbox" id="frites">
+                            <label for="frites">Frites</label>
+                        </li>
+
+                        <li>
+                            <input type="checkbox" id="Steak haché">
+                            <label for="Steak haché">Steack haché</label>
+                        </li>
+
+                        <li>
+                            <input type="checkbox" id="epinards">
+                            <label for="epinards">Epinards</label>
+                        </li>
+
+                        <li>
+                            <input type="checkbox" id="Huitres">
+                            <label for="Huitres">Huitres</label>
+                        </li>
+                    </ul>
+
+                    <p>Veuillez indiquer votre pointure :</p>
+                    <ul>
+                        <li>
+                            <input type="radio" id="38">
+                            <label for="38">Moins de 38</label>
+                        </li>
+
+                        <li>
+                            <input type="radio" id="39-40">
+                            <label for="39-40">Entre 39 et 40</label>
+                        </li>
+
+                        <li>
+                            <input type="radio" id="41-42">
+                            <label for="41-42">Entre 41 et 42</label>
+                        </li>
+
+                        <li>
+                            <input type="radio" id="43">
+                            <label for="43">Plus de 43</label>
+                        </li>
+                    </ul>
+                    <div>
+                    <label for="message">Je laisse un message(facultatif)</label>
+                    </div>
+                    <div>
+                    <textarea id="message"></textarea>
+                    </div>
+                    
+                    <div>
+                    <input type="button" value="Je m'inscris">
+                    <input type="button" value="Je réinitialise le formulaire">
+                    </div>
+                  </div>
+            </fieldset>
+        </section>
+    </main>
+
+  </body>
+</html>

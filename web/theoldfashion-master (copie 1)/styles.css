@@ -1,0 +1,66 @@
+body{
+  margin: 5em;
+}
+
+ul{  
+  padding: 0;
+}
+
+li{
+  margin-right: 2em;
+  margin-top: 1em;
+  list-style-type: none;
+}
+
+main{
+  padding-top: 2em;
+  border-bottom: 5px solid;
+}
+
+main > h1{
+  font-size: 400%;
+  border-bottom: 5px solid;
+}
+
+article{
+  margin-right: 20%;
+}
+
+footer{
+  padding-top: 1em;
+}
+
+footer > p{
+  margin: 0;
+}
+
+footer > img{
+  object-fit: contain;
+}
+
+span {
+  font-style: italic;
+}
+
+h1 > span{
+  display: block;
+  color:gray;
+  font-size: 100%
+  
+}
+
+header nav ul{
+  border-bottom: 1px solid;
+}
+
+header > nav{
+  font-weight: bold;
+}
+aside > nav {
+  font-weight: bold;
+}
+
+a{
+  text-decoration: none;
+}
+

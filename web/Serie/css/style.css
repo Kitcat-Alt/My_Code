@@ -1,0 +1,15 @@
+header{
+    border: 2px solid;
+    padding: 5px;
+
+}
+
+ul{
+    list-style-type: none;
+}
+
+li{
+    border: 1px solid;
+    padding-left: 45px;
+    padding-right: 45px;
+}

@@ -1,0 +1,21 @@
+header{
+    text-align: center;    
+}
+main{
+    display: flex;
+
+}
+
+article{
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+ul{
+    display: flex;
+}
+
+aside{
+
+}
+

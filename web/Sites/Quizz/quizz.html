@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Quizz</title>
+    <link rel="stylesheet" href="styles_quizz.css">
+  </head>
+  <body>
+    <header>
+      <img src="../img/Dragon-Ball-Z-Font.jpg" alt=""/>     
+      <nav>
+        <ul>
+          <li><a href="../Accueil/accueil.html">Accueil</a></li>
+          <li><a href="../Saisons/saisons.html">Saisons</a></li>
+          <li><a href="../perso.html">Personnages</a></li>
+          <li><a href="../Bande_Annonce/bande_annonce.html">Bandes annonces</a></li>
+          <li><a href="./quizz.html">Quizz</a></li>
+        </ul>
+      </nav>  
+    </header>
+    <h2>Questionnaire sur l'univers de Dragon Ball</h2>
+    <main>
+      <aside>
+        <h2><strong>Nouvelles</strong></h2>
+        <p>Suivez la nouvelle série <strong>Dragon Ball Daima</strong>, la dernière création d'Akira Toriyama tous les vendredi sur Netflix ou Crunchyroll. Vous pouvez retrouver les récentes actualités sur les réseaux sociaux</p>
+        <h2><strong>Réseaux sociaux</strong></h2>
+        <table>
+          <tr>
+            <td><a href="https://x.com/DBZcom">Twitter</a></td>
+          </tr>
+          <tr>
+            <td><a href="https://www.youtube.com/@ToeiAnimationjp">Youtube</a></td>
+          </tr>
+        </table>
+        <img src="../img/aside1.jpg" alt=""/>
+      </aside>
+      <article>
+        <section class="section1">
+            <h2>Je m'identifie</h2>
+            <div class="form-group">
+                <label for="prenom">Mon prénom</label>
+                <input type="text" id="prenom" name="prenom">
+            </div>
+            
+            <div class="form-group">
+                <label for="groupe">Mon groupe</label>
+                <select id="groupe" name="groupe">
+                    <option value="groupeA">Groupe 1</option>
+                    <option value="groupeB">Groupe 2</option>
+                    <option value="groupeC">Groupe 3</option>
+                    <option value="groupeD">Groupe 4</option>
+                </select>
+            </div>  
+            
+            <div class="form-group">
+                <label for="email">Mon adresse mail</label>
+                <input type="email" id="email" name="email">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Mon mot de passe</label>
+                <input type="password" id="password" name="password">
+            </div>
+        </section>
+        <section class="section2">
+            <h2>J'informe</h2>
+            <form>
+                <div class="question">
+                    <h2>Quelles sont vos personnages préférés ?</h2>
+                    <label>
+                        <input type="checkbox" name="activite" value="Lecture"> Son Goku
+                    </label>
+                    <label>
+                        <input type="checkbox" name="activite" value="Voyage"> Vegeta
+                    </label>
+                    <label>
+                        <input type="checkbox" name="activite" value="Sport"> Piccolo
+                    </label>
+                    <label>
+                        <input type="checkbox" name="activite" value="Cuisine"> Son Gohan
+                    </label>
+                    <label>
+                        <input type="checkbox" name="activite" value="Musique"> Trunks
+                    </label>
+                </div>
+                <button type="submit">Soumettre</button>
+            </form>
+        </section>
+      </article>
+    </main>
+    <footer>
+        <img src="../img/footer.jpg" alt="">
+        <p><strong>Quizz</strong></p>
+      </footer>
+    </body>
+</html>  

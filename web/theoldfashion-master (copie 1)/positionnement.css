@@ -1,0 +1,23 @@
+
+header ul{
+  display:flex;
+}
+
+main{
+  align-items: stretch;
+  display:flex;
+  flex-wrap: wrap;
+}
+
+article{
+  flex-basis: 40%;
+  flex-grow:1;
+}
+
+aside{
+  flex-basis:25%;
+}
+
+h1{
+  flex-basis:100%;
+}

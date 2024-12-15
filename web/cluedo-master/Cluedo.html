@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Cluedo</title>
+    <link rel="stylesheet" href="cluedo.css"/>
+    <link rel="stylesheet" href="basique.css"/>
+  </head>
+  <body>
+    <article>
+      <h1>Cluedo</h1> 
+      <section id="presentation">
+        <h2> Présentation <a href="#presentation"></a></h2>
+        <p>Le but du jeu est de trouver <strong>qui</strong> a tué le docteur Lenoir, dans <strong>quelle pièce du manoir</strong> et avec <strong>quelle arme</strong> a été commis le meurtre.</p>
+      </section>
+      <section> 
+        <h2 id="regledujeu"> Règles du jeu <a href="#regledujeu"><img src="./img/retour.jpg" alt="Retour en haut de page (section présentation)"/></a></h2>
+        <section id="misenplace">
+          <h3> Mise en place <a href="#presentation"><img src="./img/retour.jpg" alt="Retour en haut de page (section présentation)"/></a></h3>
+          <p>
+          En début de partie on classe les différentes cartes indices par type (suspects
+          / armes / lieux) et on en tire une de chaque au hasard que l'on met dans
+          l'enveloppe prévue <strong>sans les regarder</strong> : il s'agit de la solution de
+          l'énigme de cette partie. Chaque joueur choisit ensuite un pion. Les cartes
+          indices restantes sont alors mélangées et distribuées <strong>faces cachées</strong>
+          équitablement à tous les joueurs. Ces cartes servent alors d'alibi : si un
+          joueur possède cette carte c'est qu'elle n'est pas parmi les trois cartes mises
+          à part et donc que l'indice correspondant n'est pas la clef de l'énigme. C'est
+          donc une carte qui a son alibi et qui n'est pas suspecte.
+          </p>
+        </section>
+        <section id="deroulement">
+          <h3> Déroulement <a href="#presentation"><img src="./img/retour.jpg" alt="Retour en haut de page (section présentation)"/></a></h3>
+          <p>Pour découvrir la vérité sur le meurtre chaque joueur peut à tour de rôle se déplacer dans le manoir et proposer une suspicion du crime.</p>
+          <p>Pour <strong>se déplacer dans le manoir</strong>, le joueur jette le dé et se déplace du
+            nombre de cases correspondantes sur le plateau dans le couloir.
+            Lorsqu'il passe une porte ouverte, le joueur arrive dans une pièce et
+            ne peut plus avancer ce tour-ci (même s'il n'a pas utilisé tous les
+            déplacements auxquels le dé lui donnait droit), mais au tour prochain
+            il pourra repartir de n'importe quelle porte ouverte de cette pièce.
+            Les deux passages secrets entre les différents coins du plateau peuvent
+            s'emprunter uniquement lorsque l'on est dans une pièce de coin, on peut
+            alors au lieu de lancer les dés choisir de passer directement dans le
+            passage secret.</p>
+          <p>Il existe dans la version classique 2 passages secrets : un qui relie la cuisine à l'observatoire, et un autre qui relie le spa au pavillon des invités.</p>
+          <p>Lorsqu'un joueur termine son tour dans une pièce il peut <strong>proposer une reconstitution du crime dans <strong>cette pièce</strong></strong>. Il
+            choisit une arme et un
+            personnage qu'il amène directement dans cette pièce puis énonce la
+            reconstitution : « Je suspecte le professeur Violet d'avoir tué le
+            docteur Lenoir avec le poignard dans le salon ». (Le joueur doit se
+            trouver dans le salon pour faire cette reconstitution.) Il choisit
+            alors parmi les autres joueurs un adversaire pour authentifier sa
+            reconstitution, si ce dernier a au moins une carte alibi, il est tenu
+            de lui en montrer une (il peut choisir celle qu'il montre) en secret.
+            S'il n'en possède pas, il ne montre rien mais ne doit pas faire savoir
+            autres adversaires qu'il n'a aucune des cartes demandées. Lorsqu'une
+            carte a été montrée, la reconstitution est invalidée et le tour passe
+            au joueur suivant. Dans notre exemple si le joueur questionné a la
+            carte du poignard mais pas celle du professeur Violet ni celle du
+            salon, il la montre alors au joueur qui a fait la reconstitution, sauf
+            si le joueur qui soupçonne pratique la même stratégie proposée
+            ci-dessous (soupçonner alors qu'on a l'alibi pour confirmer une idée).
+            Il faut ainsi être prudent.
+          </p>
+        </section>
+        <section id="findujeu">
+          <h3>Fin du jeu <a href="#presentation"><img src="./img/retour.jpg" alt="Retour en haut de page (section présentation)"/></a></h3>
+          <p>Lorsqu'un des joueurs pense avoir trouvé les trois éléments du meurtre, il doit accuser (et non plus soupçonner) le personnage voulu (joueur ou non) qu'il pense être coupable du meurtre, ainsi que l'arme et la pièce utilisées (le joueur n'est pas nécessairement obligé de se trouver dans la pièce qu'il soupçonne pour faire son accusation). Le joueur vérifie alors secrètement les trois cartes solution, cachées dans l'enveloppe</p>
+          <ul>
+            <li>S'il a raison, il annonce les cartes aux autres joueurs et la partie s'achève.</li>
+            <li>S'il s'est trompé, il remet les cartes sans les révéler aux autres
+              joueurs, et il s'arrête de jouer. Les autres joueurs continuent de
+              chercher jusqu'à ce que la partie s'achève.</li>
+          </ul>
+        </section>
+      </section>
+      <section id="annexes">
+        <h2>Annexes <a href="#presentation"><img src="./img/retour.jpg" alt="Retour en haut de page (section présentation)"/></a></h2>
+        <section id="armes">
+          <h3>Armes </h3>
+          <ul>
+            <li> Édition classique 
+              <ul>
+                <li class="coupante">Poignard</li>
+                <li>Revolver</li>
+                <li class="contandante">Matraque</li>
+                <li class="contandante detournee">Chandelier</li>
+                <li class="detournee">Corde</li>
+                <li class="contandante detournee">Clé anglaise</li>
+                <li class="contandante detournee">Tuyau de plomb</li>
+              </ul>
+            </li>
+            <li> Éditions spéciales 
+                <ul>
+                  <li class="contandante detournee"> Fer à cheval</li>
+                  <li> Flacon de poison</li>
+                  <li class="contandante detournee"> Batte de baseball</li>
+                  <li class="contandante detournee"> Haltères</li>
+                </ul>
+            </li>
+          </ul>
+        </section>
+        
+        <section>
+          <h3>Exemples de fiches</h3>
+          <ul>
+            <li>
+              <table>
+                <thead>
+                    <tr> <th colspan="4"> Suspects</th> </tr>
+                </thead>
+                <tbody>
+                    <tr><td> Colonel Moutarde</td><td></td><td></td><td></td> </tr>
+                    <tr><td> Docteur Olive<td></td><td></td><td> </td></tr>
+                    <tr> <td> Professeur Violet</td><td></td><td></td><td></td></tr>
+                    <tr> <td> Melle Rose</td><td></td><td></td><td> </td></tr>
+                    <tr> <td> Mme Pervenche</td><td></td><td></td><td> </td></tr>
+                    <tr> <td> Mme Leblanc</td><td></td><td></td><td></td></tr>
+                </tbody>
+              </table>
+            </li>
+            <li>
+              <table>
+                <thead>
+                  <tr> <th colspan="4"> Lieux</th> </tr>
+                </thead>
+                <tbody>
+                  <tr> <td> Véranda </td><td></td><td></td><td></td> </tr>
+                  <tr><td> Salle à manger </td><td></td><td></td><td></td> </tr>
+                  <tr> <td> Petit salon</td><td></td><td></td><td></td> </tr>
+                  <tr> <td> Bibliothèque</td><td></td><td></td><td></td> </tr>
+                  <tr> <td> Grand salon</td><td></td><td></td><td></td> </tr>
+                  <tr> <td> Bureau</td><td></td><td></td><td></td> </tr>
+                  <tr> <td> Hall</td><td></td><td></td><td></td> </tr>
+                  <tr> <td> Cuisine</td><td></td><td></td><td></td> </tr>
+                  <tr> <td> Studio </td><td></td><td></td><td></td> </tr>
+                </tbody>
+              </table>
+            </li>
+          </ul>
+        </section>
+      </section>
+    </article>
+    <aside>
+      <img src="./img/boite-cluedo.jpg" alt="photo de la boîte de jeu du Cluedo"/>
+      <h2>Sommaire</h2>
+      <nav>
+        <ul>
+        <li><a href="#presentation">Présentation</a></li>
+        <li><a href="#regledujeu">Règles du jeu</a>
+          <ul>
+            <li><a href="#misenplace">Mise en place</a></li>
+            <li><a href="#deroulement">Déroulement</a></li>
+            <li><a href="#findujeu">Fin du jeu</a></li>
+          </ul>
+        </li>
+        <li><a href="#annexes">Annexes</a></li>
+      </ul></nav>
+    </aside>
+  </body>
+</html>

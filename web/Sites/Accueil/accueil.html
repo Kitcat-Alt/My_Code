@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Accueil</title>
+    <link rel="stylesheet" href="styles_accueil.css">
+  </head>
+  <body>
+    <header>
+      <img src="../img/Dragon-Ball-Z-Font.jpg" alt=""/>     
+      <nav>
+        <ul>
+          <li><a href="../Accueil/accueil.html">Accueil</a></li>
+          <li><a href="../Saisons/saisons.html">Saisons</a></li>
+          <li><a href="../perso.html">Personnages</a></li>
+          <li><a href="../Bande_Annonce/bande_annonce.html">Bandes annonces</a></li>
+          <li><a href="../Quizz/quizz.html">Quizz</a></li>
+        </ul>
+      </nav>  
+    </header>
+    <main>
+      <aside>
+        <h2><strong>Nouvelles</strong></h2>
+        <p>Suivez la nouvelle série <strong>Dragon Ball Daima</strong>, la dernière création d'Akira Toriyama tous les vendredi sur Netflix ou Crunchyroll. Vous pouvez retrouver les récentes actualités sur les réseaux sociaux</p>
+        <h2><strong>Réseaux sociaux</strong></h2>
+        <table>
+          <tr>
+            <td><a href="https://x.com/DBZcom">Twitter</a></td>
+          </tr>
+          <tr>
+            <td><a href="https://www.youtube.com/@ToeiAnimationjp">Youtube</a></td>
+          </tr>
+        </table>
+        <img src="../img/aside1.jpg" alt=""/>
+      </aside>
+      <section class="carousel-container">
+        <div class="carousel" id="carousel">
+            <img src="../img/palaisdivin.jpg" alt="Image 1">
+            <img src="../img/Namek.jpg" alt="Image 2">
+            <img src="../img/zeno.webp" alt="Image 3">
+            <img src="../img/beerus.webp" alt="Image 4">
+            <img src="../img/Capsulecorp.jpg" alt="Image 5">
+            <img src="../img/kamehouse.jpg" alt="Image 6">
+        </div>
+      </section>
+      <article>
+        <section class="Resume">
+          <h2><strong>Resume de l'histoire de dragon ball</strong></h2>
+          <p>Dragon Ball est une saga épique qui mêle aventure, arts martiaux et science-fiction, plongeant ses spectateurs dans un monde fascinant peuplé de créatures fantastiques, de combattants puissants et de mystères anciens. L’histoire commence avec la quête des Dragon Balls, des boules magiques capables d’exaucer n’importe quel souhait, et réunit une équipe de personnages hauts en couleur : Bulma, une jeune scientifique curieuse, Krillin, un combattant loyal, et bien d’autres, tous liés par leur désir d'explorer l’inconnu et de se surpasser.<br>Ensemble, ils affrontent des adversaires variés, de l’Armée du Ruban Rouge aux tyrans galactiques comme Freezer, et se battent pour protéger la Terre contre des menaces toujours plus dangereuses, telles que les Cyborgs et le démon destructeur Majin Buu. À chaque nouvel arc, l’action s’intensifie, les enjeux grandissent, et de nouveaux personnages entrent en scène, comme Vegeta, le prince des Saiyans, ou Piccolo, l’ancien ennemi devenu allié.<br>Au fil de la série, on découvre des mondes extraterrestres, des techniques de combat surpuissantes et des transformations spectaculaires qui repoussent les limites de l’imaginable. Dragon Ball explore l’amitié, le dépassement de soi, et le courage face à l’inconnu, tout en livrant des combats épiques et des moments d’émotion forts.<br>Que vous soyez amateur d’action, de fantastique ou d’aventure, Dragon Ball offre un univers riche et captivant qui promet de vous tenir en haleine du début à la fin.
+            </p>
+        </section>
+        <img src="../img/gokuui.png" class="dynamic" alt=""/>
+      </article>
+    </main>  
+      <footer>
+        <img src="../img/footer.jpg" alt="">
+        <p><strong>Accueil</strong></p>
+      </footer>
+      <script>
+      document.addEventListener("DOMContentLoaded", function() {
+      const carousel = document.getElementById('carousel');
+      const images = carousel.querySelectorAll('img');
+      const totalImages = images.length;
+      let index = 0;
+      function slide() {
+        index = (index + 1) % totalImages;
+        const imgWidth = carousel.clientWidth;
+        carousel.style.transform = `translateX(-${index * imgWidth}px)`;
+      }
+        setInterval(slide, 2500);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+body{
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+
+header{
+    flex-basis: 99%;
+    margin: 5px;
+}
+
+#boite2{
+    flex-basis: 32%;
+    margin: 5px;
+
+}
+
+#boite3{
+    flex-basis: 32%;
+    margin: 5px;
+
+}
+
+#boite4{
+    flex-basis: 32%;
+    margin: 5px;
+
+}
+
+footer{
+    flex-basis: 100%;
+    margin: 5px;
+
+}
+
+

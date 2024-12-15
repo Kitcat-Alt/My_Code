@@ -1,0 +1,63 @@
+header{
+    text-align: center;  
+    width: 100%; 
+    padding: 5px; 
+}
+
+main{
+    display: flex;
+
+}
+
+section > article{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+article p, h2{
+    padding-left: 10px;
+}
+
+ul{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-basis: 100%;
+}
+
+ul > li{
+    flex-grow: 1;
+    text-align: center;
+}
+
+aside{
+    flex-basis: 25%;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+aside h2{
+    padding-left: 5px;
+}
+
+article h2 {
+    margin-top: 0;
+}
+
+aside img, p{
+    padding: 5px;
+}
+
+section > p {
+    text-align: center;
+}
+
+table{
+    margin-left: 10px;
+}
+
+
+h1{
+    text-align: center;
+}
+    

@@ -1,0 +1,12 @@
+pages:
+  stage: deploy
+  script:
+    - mkdir .public
+    - echo "/ /Cluedo.html 301" > ./.public/_redirects    
+    - cp -r * .public
+    - mv .public public
+  artifacts:
+    paths:
+      - public
+  only:
+    - master

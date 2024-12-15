@@ -1,0 +1,16 @@
+ul{
+    list-style-type: none;
+    background-color: black;
+}
+
+li{
+    color: white;
+}
+
+main{
+    background-color: bisque;
+}
+
+th{
+    background-color:  #af7350;
+}

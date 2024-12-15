@@ -1,0 +1,8 @@
+header{ background-color: lightgrey; }
+section{ background-color: lawngreen; }
+article{ background-color: lightyellow; }
+#rose{ background-color: lightpink; }
+p{
+  background-color: lightblue;
+  margin:0.2em;
+}

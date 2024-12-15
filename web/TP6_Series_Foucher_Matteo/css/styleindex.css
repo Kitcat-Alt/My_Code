@@ -1,0 +1,40 @@
+header{
+    border: 2px solid;
+}
+
+ul{
+    list-style-type: none;
+}
+
+ul > li{
+    border: 1px solid;
+    
+}
+
+h1{
+    font-size: 2em;
+}
+
+aside{
+    border: 1px solid;
+}
+
+body > footer {
+    border: 2px solid;
+}
+
+table{
+    border-collapse: collapse;
+}
+
+table, td{
+    border: thin solid black;
+}
+ section img {
+    border-radius: 5%;
+}
+
+header img{
+    height: 300px;
+    width: 60%;
+}

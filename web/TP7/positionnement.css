@@ -1,0 +1,14 @@
+header{
+    text-align: center;
+    border: 1px solid;
+    border-radius: 10px;
+    background-color: skyblue;
+}
+
+body{
+    background-color: #edfbfd;
+}
+
+ul{
+    list-style-type: none;
+}

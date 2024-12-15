@@ -1,0 +1,62 @@
+#!/bin/bash
+for nb in $(seq 10)
+do
+    echo bonjour $nb
+done
+
+
+#!/bin/bash
+a=0
+for nb in $(ls $1)
+do
+    echo fichier: $nb
+    a=$(($a+1))
+done
+echo
+echo il y a $a fichiers traités
+
+
+#!/bin/bash
+num=1
+for nb in $(ls $1)
+do
+    echo fichier images numéro $num : $nb
+    num=$(($num+1))
+done
+
+
+#!/bin/bash
+for fichier in $(ls $1)
+do
+    echo copie de $fichier dans $2
+    cp $1/$fichier $2
+done 
+
+
+#!/bin/bash
+mkdir -p $2
+for fichier in $(ls $1)
+do
+    echo copie de $fichier dans $2
+    cp $1/$fichier $2
+done 
+
+
+#!/bin/bash
+mkdir -p $2
+img=1
+for fichier in $(ls $1)
+do
+    echo copie de $fichier dans $2
+    cp $1/$fichier $2/Image$img
+    img=$((img+1))
+done
+
+ GNU nano 7.2                              Q19.sh                                        
+#!/bin/bash
+for fichier in $(ls -R)
+do
+        if[ -f $fichier in *.{jpg,Jpg,jPg,jpG,JPg,JpG,jPG,JPG} ] then
+        echo $fichier
+        fi
+done

@@ -1,0 +1,161 @@
+@font-face {
+    font-family: 'SaiyanM'; /* Nom que tu donnes à la police */
+    src: url('../police/Saiyan-Sans.ttf') format('truetype'); /* Chemin vers ton fichier */
+    font-weight:normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'banger'; /* Nom que tu donnes à la police */
+    src: url('../police/Bangers-Regular.ttf') format('truetype'); /* Chemin vers ton fichier */
+    font-weight:lighter;
+    font-style:lighter;
+}
+
+
+body{
+    background: #8B0000
+   
+}
+
+header{
+    text-align: center;
+    background-image: url(../img/fond_couleur.jpg);
+    background-size: cover; /* Pour que l'image couvre tout l'espace du header */
+    padding-top: 30px;
+    border: solid;
+    margin: 25px;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+ul{
+    display: flex;
+   justify-content: space-between;
+   list-style-type: none;
+}
+
+nav>ul>li{
+    border-style: solid;
+    padding: 1rem 2rem;
+    font-family: 'SaiyanM';
+    font-size: 50px;
+    flex-basis: 30%;
+    margin-right: 20px;
+    margin-left: -20px;
+    background-color: #FFD700;
+}
+
+aside{
+    background-color: #1C6DD0;
+    flex-basis: 20%;
+    order:2;
+    font-family: 'banger';
+}
+
+aside>h2{
+    font-size: 35px;
+    margin-top: 50px;
+}
+
+aside>p{
+    font-size: 20px;
+}
+
+aside>img{
+    margin-top: 50px;
+    margin-left: 17px;
+}
+
+table {
+    width: 100%; 
+    border-collapse: collapse; 
+}
+tr, td {
+    border: 4px solid black; 
+    padding: 10px;
+    text-align: center; 
+    font-size: 20px;
+}
+tr {
+    background-color: #FFD700; 
+    color: black; 
+}
+
+main{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-top: 100px;
+}
+
+article{
+    flex-basis: 78%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.Resume{
+    background-color: #FFC300;
+    font-family: 'banger';
+}
+
+.Resume>h2{
+    text-align: center;
+    font-size: 30px;
+}
+
+.Resume>p{
+    font-size: 20px;
+}
+
+.carousel-container {
+    width: 40%; /* Réduction de la largeur du conteneur à 40% de la page */
+    overflow: hidden;
+    position: relative;
+    margin: auto;
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    margin-bottom: 100px;
+}
+
+.carousel img {
+    flex-shrink: 0;
+    width: 100%; /* L'image occupe toute la largeur du conteneur */
+    height: 400px; /* Augmentation de la hauteur pour rendre l'image plus longue */
+    object-fit: cover; /* Ajuste l'image pour qu'elle remplisse l'espace sans déformation */
+}
+
+.dynamic{
+    transition: transform 0.3s, filter 0.3s;
+    width: 900px;
+    height: 500px;
+    margin: auto;
+    margin-top: 15px;
+}
+
+.dynamic:hover {
+    transform: scale(0.7) rotate(360deg); /* Agrandit et fait tourner l'image légèrement */
+    filter: brightness(1.15); /* Rend l'image un peu plus lumineuse */
+}
+
+footer{
+    display: flex;
+    flex-wrap: nowrap;
+    height: 50px;
+    align-items: center;
+    font-family: 'banger';
+    font-size: 20px;
+}
+footer img {
+    height: 100%; 
+    max-height: 30px; 
+    margin-right: 10px;
+}

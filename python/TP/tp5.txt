@@ -1,0 +1,27 @@
+1.1 :
+
+def AdresseMail(mail):
+    res = None
+    cptAt = 0
+    mail2 = []
+    for i in range(len(mail)):
+        if mail[0] == "@" or mail[-1] == ".":
+            res1 = False
+        else:
+            if mail[i] != ' ':
+                if mail[i] == "@":
+                    cptAt += 1
+                    mail2 = mail.split("@")
+                    for i in range(len(mail2)):
+                        for carac in mail2[1]:
+                            if carac == ".":
+                                res1 = True
+                            else:
+                                res1 = False
+                else:
+                    res1 = False
+            if cptAt > 1:
+                res2 = False
+            else:
+                res2 = True
+        return res

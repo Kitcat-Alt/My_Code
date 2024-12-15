@@ -1,0 +1,42 @@
+
+/* Gérer le positionnement */
+
+body{
+  display: flex;
+}
+article{
+  flex-grow: 1;
+}
+aside{
+  flex-basis: 20%;
+}
+
+/* couleur de l'aside */
+
+aside{
+  background-color: lightgray;
+}
+
+/* Visuel des tableaux */
+
+table {
+  border-collapse: collapse;
+  margin:1em;
+}
+
+table, td, th{
+  border : thin solid black ;
+}
+
+td, th{
+  padding:1rem;
+}
+
+tr:nth-child(odd){
+   background-color: lightgrey;
+}
+
+#annexes section:last-child ul{
+  display: flex;
+}
+

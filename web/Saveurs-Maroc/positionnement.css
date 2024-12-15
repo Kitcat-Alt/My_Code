@@ -1,0 +1,27 @@
+header{
+    display: flex;
+    flex-wrap: nowrap;
+}
+main{
+    
+}
+
+ul{
+    display: flex;
+}
+
+li{
+    flex-grow: 1;
+    text-align: center;
+    flex-basis: 100%;
+}
+
+article{
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 10px;
+}
+
+aside{
+    flex-basis: 25%;
+}
