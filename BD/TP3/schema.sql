@@ -132,6 +132,6 @@ select distinct c1.Nom
 from CLIENTS c1, RESERVATIONS R1, RESERVATIONS R2
 where R1.id = C1.id and R2.id = C1.id and R1.Code != R2.Code;
 --20. Couples de clients ayant fait des r´eservations le mˆeme jour. Informer aussi les codes
-
 --des voyages en question et la date de r´eservation.
+select 
 --21. Couples de clients ayant r´eserv´e le mˆeme voyage le mˆeme jour.
