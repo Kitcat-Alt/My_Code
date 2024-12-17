@@ -8,3 +8,11 @@ L'erreur avec display vient du fait que la taille du fichier en octet sur okteta
 ![Image](/SAE/Image/TailleImgOctet.jpg)
 Ici on voit que l'image fait 816026 octets or sur le fichier il est indiqué 816025 octets il faut donc rajouter 1 bit dans le fichier pour qu'il n'y ai plus d'erreur avec display. Il faut donc changer 99 en 9A pour avoir : 10 + 9x16^1 + 3x16^2 + 7x16^3 + 12x16^4 = 816026
 ![Image](/SAE/Image/entetebonne.png)
+
+## A.1
+Avec ce code :
+```
+42 4D 4A 00 00 00 00 00 00 00 1A 00 00 00 0C 00 00 00 04 00 04 00 01 00 18 00 00 00 FF FF FF FF 00 00 FF FF FF FF FF FF FF 00 00 FF FF FF FF 00 00 FF 00 00 FF FF FF FF 00 00 FF FF FF FF FF FF FF 00 00 FF FF FF FF 00 00 FF
+```
+
+![Image](/SAE/Image/Image0_zoom.png)
