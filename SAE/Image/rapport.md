@@ -22,12 +22,13 @@ on obtient cette image
 
 ![Image](/SAE/Image/Image0ScreenShot.png)
 
-Les suite FF FF FF sont les pixels de couleur blanc et les 00 00 FF sont pour le rouge (B = 0, G = 0, R = 255 car on est en little endian)
+Les suite FF FF FF sont les pixels de couleur blanc et les 00 00 FF sont pour le rouge (B = 0, G = 0, R = 255 car on es en little endian)
 4A est la taille du fichier en octet (sur 4 octets), 1A est l'adresse à laquelle commence l'image (le début des pixels)
-le 0C donne la taille de la deuxième partie de l'entête. Enfin le 18 vient du fait que l'on utilise 3 octets pour coder la couleur d'un pixel (RGB), on utilise donc 8x3 = 24 bits pour coder un pixel et en hexadecimal 24 = 18 bits.
+le 0C donne la taille de la deuxième partie de l'entête. Enfin le 18 vient du fait que l'on utilise 3 octets pour coder la couleur d'un pixel (RGB), on utilise donc 8x3 = 24 bits pour coder un pixel et en hexadecimal 24 = 18.
 
 
 ## A.2
+En convertissant l'image en bmp3, on obtient bien une nouvelle taille de 102 octets
 Avec ce code :
 ```
 42 4D 4A 00 00 00 00 00 00 00 1A 00 00 00 0C 00
@@ -40,14 +41,16 @@ on obtient cette image
 
 ![Image](/SAE/Image/ImageTestScreenShot.png)
 
-Ici on a juste changé les pixels pour avoir d'autres couleurs par exemple 00 FF 00 pour avoir du vert. Pour les coleurs non primaire il a fallu convertir leur code rgb en décimal en hexadécimal et le mettre en little endian sur le code. Par exemple pour le bleu céruléen, on a le code 15, 157, 232 qui donne en hexadécimal : 0F, 9D, E8 qui donne en little endian E8 9D 0F.
+Ici on a juste changé les pixels pour avoir d'autres couleurs par exemple 00 FF 00 pour avoir du vert. Pour les couleurs non primaire il a fallu convertir leur code rgb en décimal en hexadécimal et le mettre en little endian sur le code. Par exemple pour le bleu céruléen, on a le code 15, 157, 232 qui donne en hexadécimal : 0F, 9D, E8 qui donne en little endian E8 9D 0F.
 
 ## A.3
-En enelevant 12 octets à la taille de l'image et en en rajoutant 40 , on obtient une nouvelle taille de 72-12+40 = 102 octets
-
-En convertissant l'image en bmp3, on obtient bien une nouvelle taille de 102 octets 
+En enelevant 12 octets à la taille de l'image et en en rajoutant 40 , on obtient une nouvelle taille de 72-12+40 = 102 octets 
 
 Voici le code de l'image convertie
 ![Image](/SAE/Image/CodeImage1.png)
-On remarque qu'un autre en tête a été ajouté à partir de 18 00.
-1. Il y a toujours2' bits par pixels 
+Sur ce code nous pouvons voir que la taille de l'image est toujours à l'adresse 0x02 sur octets. Ici la valeur à cette adresse est de 66 soit 102 en décimal. On retrouve bien la taille calculée précedemment.  
+On remarque aussi qu'un autre en tête a été ajouté à partir de 18 00 à l'adresse 0x1C.
+1. Il y a toujours 24 bits par pixels (18 = 24 en décimal)
+2. La taille des données pixels est de 48 octets.Cette valeur s'obtient grace à la valeur 30 à l'adresse 0x22 qui est la taille des données pixels de l'image. 30 = 48 en décimal soit 48 octets de pixels
+3. La compression de l'image est indiquée à l'adresse 0x1E, cette compression est codée sur 4 octets. Dans notre cas à l'adresse 0x1E il y a que des zéros, l'image n'est donc pas compréssée.
+4. Oui le codage des pixels a légèrement changé. on les code toujours sur 3 octets en RGB,cependant un quatrième octet c'est rajouté qui est un octet réservé. Par exemple dans la première image on codaEn convertissant l'image en bmp3, on obtient bien une nouvelle taille de 102 octetsit la couleur rouge avec : 00 00 FF. Ici on codera le rouge avec :    
