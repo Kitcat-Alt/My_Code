@@ -53,4 +53,25 @@ On remarque aussi qu'un autre en tête a été ajouté à partir de 18 00 à l'a
 1. Il y a toujours 24 bits par pixels (18 = 24 en décimal)
 2. La taille des données pixels est de 48 octets.Cette valeur s'obtient grace à la valeur 30 à l'adresse 0x22 qui est la taille des données pixels de l'image. 30 = 48 en décimal soit 48 octets de pixels
 3. La compression de l'image est indiquée à l'adresse 0x1E, cette compression est codée sur 4 octets. Dans notre cas à l'adresse 0x1E il y a que des zéros, l'image n'est donc pas compréssée.
-4. Oui le codage des pixels a légèrement changé. on les code toujours sur 3 octets en RGB,cependant un quatrième octet c'est rajouté qui est un octet réservé. Par exemple dans la première image on codaEn convertissant l'image en bmp3, on obtient bien une nouvelle taille de 102 octetsit la couleur rouge avec : 00 00 FF. Ici on codera le rouge avec :    
+4. Non le codage des pixels n'a pas changé, on code toujours le pixels sur 3 octets en little endian.
+
+## A.4
+En convertissant l'image on obtient ce code :
+![Image](/SAE/Image/CodeImage2.png)
+1. Il y a 1 bit par pixel. ce nombre ce trouve à l'adresse 0x1C.
+2. La taille des données pixels se trouve à l'adresse 0x22. A cette adresse on trouve le nombre 10 qui en décimal nous donne 16. La taille des données pixels est donc de 16 octets.
+3. La compression utilisée est indiquée à l'adresse 0x1E. A cette adresse on ne trouve que des zéros donc il n'y a pas de compréssion utilisée pour cette image.
+4. 
+5. la palette de couleur est composée de deux couleurs. On trouve cette information à l'adresse 0x2E ou l'on trouve 2 en hexadécimal soit 2 en décimal donc 2 couleurs utilisées pour la palette.
+6. Oui le codage des pixels a changé. Dans ce code, chaque pixel est représenté par un seul octet alors que dans les images précédentes on le codaient sur 3 octets
+7. Avec ce code :
+
+    ![Image](/SAE/Image/CodeImage3.png)
+    on obtient cette image :
+
+    ![Image](/SAE/Image/ScreenShotImageBleue.png)
+
+    Pour obtenir cette image il faut modifier la valeur d'une des deux couleurs de notre palette, ici c'est le rouge qu'il fallait changer. Il fallait donc remplacer le 00 00 FF 00 (qui correspond au rouge avec un octet réservé à la fin) à l'adresse 0x36 et mettre FF 00 00 00 pour avoir du bleu.
+8. Avec ce code : 
+
+    ![Image]($)
