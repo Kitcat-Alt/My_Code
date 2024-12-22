@@ -101,4 +101,12 @@ En convertissant l'image on obtient ce code :
 
     Pour ce code, il a fallu remettre le rouge dans la palette de couleur avec 00 00 FF 00 à l'adresse 0x36. Pour la ligne de pixel blancs, il a fallu mettre F0 en hexa. En effet une ligne de pixels blanc correspond à une suite de 1 en binaire : 1111 qui en little endian donne 1111 0000 et en hexa donne F0. Ensuite, le 0 correspondant au rouge en binaire, il a fallu laisser les octets à 0 sur deux lignes pour avoir les deux lignes de pixels rouges sur l'image. Enfin pour la dernière ligne, il fallait alterner entre deux couleur (1 sur 2) comme dans la question précédente. Il fallait donc coder cette suite en binaire : 1010 soit blanc, rouge, blanc, rouge. En little endian cela donne 0000 1010 qui donne A0 en hexa.
 
-11.  
+L'en tête de l'image convertie :
+
+![Image](/SAE/Image/EnTeteImgExempleConvertie.png)
+
+11. On trouve le nombre de couleur dans la palette à l'adresse 0x2E. ici on trouve 10 en hexa soit 16 en décimal donc 16 couleurs dans la palette.
+
+12. La couleur blanche pure en RGB est codée en hexa par FF FF FF. Il faut donc trouver la couleur dans la palette dont le code se rapproche le plus de celui du blanc pur. On trouve FE FE FD à l'adresse 0x66 qui est couleur à dominante blanc.
+
+13. Le tableau de pixel commence à l'adresse 0x76. On trouve cette information à l'adresse 0x0A qui donne l'adresse de la zone de définition de l'image ici c'est 76. 
