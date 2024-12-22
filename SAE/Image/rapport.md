@@ -101,12 +101,31 @@ En convertissant l'image on obtient ce code :
 
     Pour ce code, il a fallu remettre le rouge dans la palette de couleur avec 00 00 FF 00 à l'adresse 0x36. Pour la ligne de pixel blancs, il a fallu mettre F0 en hexa. En effet une ligne de pixels blanc correspond à une suite de 1 en binaire : 1111 qui en little endian donne 1111 0000 et en hexa donne F0. Ensuite, le 0 correspondant au rouge en binaire, il a fallu laisser les octets à 0 sur deux lignes pour avoir les deux lignes de pixels rouges sur l'image. Enfin pour la dernière ligne, il fallait alterner entre deux couleur (1 sur 2) comme dans la question précédente. Il fallait donc coder cette suite en binaire : 1010 soit blanc, rouge, blanc, rouge. En little endian cela donne 0000 1010 qui donne A0 en hexa.
 
-L'en tête de l'image convertie :
+    L'en tête de l'image convertie :
 
-![Image](/SAE/Image/EnTeteImgExempleConvertie.png)
+    ![Image](/SAE/Image/EnTeteImgExempleConvertie.png)
 
 11. On trouve le nombre de couleur dans la palette à l'adresse 0x2E. ici on trouve 10 en hexa soit 16 en décimal donc 16 couleurs dans la palette.
 
 12. La couleur blanche pure en RGB est codée en hexa par FF FF FF. Il faut donc trouver la couleur dans la palette dont le code se rapproche le plus de celui du blanc pur. On trouve FE FE FD à l'adresse 0x66 qui est couleur à dominante blanc.
 
 13. Le tableau de pixel commence à l'adresse 0x76. On trouve cette information à l'adresse 0x0A qui donne l'adresse de la zone de définition de l'image ici c'est 76. 
+
+14. 
+    L'image avec les pixels bleus rajoutés : 
+    ![Image](/SAE/Image/PixelsBleusImageExemple.png)
+
+    Le code de cette nouvelle image : 
+    ![Image](/SAE/Image/CodeImageExemplePixelsBleus.png)
+
+    Pour rajouter ces pixels bleus en bas à gauche, il a fallu rajouter des A pour chaque octets au début de la zone de définition de l'image. Mais pourquoi ? On sait que l'image a 16 couleurs grace au 10 à l'adresse 0x2E qui nous donne 16 en décimal. Ensuite, on sait que la palette de couleur commence à l'adresse 0x36 et que la zone de définition de l'image commence à l'adresse 0x76. On peut donc en déduire que la palette de couleur va de l'adresse 0x36 à l'adresse 0x76. Il faut maintenant trouver une couleur qui donne bleu parmi les 16 que contient la palette. Cependant, nous sommes en little endian il ne faut donc pas oublier d'inverser le rouge et le bleu pour passer de BGR à RGB. J'ai choisi la couleur CD 92 3D (3D 92 CD en big endian) qui donne le bleu des pixels qu'on voit sur la première image. Après avoir choisi la couleur, il faut la coder de sorte à ce que les pixels soit en bleus. Pour cela il faut d'abord regarder la position de la couleur dans la palette, ici elle se trouve à l'adresse 0x5E et en comptant à partir du début de la palette on trouve que c'est la 10ème couleur de la palette. Enfin, on sait qu'un pixel est codé sur 4bits et que par conséquent un octet permet de coder 2 pixels. En convertissant 10 en binaire on a 1010 (ce qui tient bien sur 4 bits) et en hexa cela nous donne A. En remplaçant les CC par des AA dans les premiers octets, on modifie pour chaque octet la couleur de 2 pixels en bleus
+15. L'image avec seulement 4 couleurs : 
+    ![Image](/SAE/Image/ImageExempleIndexBMP3_4.bmp)
+
+    Visuellement, on remarque qu'il manque des couleurs comme le orange et que des pixels qui étaient avant des nuances de certaines couleurs comme le bleu on été remplacés par du blanc.
+
+    Le code de l'image : 
+    ![Image](/SAE/Image/CodeImageExemple4Couleurs.png)
+    Au niveau de l'hexa on peut voir qu'une bonne partie de la palette de couleur a été remplacé par des 0 puisqu'il n'y a plus que 4 couleurs. Les pixels on changés puisque qu'il n'y a plus les mêmes couleurs qu'avant. Cependant on peut voir que selon l'hexa le nombre de couleurs n'a pas changé puisqu'à l'adresse 0x2E on retrouve toujours 10 en hexa soit 16 en décimal donc 16 couleurs alors qu'il n'y en a que 4.
+
+## A.5 
