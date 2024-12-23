@@ -129,3 +129,67 @@ En convertissant l'image on obtient ce code :
     Au niveau de l'hexa on peut voir qu'une bonne partie de la palette de couleur a été remplacé par des 0 puisqu'il n'y a plus que 4 couleurs. Les pixels on changés puisque qu'il n'y a plus les mêmes couleurs qu'avant. Cependant on peut voir que selon l'hexa le nombre de couleurs n'a pas changé puisqu'à l'adresse 0x2E on retrouve toujours 10 en hexa soit 16 en décimal donc 16 couleurs alors qu'il n'y en a que 4.
 
 ## A.5 
+2. En changeant la hauteur de 04 00 00 00 à FC FF FF FF, on passe la hauteur de 4 à -4. Pour avoir ce nombre négatif, il fallait passer par le C2 : 4 en binaire donne 0000 0000 0000 0100 et en C2 cela donne 1111 1111 1111 1100 qui donne en hexa : FF FF FF FC.
+
+    Dans le code cela donne : 
+
+    ![Image](/SAE/Image/CodeImage3Inverse.png)
+
+    On peut voir qu'on a remplacé la hauteur de l'image par FC FF FF FF
+
+    cela donne l'image :
+
+    ![Image](/SAE/Image/ScreenShotImage3Inverse.png)
+
+    On peut voir qu'en passant la hauteur de l'image en négatif, l'image c'est retournée.
+
+3. Pour cette image, il suffit de faire le même calcul que précedement : on converti la hauteur de l'image en binaire : 00 00 01 A9 -> 0000 0001 1010 1001. Puis on inverse les bits à gauche du premier 1 rencontré dans notre chiffre : 1111 1110 0101 0111. Ce qui donne en hexa FF FF FE 57 et en little endian 57 FE FF FF 
+
+    Dans le code cela donne ceci :
+
+    ![Image](/SAE/Image/CodeImageExempleInverse.png)
+
+    On retrouve bien le 57 FE FF FF à l'adresse 0x16
+
+    Avec ce code on obtient cette image : 
+
+    ![Image](/SAE/Image/ScreenShotImageExempleInverse.png)
+
+## A.6
+1. Le poid du nouveau fichier est de 1120 octets alors qu'avant la compression il n'en faisait que 102. On a donc multiplié par 10 la taille du fichier. Cela peut s'expliquer en regardant le nouveau code de cette image : 
+
+    ![Image](/SAE/Image/CodeImage4.png)
+
+    On peut remarquer que l'en tête du fichier a beaucoup changé. En effet on peut voir que la palette de couleur est composé de 256 couleurs(dont toutes sont du noirs sauf les deux première qui sont rouge et blanc) car on a 8 bits par pixels soit 2⁸ = 256. De plus à l'adresse du nombre de couleur utilisées on trouve qu'il y en a 0 soit le maximum.
+    Enfin on peut voir que le nombre de bits par pixels a diminué, on est passé de 24 bits par pixels à 8 bits par pixels.
+
+2. L'offset du début des pixels se trouve à l'adresse 0x0A. Cet offset nous donne une adresse :0x436
+
+    Le codage des pixels : 
+    ![Image](/SAE/Image/CodagePixelsImage4.png)
+
+3. On sait que le codage des pixels commence à l'adresse 0x436. Il faut maintenant comprendre comment fonctionne la compression RLE : la compression RLE code nos pixels grâce à deux octets. Le premier octet nous donne le nombre de pixels à coder et le deuxième nous donne la couleur de ce pixel (sa position dans la palette de couleur). Par exemple le premier couple d'octet que l'on rencontre est : 01 00. Le premier octet dit que l'on va coder 1 fois un pixel et le deuxième octet dit que c'est la première couleur de la palette que l'on va coder (ici le rouge) : en effet, si on regarde la palette de couleur le rouge est bien la première couleur de la palette et on la code bien une seule fois (on commence en bas à gauche de l'image). ce processus ce répète pour chaque pixels (01 01 signifie 1 pixel de couleur blanche)
+
+    ![Image](/SAE/Image/Image0ScreenShot.png)
+
+## A.7
+1. L'entête de l'image convertie : 
+    
+    ![Image](/SAE/Image/EnteteImage5.png)
+
+    Le codage des pixels de cette image :
+
+    ![Image](/SAE/Image/CodagePixelsImage5.png)
+
+    Le fichier fait 1102 octets. C'est 18 octets de moins que le fichier précédent car si on regarde le codage des pixels, on remarque qu'il y a moins de données pixels qu'avant.
+
+    Voici l'image obtenue : 
+
+    ![Image](/SAE/Image/ScreenShotImage3.png)
+2. La compression étant la même, la manière de coder les pixels n'a pas changé. Prenons la première ligne de pixels blanc en bas à gauche de l'image. Ces pixels sont codés comme ceci : 04 01. Le premier octet (04) signifie que l'on va coder 4 pixels et le deuxième octet (01) signifie qu'on va coder la deuxième couleur de la palette (On commence à 0 donc c'est bien la deuxième), ici cette couleur correspond au blanc. C'est la même chose pour les 2 lignes rouges qui suivent : 04 00, 4 pixels codés en rouge (00 correspondant à la première couleur de la palette soit le rouge ici). Pour la dernière ligne, c'est la même façon qu'à la question précédente 01 01 un pixel de couleur blanche, 01 00 un pixel de couleur rouge. A noter qu'on sépare chaque ligne de pixels par deux octets à zéro.
+
+## A.8
+
+
+
+
