@@ -189,7 +189,60 @@ En convertissant l'image on obtient ce code :
 2. La compression étant la même, la manière de coder les pixels n'a pas changé. Prenons la première ligne de pixels blanc en bas à gauche de l'image. Ces pixels sont codés comme ceci : 04 01. Le premier octet (04) signifie que l'on va coder 4 pixels et le deuxième octet (01) signifie qu'on va coder la deuxième couleur de la palette (On commence à 0 donc c'est bien la deuxième), ici cette couleur correspond au blanc. C'est la même chose pour les 2 lignes rouges qui suivent : 04 00, 4 pixels codés en rouge (00 correspondant à la première couleur de la palette soit le rouge ici). Pour la dernière ligne, c'est la même façon qu'à la question précédente 01 01 un pixel de couleur blanche, 01 00 un pixel de couleur rouge. A noter qu'on sépare chaque ligne de pixels par deux octets à zéro.
 
 ## A.8
+Le codage des pixels de l'image obtenue :
 
+![Image](/SAE/Image/CodagePixelsImage6.png)
 
+Par rapport à l'image d'avant, on a modifié la première ligne de pixels. On a remplacé 04 00 00 00 
+par 02 01 01 00 01 01 00 00. 02 01 pour avoir les deux premier pixels blancs, 01 00 pour ensuite avoir 1 pixel rouge et enfin 01 01 pour avoir 1 pixel blanc.
+
+Cela donne l'image : 
+
+![Image](/SAE/Image/ScreenShotImage6.png)
+
+L'entête de l'image :
+
+![Image](/SAE/Image/EnTeteImage6.png)
+
+La seule chose qu'il a fallu changer par rapport à l'image5 est la taille de l'image car on a rajouté des données pixels, donc la taille n'était plus la même. Ici la nouvelle image fait 1106 octets soit 452 en hexa et 52 04 00 00 en little endian.
+
+## A.9
+L'image obtenue : 
+
+![Image](/SAE/Image/ScreenShotImage7.png)
+
+L'en tête de l'image : 
+
+![Image](/SAE/Image/EnTetetImage7.png)
+
+J'ai remplacé deux couleurs noires de la palette par les couleurs vert et bleu dans la palette, ici on trouve le bleu à l'adresse 0x3E (FF 00 00 00) et le vert à l'adresse 0x41 (00 FF 00 00).
+
+Le codage des pixels : 
+
+![Image](/SAE/Image/CodagePixelsImage7.png)
+
+Pour la première ligne (en bas), il fallait changer le pixel qui était rouge en bleu. Pour cela j'ai changé le deuxième couple d'ocets à l'adresse 0x438.
+J'ai donc remplacé le couple 01 00 par le couple 01 02. 01 pour 1 fois un pixel et 02 pour la deuxième couleur de la palette, ici c'est le bleu. Enfin j'ai changé le couple 04 00 à l'adresse 0x442 en 04 03. 04 pour quatre pixels et 03 pour la 3ème couleur de la palette ici le vert.
+
+## A.10
+1. L'image obtenue :  
+
+    ![Image](/SAE/Image/ScreenShotImage8.png)
+
+    L'entête de l'image:
+
+    ![Image](/SAE/Image/EnTeteImage8.png)
+
+    Dans cette entête, seule la taille a été modifée par rapport à l'image précedente car des données pixels on été ajoutées cela a donc fait passé la taile de 1106 octets à 1114 octets soit 45A en hexa et 5A 04 00 00 en litlle endian sur 32 bits.
+
+    Le codage des pixels : 
+
+    ![Image](/SAE/Image/CodagePixelsImage8.png)
+
+    Par rapport à l'image précedente, ce sont les lignes 2 et 3 qui on été modifiées. Pour la deuxième ligne (en partant du bas), on a 01 00 01 03 02 00. Le premier couple d'octet 01 00 veut dire qu'on code un seul pixel avec la première couleur de la palette (le rouge ici). Le deuxième couple d'octet 01 03 veut dire qu'on code un pixel avec la 3ème couleur de la palette (ici le vert). Enfin le dernier couple d'octet 02 00 veut dire que l'on code deux pixels avec la première couleur de la palette (le rouge). Pour la 3ème ligne on a 02 03 01 00 01 03. Le premier couple d'octet 02 03 veut dire que l'on code deux pixels avec la 3ème couleur de la palette (ici le vert). Le deuxième couple d'octet 01 00 veut dire que l'on code un pixel avec la première couleur de la palette (le rouge) et le dernier couple d'octet 01 03 veut dire que l'on code un pixel avec la 3ème couleur de la palette.
+
+2. 
+
+## B.1
 
 
