@@ -1,18 +1,13 @@
 from PIL import Image
 
 coloneInverse = 0
-ligneInverse = 0
-i  = Image.open("SAE/Image/ImageTest.bmp")
+
+i = Image.open("SAE/Image/hall-mod_0.bmp")
 sortie = i.copy()
 
 for ligne in range(i.size[1]):
-    ligneInverse += i.size[1]-(ligne+1)
     for colone in range(i.size[0]):
-        coloneInverse += i.size[0]-(colone+1)
-        c = i.getpixel((coloneInverse, ligneInverse))
+        coloneInverse = i.size[0]-(colone+1)        
+        c = i.getpixel((coloneInverse, ligne))
         sortie.putpixel((colone, ligne), (c))
-        coloneInverse = 0
-        ligneInverse -= 1
-        if ligneInverse < 0:
-            sortie.save("SAE/Image/Imageout1.bmp")
-            break
+sortie.save("SAE/Image/Imageout1.bmp")
