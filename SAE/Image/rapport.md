@@ -245,4 +245,6 @@ J'ai donc remplacé le couple 01 00 par le couple 01 02. 01 pour 1 fois un pixel
 
 ## B.1
 
+"custom/updates", "idle_inhibitor"
+
 
