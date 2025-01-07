@@ -1,23 +1,16 @@
 from PIL import Image
 
 def cacher(i,b):
-    return i-(i%2)+b
-
-i  = Image.open("SAE/Image/hall-mod_0.bmp")
-sortie_pixel_rouges = i.copy()
-
-for ligne in range(i.size[1]):
-    for colone in range(i.size[0]):
-        c = i.getpixel((colone, ligne))
-        R = c[0]-(c[0]%2)
-        sortie_pixel_rouges.putpixel((colone,ligne), (R, c[1], c[2]))
-sortie_pixel_rouges.save("SAE/Image/hall-mod-pixels-rouges.bmp")            
+    return i-(i%2)+b       
 
 i2 = Image.open("SAE/Image/Imageout3.bmp")
-sortie_image_cachee = sortie_pixel_rouges.copy()
-for ligne in range(i.size[1]):
-    for colone in range(i.size[0]):
-        if ligne <= i2.size[1] and colone <= i2.size[0]:
+sortie_image_cachee = Image.open("SAE/Image/hall-mod-pixels-rouges.bmp")
+for ligne in range(i2.size[1]):
+    for colone in range(i2.size[0]):
             c2 = i2.getpixel((colone, ligne))
-            sortie_image_cachee.putpixel((colone, ligne),(cacher(c[0], 0), c[1], c[2]))
+            c3 = sortie_image_cachee.getpixel((colone, ligne))
+            if c2[0] == 0 and c2[1] == 0 and c2[2] == 0:
+                sortie_image_cachee.putpixel((colone, ligne),(cacher(c3[0], 1), c3[1], c3[2]))
+            else:
+                sortie_image_cachee.putpixel((colone, ligne), sortie_image_cachee.getpixel((colone, ligne)))
 sortie_image_cachee.save("SAE/Image/Imageout_steg_1.bmp")

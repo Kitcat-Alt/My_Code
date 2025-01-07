@@ -1,6 +1,6 @@
 from PIL import Image
 
-i  = Image.open("SAE/Image/ImageExemple.bmp")
+i  = Image.open("SAE/Image/IUT-Orleans.bmp")
 sortie = i.copy()
 Cgray =()
 ValeurMoyenne = (255*255*3)/2
