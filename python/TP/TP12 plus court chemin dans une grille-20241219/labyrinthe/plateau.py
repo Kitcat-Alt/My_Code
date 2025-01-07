@@ -13,8 +13,8 @@ FANTOME = 3
 
 NORD = 'z'
 OUEST = 'q'
-SUD = 'w'
-EST = 's'
+SUD = 's'
+EST = 'd'
 
 
 def init(nom_fichier="./labyrinthe1.txt"):
@@ -30,10 +30,10 @@ def init(nom_fichier="./labyrinthe1.txt"):
         le plateau de jeu avec les MUR, COULOIR, PERSONNAGE et FANTOME
     """
     matrice = mat.charge_matrice(nom_fichier)
-    mat.set_val(matrice, 0, 0, 2)
-    mat.set_val(matrice, mat.get_nb_colonnes, mat.get_nb_lignes, 3)
+    mat.set_val(matrice, 0, 0, PERSONNAGE)
+    mat.set_val(matrice, mat.get_nb_lignes(matrice)-1, mat.get_nb_colonnes(matrice)-1, FANTOME)
     return matrice
-print(init("./labyrinthe1.txt"))
+#print(init("labyrinthe1.txt"))
 
 
 def est_sur_le_plateau(le_plateau, position):
@@ -46,7 +46,10 @@ def est_sur_le_plateau(le_plateau, position):
     Returns:
         [boolean]: True si la position est bien sur le plateau
     """
-    ...
+    if position[0] <= mat.get_nb_lignes(le_plateau) and position[0] >= 0 and position[1] <= mat.get_nb_colonnes(le_plateau) and position[1] >= 0:
+        return True
+    return False
+
 
 
 def get(le_plateau, position):
@@ -60,7 +63,11 @@ def get(le_plateau, position):
         int: la valeur de la case qui se trouve à la position donnée ou
              None si la position n'est pas sur le plateau
     """
-    ...
+    value = mat.get_val(le_plateau, position[0], position[1])
+    if est_sur_le_plateau(le_plateau, position) == True:
+        return value
+    else:
+        return None
 
 
 def est_un_mur(le_plateau, position):
@@ -73,7 +80,11 @@ def est_un_mur(le_plateau, position):
     Returns:
         bool: True si la case à la position donnée est un MUR, False sinon
     """
-    ...
+    value = mat.get_val(le_plateau, position[0], position[1])
+    if est_sur_le_plateau(le_plateau, position) == True and value == 1:
+        return True
+    else:
+        return False
 
 
 def contient_fantome(le_plateau, position):
@@ -86,7 +97,11 @@ def contient_fantome(le_plateau, position):
     Returns:
         bool: True si la case à la position donnée est un FANTOME, False sinon
     """
-    ...
+    value = mat.get_val(le_plateau, position[0], position[1])
+    if est_sur_le_plateau(le_plateau, position) == True and value == 3:
+        return True
+    else:
+        return False
 
 def est_la_sortie(le_plateau, position):
     """Détermine si la position donnée est la sortie
@@ -99,7 +114,11 @@ def est_la_sortie(le_plateau, position):
     Returns:
         bool: True si la case à la position donnée est la sortie, False sinon
     """
-    ...
+    mat.get_val(le_plateau, position[0], position[1])
+    if est_sur_le_plateau(le_plateau, position) == True and position[0] == mat.get_nb_lignes(le_plateau)-1 and position[1] == mat.get_nb_colonnes(le_plateau)-1:
+        return True
+    else:
+        return False
 
 
 def deplace_personnage(le_plateau, personnage, direction):
@@ -115,7 +134,9 @@ def deplace_personnage(le_plateau, personnage, direction):
     Returns:
         [tuple]: la nouvelle position du personnage
     """
-    ...
+    
+    if direction == SUD:
+        if est_sur_le_plateau(le_plateau, personnage) == True and est_un_murr
 
 
 def voisins(le_plateau, position):
