@@ -17,7 +17,7 @@ SUD = 's'
 EST = 'd'
 
 
-def init(nom_fichier="./labyrinthe1.txt"):
+def init(nom_fichier="/home/iut45/Etudiants/o22402888/Documents/My_Code-1/python/TP/TP12/labyrinthe/labyrinthe1.txt"):
     """Construit le plateau de jeu de la façon suivante :
         - crée une matrice à partir d'un fichier texte qui contient des COULOIR et MUR
         - met le PERSONNAGE en haut à gauche cad à la position (0, 0)
@@ -136,7 +136,44 @@ def deplace_personnage(le_plateau, personnage, direction):
     """
     
     if direction == SUD:
-        if est_sur_le_plateau(le_plateau, personnage) == True and est_un_murr
+        if get(le_plateau, (personnage[0]+1, personnage[1])) == 0:
+            mat.set_val(le_plateau, personnage[0], personnage[1], 0)
+            personnage = (personnage[0]+1, personnage[1])
+            mat.set_val(le_plateau, personnage[0], personnage[1], PERSONNAGE)
+            return personnage
+        else:
+            return personnage
+        
+        
+    if direction == NORD:
+        if get(le_plateau, (personnage[0]-1, personnage[1])) == 0:
+            mat.set_val(le_plateau, personnage[0], personnage[1], 0)
+            personnage = (personnage[0]-1, personnage[1])
+            mat.set_val(le_plateau, personnage[0], personnage[1], PERSONNAGE)
+            return personnage
+        else:
+            return personnage
+        
+    if direction == EST:
+        if get(le_plateau, (personnage[0], personnage[1]+1)) == 0:
+            mat.set_val(le_plateau, personnage[0], personnage[1], 0)
+            personnage = (personnage[0], personnage[1]+1)
+            mat.set_val(le_plateau, personnage[0], personnage[1], PERSONNAGE)
+            return personnage
+        else:
+            return personnage
+        
+    if direction == OUEST:
+        if get(le_plateau, (personnage[0], personnage[1]-1)) == 0:
+            mat.set_val(le_plateau, personnage[0], personnage[1], 0)
+            personnage = (personnage[0], personnage[1]-1)
+            mat.set_val(le_plateau, personnage[0], personnage[1], PERSONNAGE)
+            return personnage
+        else:
+            return personnage
+        
+le_plateau = init()
+print(deplace_personnage(le_plateau, (0, 0), NORD))           
 
 
 def voisins(le_plateau, position):
@@ -149,8 +186,20 @@ def voisins(le_plateau, position):
     Returns:
         set: l'ensemble des positions des cases voisines accessibles
     """
-    ...
-
+    ens_pos = set()
+    if get(le_plateau, (position[0]+1, position[1])) == COULOIR and position[0]+1 < len(le_plateau):
+        ens_pos.add((position[0]+1, position[1]))
+    
+    if get(le_plateau, (position[0]-1, position[1])) == COULOIR and position[0]-1 < len(le_plateau):
+        ens_pos.add((position[0]-1, position[1]))
+    
+    if get(le_plateau, (position[0], position[1]+1)) == COULOIR and position[1]+1 < len(le_plateau):
+        ens_pos.add((position[0], position[1]+1))
+    
+    if get(le_plateau, (position[0], position[1]-1)) == COULOIR and position[1]-1 < len(le_plateau):
+        ens_pos.add((position[0], position[1]-1))
+    return ens_pos
+print(voisins(init(nom_fichier="/home/iut45/Etudiants/o22402888/Documents/My_Code-1/python/TP/TP12/labyrinthe/labyrinthe1.txt")))
 
 def fabrique_le_calque(le_plateau, position_depart):
     """fabrique le calque d'un labyrinthe en utilisation le principe de l'inondation :
@@ -164,7 +213,11 @@ def fabrique_le_calque(le_plateau, position_depart):
        position_de_depart est à 0 les autres cases contiennent la longueur du
        plus court chemin pour y arriver (les murs et les cases innaccessibles sont à None)
     """
-    ...
+    longueur_max = len(le_plateau)*len(le_plateau)
+    i = 0
+    #while i <= longueur_max:
+
+    
 
 
 def fabrique_chemin(le_plateau, position_depart, position_arrivee):
