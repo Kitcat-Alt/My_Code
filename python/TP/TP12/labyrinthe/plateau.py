@@ -17,7 +17,7 @@ SUD = 's'
 EST = 'd'
 
 
-def init(nom_fichier="/home/iut45/Etudiants/o22402888/Documents/My_Code-1/python/TP/TP12/labyrinthe/labyrinthe1.txt"):
+def init(nom_fichier="/home/Kitcat/MyCode/python/TP/TP12/labyrinthe/labyrinthe1.txt"):
     """Construit le plateau de jeu de la façon suivante :
         - crée une matrice à partir d'un fichier texte qui contient des COULOIR et MUR
         - met le PERSONNAGE en haut à gauche cad à la position (0, 0)
@@ -199,7 +199,7 @@ def voisins(le_plateau, position):
     if get(le_plateau, (position[0], position[1]-1)) == COULOIR and position[1]-1 < len(le_plateau):
         ens_pos.add((position[0], position[1]-1))
     return ens_pos
-print(voisins(init(nom_fichier="/home/iut45/Etudiants/o22402888/Documents/My_Code-1/python/TP/TP12/labyrinthe/labyrinthe1.txt")))
+print(voisins(le_plateau,(8,8)))
 
 def fabrique_le_calque(le_plateau, position_depart):
     """fabrique le calque d'un labyrinthe en utilisation le principe de l'inondation :
@@ -213,11 +213,19 @@ def fabrique_le_calque(le_plateau, position_depart):
        position_de_depart est à 0 les autres cases contiennent la longueur du
        plus court chemin pour y arriver (les murs et les cases innaccessibles sont à None)
     """
-    longueur_max = len(le_plateau)*len(le_plateau)
-    i = 0
-    #while i <= longueur_max:
+    longueur_max = mat.get_nb_lignes(le_plateau) + mat.get_nb_colonnes(le_plateau)
+    i2 = 0
+    pos_apr_start = set()
+    ens_pos = voisins(le_plateau, position_depart)
+    while i2 <= longueur_max:
+        for position in ens_pos:
+            if get(le_plateau, position)!= COULOIR:
+                mat.set_val(le_plateau, position[0], position[1], None)
+            else:
+                mat.set_val(le_plateau, position[0], position[1], i2+1)
+        ens_pos = voisins(le_plateau,)
+        
 
-    
 
 
 def fabrique_chemin(le_plateau, position_depart, position_arrivee):
