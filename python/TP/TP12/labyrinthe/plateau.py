@@ -173,7 +173,7 @@ def deplace_personnage(le_plateau, personnage, direction):
             return personnage
         
 le_plateau = init()
-print(deplace_personnage(le_plateau, (0, 0), NORD))           
+#print(deplace_personnage(le_plateau, (0, 0), NORD))           
 
 
 def voisins(le_plateau, position):
@@ -199,7 +199,7 @@ def voisins(le_plateau, position):
     if get(le_plateau, (position[0], position[1]-1)) == COULOIR and position[1]-1 < len(le_plateau):
         ens_pos.add((position[0], position[1]-1))
     return ens_pos
-print(voisins(le_plateau,(8,8)))
+#print(voisins(le_plateau,(4,3)))
 
 def fabrique_le_calque(le_plateau, position_depart):
     """fabrique le calque d'un labyrinthe en utilisation le principe de l'inondation :
@@ -215,7 +215,7 @@ def fabrique_le_calque(le_plateau, position_depart):
     """
     longueur_max = mat.get_nb_lignes(le_plateau) + mat.get_nb_colonnes(le_plateau)
     i2 = 0
-    pos_apr_start = set()
+    count_pos = 0
     ens_pos = voisins(le_plateau, position_depart)
     while i2 <= longueur_max:
         for position in ens_pos:
@@ -223,7 +223,13 @@ def fabrique_le_calque(le_plateau, position_depart):
                 mat.set_val(le_plateau, position[0], position[1], None)
             else:
                 mat.set_val(le_plateau, position[0], position[1], i2+1)
-        ens_pos = voisins(le_plateau,)
+        ens_pos = (voisins(le_plateau, position))
+        if len(ens_pos) >= 2:
+            ens_pos.add(voisins(le_plateau, position))
+
+        i2 += 1
+    return le_plateau
+print(fabrique_le_calque(le_plateau, (0,0)))
         
 
 
