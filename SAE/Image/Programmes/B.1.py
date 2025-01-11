@@ -1,9 +1,12 @@
 from PIL import Image
 
-i  = Image.open("SAE/Image/ImageTest.bmp")
-sortie = i.copy()
-for ligne in range(i.size[1]):
-    for colone in range(i.size[0]):
-        c = i.getpixel((colone, ligne))
-        sortie.putpixel((ligne, colone), (c))
-sortie.save("SAE/Image/Imageout0.bmp")
+image  = Image.open("SAE/Image/images/ImageTest.bmp")
+image_transpose = image.copy()
+
+def transpose_image(image):
+    for ligne in range(image_transpose.size[1]):
+        for colone in range(image_transpose.size[0]):
+            pixel = image.getpixel((colone, ligne))
+            image_transpose.putpixel((ligne, colone), (pixel))
+    return image_transpose.save("SAE/Image/images/Imageout0.bmp")
+transpose_image(image)

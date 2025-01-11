@@ -1,16 +1,17 @@
 from PIL import Image
 
-i  = Image.open("SAE/Image/IUT-Orleans.bmp")
-sortie = i.copy()
-Cgray =()
+image = Image.open("SAE/Image/images/IUT-Orleans.bmp")
+image_noir_blanc = image.copy()
 ValeurMoyenne = (255*255*3)/2
 
-for ligne in range(i.size[1]):
-    for colone in range(i.size[0]):
-        c = i.getpixel((colone, ligne))
-        BlackOrWhite = ((c[0]*c[0]+c[1]*c[1]+c[2]*c[2]))
-        if BlackOrWhite > ValeurMoyenne:
-            sortie.putpixel((colone,ligne), (255,255,255))
-        else:
-            sortie.putpixel((colone,ligne), (0,0,0))
-sortie.save("SAE/Image/Imageout3.bmp")
+def image_noir_et_blanc(image):
+    for ligne in range(image.size[1]):
+        for colone in range(image.size[0]):
+            pixel = image.getpixel((colone, ligne))
+            BlackOrWhite = ((pixel[0]*pixel[0]+pixel[1]*pixel[1]+pixel[2]*pixel[2]))
+            if BlackOrWhite > ValeurMoyenne:
+                image_noir_blanc.putpixel((colone,ligne), (255,255,255))
+            else:
+                image_noir_blanc.putpixel((colone,ligne), (0,0,0))
+    return image_noir_blanc.save("SAE/Image/images/Imageout3.bmp")
+image_noir_et_blanc(image)
