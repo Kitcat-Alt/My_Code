@@ -47,6 +47,6 @@ def trouver_image(image_hote):
             if trouver(pixel[0]) == 0:
                 image_cachee.putpixel((colone, ligne), (255, 255, 255))
             else:
-                image_cachee.putpixel((colone, ligne), (trouver(pixel[0]), 0, 0))
+                image_cachee.putpixel((colone, ligne), (0, 0, 0))
     return image_cachee.save("SAE/Image/images/Imageout3trouve.bmp")
 trouver_image(image_hote)

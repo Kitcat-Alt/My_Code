@@ -3,9 +3,12 @@
 La première partie du fichier est l'en tête du fichier :
 - les 2 premier octets 42 4D correspondent au format du fichier 42 qui fait B en Ascii et 4D qui fait M.
 ![Image](/SAE/Image/Screenshots/entete.png)
-- Ensuite il y a 4 octets : 99 73 0C 00 qui donnent la taille du fichier avec cela oon peut avoir la taille du fichier en octets. Cependant il faut inverser tout les octets pour convertir car c'est du little endian : 9 + 9x16^1 + 3x16^2 + 7x16^3 + 12x16^4 = 816025
-L'erreur avec display vient du fait que la taille du fichier en octet sur okteta ne correspond pas à la taille réelle en octet 
-![Image](/SAE/Image/Screenshots/TailleImgOctet.jpg)
+
+- Ensuite il y a 4 octets : 99 73 0C 00 qui donnent la taille du fichier avec cela on peut avoir la taille du fichier en octets. Cependant il faut inverser tout les octets pour convertir car c'est du little endian : 9 + 9x16^1 + 3x16^2 + 7x16^3 + 12x16^4 = 816025
+L'erreur avec display vient du fait que la taille du fichier en octet sur okteta ne correspond pas à la taille réelle en octet. 
+
+    ![Image](/SAE/Image/Screenshots/TailleImgOctet.jpg)
+
 Ici on voit que l'image fait 816026 octets or sur le fichier il est indiqué 816025 octets il faut donc rajouter 1 bit dans le fichier pour qu'il n'y ai plus d'erreur avec display. Il faut donc changer 99 en 9A pour avoir : 10 + 9x16^1 + 3x16^2 + 7x16^3 + 12x16^4 = 816026
 ![Image](/SAE/Image/Screenshots/entetebonne.png)
 
@@ -20,10 +23,10 @@ FF 00 00 FF FF FF FF 00 00 FF
 ```
 on obtient cette image
 
-![Image](/SAE/Image/Image0ScreenShot.png)
+![Image](/SAE/Image/Screenshots/ScreenShotImage0.png)
 
-Les suite FF FF FF sont les pixels de couleur blanc et les 00 00 FF sont pour le rouge (B = 0, G = 0, R = 255 car on es en little endian)
-4A est la taille du fichier en octet (sur 4 octets), 1A est l'adresse à laquelle commence l'image (le début des pixels)
+Les suite FF FF FF sont les pixels de couleur blanche et les 00 00 FF sont pour le rouge (B = 0, G = 0, R = 255 car on es en little endian)
+4A est la taille du fichier en octets (sur 4 octets), 1A est l'adresse à laquelle commence l'image (le début des pixels)
 le 0C donne la taille de la deuxième partie de l'entête. Enfin le 18 vient du fait que l'on utilise 3 octets pour coder la couleur d'un pixel (RGB), on utilise donc 8x3 = 24 bits pour coder un pixel et en hexadecimal 24 = 18.
 
 
@@ -39,24 +42,25 @@ FF 00 FF 00 00 00 FF 00 00 FF
 ```
 on obtient cette image
 
-![Image](/SAE/Image/Screenshots/ImageTestScreenShot.png)
+![Image](/SAE/Image/Screenshots/ScreenShotImageTest.png)
 
-Ici on a juste changé les pixels pour avoir d'autres couleurs par exemple 00 FF 00 pour avoir du vert. Pour les couleurs non primaire il a fallu convertir leur code rgb en décimal en hexadécimal et le mettre en little endian sur le code. Par exemple pour le bleu céruléen, on a le code 15, 157, 232 qui donne en hexadécimal : 0F, 9D, E8 qui donne en little endian E8 9D 0F.
+Ici on a juste changé les pixels pour avoir d'autres couleurs par exemple 00 FF 00 pour avoir du vert. Pour les couleurs non primaire il a fallu convertir leur code rgb décimal en hexadécimal et le mettre en little endian sur le code. Par exemple pour le bleu céruléen, on a le code 15, 157, 232 qui donne en hexadécimal : 0F, 9D, E8 qui donne en little endian E8 9D 0F.
 
 ## A.3
 En enelevant 12 octets à la taille de l'image et en en rajoutant 40 , on obtient une nouvelle taille de 72-12+40 = 102 octets 
 
 Voici le code de l'image convertie
 ![Image](/SAE/Image/Screenshots/CodeImage1.png)
-Sur ce code nous pouvons voir que la taille de l'image est toujours à l'adresse 0x02 sur octets. Ici la valeur à cette adresse est de 66 soit 102 en décimal. On retrouve bien la taille calculée précedemment.  
+
+Sur ce code nous pouvons voir que la taille de l'image est toujours à l'adresse 0x02 sur 4 octets. Ici la valeur à cette adresse est de 66 soit 102 en décimal. On retrouve bien la taille calculée précedemment.  
 On remarque aussi qu'un autre en tête a été ajouté à partir de 18 00 à l'adresse 0x1C.
 1. Il y a toujours 24 bits par pixels (18 = 24 en décimal)
 
 2. La taille des données pixels est de 48 octets.Cette valeur s'obtient grace à la valeur 30 à l'adresse 0x22 qui est la taille des données pixels de l'image. 30 = 48 en décimal soit 48 octets de pixels.
 
-3. La compression de l'image est indiquée à l'adresse 0x1E, cette compression est codée sur 4 octets. Dans notre cas à l'adresse 0x1E il y a que des zéros, l'image n'est donc pas compréssée.
+3. La compression de l'image est indiquée à l'adresse 0x1E, cette compression est codée sur 4 octets. Dans notre cas à l'adresse 0x1E il n'y a que des zéros, aucune compression n'est donc utilisée.
 
-4. Non le codage des pixels n'a pas changé, on code toujours le pixels sur 3 octets en little endian.
+4. Non le codage des pixels n'a pas changé, on code toujours les pixels sur 3 octets en little endian.
 
 ## A.4
 En convertissant l'image on obtient ce code :
@@ -67,11 +71,11 @@ En convertissant l'image on obtient ce code :
 
 3. La compression utilisée est indiquée à l'adresse 0x1E. A cette adresse on ne trouve que des zéros donc il n'y a pas de compréssion utilisée pour cette image.
 
-4.
+4. Les couleurs de la palette sont codées en BGR (RGB mais en little endian) sur 4 octets avec un octet résérvé. Pour le blanc on a FF FF FF et pour le rouge on a 00 00 FF 
 
 5. la palette de couleur est composée de deux couleurs. On trouve cette information à l'adresse 0x2E ou l'on trouve 2 en hexadécimal soit 2 en décimal donc 2 couleurs utilisées pour la palette.
 
-6. Oui le codage des pixels a changé. Dans ce code, chaque pixel est représenté par 1 seul bit alors que dans es images précédente on utilisait 24 bits pour représenter un pixel.
+6. Oui le codage des pixels a changé. Dans ce code, chaque pixel est représenté par 1 seul bit alors que dans les images précédentes on utilisait 24 bits pour représenter un pixel.
 
 7. Avec ce code :
 
@@ -107,7 +111,7 @@ En convertissant l'image on obtient ce code :
 
 11. On trouve le nombre de couleur dans la palette à l'adresse 0x2E. ici on trouve 10 en hexa soit 16 en décimal donc 16 couleurs dans la palette.
 
-12. La couleur blanche pure en RGB est codée en hexa par FF FF FF. Il faut donc trouver la couleur dans la palette dont le code se rapproche le plus de celui du blanc pur. On trouve FE FE FD à l'adresse 0x66 qui est couleur à dominante blanc.
+12. La couleur blanche pure en RGB est codée en hexa par FF FF FF. Il faut donc trouver la couleur dans la palette dont le code se rapproche le plus de celui du blanc pur. On trouve FE FE FD à l'adresse 0x66 qui est une couleur à dominante blanc.
 
 13. Le tableau de pixel commence à l'adresse 0x76. On trouve cette information à l'adresse 0x0A qui donne l'adresse de la zone de définition de l'image ici c'est 76. 
 
@@ -122,11 +126,11 @@ En convertissant l'image on obtient ce code :
 15. L'image avec seulement 4 couleurs : 
     ![Image](/SAE/Image/images/ImageExempleIndexBMP3_4.bmp)
 
-    Visuellement, on remarque qu'il manque des couleurs comme le orange et que des pixels qui étaient avant des nuances de certaines couleurs comme le bleu on été remplacés par du blanc.
+    Visuellement, on remarque qu'il manque des couleurs comme le orange (remplacé par du gris) et que des pixels qui étaient avant des nuances de certaines couleurs comme le bleu on été remplacés par du blanc.
 
     Le code de l'image : 
     ![Image](/SAE/Image/Screenshots/CodeImageExemple4Couleurs.png)
-    Au niveau de l'hexa on peut voir qu'une bonne partie de la palette de couleur a été remplacé par des 0 puisqu'il n'y a plus que 4 couleurs. Les pixels on changés puisque qu'il n'y a plus les mêmes couleurs qu'avant. Cependant on peut voir que selon l'hexa le nombre de couleurs n'a pas changé puisqu'à l'adresse 0x2E on retrouve toujours 10 en hexa soit 16 en décimal donc 16 couleurs alors qu'il n'y en a que 4.
+    Au niveau de l'hexa on peut voir qu'une bonne partie de la palette de couleur a été remplacée par des 0 puisqu'il n'y a plus que 4 couleurs. Les pixels on changés puisque qu'il n'y a plus les mêmes couleurs qu'avant. Cependant on peut voir que selon l'hexa le nombre de couleurs n'a pas changé puisqu'à l'adresse 0x2E on retrouve toujours 10 en hexa soit 16 en décimal donc 16 couleurs alors qu'il n'y en a que 4.
 
 ## A.5 
 2. En changeant la hauteur de 04 00 00 00 à FC FF FF FF, on passe la hauteur de 4 à -4. Pour avoir ce nombre négatif, il fallait passer par le C2 : 4 en binaire donne 0000 0000 0000 0100 et en C2 cela donne 1111 1111 1111 1100 qui donne en hexa : FF FF FF FC.
@@ -160,7 +164,7 @@ En convertissant l'image on obtient ce code :
 
     ![Image](/SAE/Image/Screenshots/CodeImage4.png)
 
-    On peut remarquer que l'en tête du fichier a beaucoup changé. En effet on peut voir que la palette de couleur est composé de 256 couleurs(dont toutes sont du noirs sauf les deux première qui sont rouge et blanc) car on a 8 bits par pixels soit 2⁸ = 256. De plus à l'adresse du nombre de couleur utilisées on trouve qu'il y en a 0 soit le maximum.
+    On peut remarquer que l'en tête du fichier a beaucoup changé. En effet on peut voir que la palette de couleur est composé de 256 couleurs(dont toutes sont du noirs sauf les deux première qui sont rouge et blanc) car on a 8 bits par pixels soit 2⁸ = 256 couleurs. De plus à l'adresse du nombre de couleur utilisées on trouve qu'il y en a 0 soit le maximum.
     Enfin on peut voir que le nombre de bits par pixels a diminué, on est passé de 24 bits par pixels à 8 bits par pixels.
 
 2. L'offset du début des pixels se trouve à l'adresse 0x0A. Cet offset nous donne une adresse :0x436
@@ -221,7 +225,7 @@ Le codage des pixels :
 
 ![Image](/SAE/Image/Screenshots/CodagePixelsImage7.png)
 
-Pour la première ligne (en bas), il fallait changer le pixel qui était rouge en bleu. Pour cela j'ai changé le deuxième couple d'ocets à l'adresse 0x438.
+Pour la première ligne (en bas), il fallait changer le pixel qui était rouge en bleu. Pour cela j'ai changé le deuxième couple d'octets à l'adresse 0x438.
 J'ai donc remplacé le couple 01 00 par le couple 01 02. 01 pour 1 fois un pixel et 02 pour la deuxième couleur de la palette, ici c'est le bleu. Enfin j'ai changé le couple 04 00 à l'adresse 0x442 en 04 03. 04 pour quatre pixels et 03 pour la 3ème couleur de la palette ici le vert.
 
 ## A.10
@@ -251,6 +255,10 @@ Voici le programme qui permet de faire cela :
 
 Tout d'abord, on ouvre l'image à transposer et on en fait une copie (lignes 3 et 4). Ensuite, on définit une fonction qui va parcourir l'image ligne par ligne en partant en haut à droite. c'est ce que font les deux boucles for. La ligne 9 va s'occuper de récupérer la valeur de chaque pixel que l'on rencontre. C'est-à-dire qu'elle va stocker un tuple qui va stocker la couleur comme ceci : (R,G,B). Quand on a récupéré un pixel, on le met sur l'image copiée et on inverse ligne et colonne dans "putpixel". Quand on a fini de parcourir l'image, on enregistre l'image transposée (ligne 11).
 
+cela donne l'image : 
+
+![Image](/SAE/Image/Screenshots/ScreenShotImageout0.png)
+
 ## B.2
 ![Image](/SAE/Image/Screenshots/ScreenShotB.2.png)
 
@@ -259,13 +267,60 @@ On va donc commencer par définir une variable "colonneInverse" qui stockera l'i
 La ligne 11 permet de parcourir l'image de droite à gauche. En effet, on prend la longueur de l'image à laquelle on enlève la colone ou on se trouve en lui ajoutant 1 car on commence à 0. Cela permet d'aller récuperer le pixel opposé à celui que l'on regarde.
 Quand on a cet indice, on va aller chercher la valeur du pixel à cet indice et on le met sur l'image copiée (ligne 12 et 13). Enfin on enregistre l'image copiée.
 
+cela donne l'image : 
+
+![Image](/SAE/Image/images/Imageout1.bmp)
+
 ## B.3
 ![Image](/SAE/Image/Screenshots/ScreenShotB.3.png)
 
 les lignes 3 et 4 permettent d'ouvrir l'image que l'on veut passer en niveau de gris et d'en faire une copie. La variable pixel_gray à la ligne 5 va permettre de stocker la valeur d'un pixel passé en niveau de gris. Ensuite dans le fonction, on parcour l'image de gauce à droite en partant d'en haut à gauche. Pour chaque indice (colone, ligne) on récupère la valeur du pixel grâce à la ligne 10 puis on passe ce pixel en niveau de gris grace à la formule donnée : Gris=(R+V+B)/3. On fait cela pour le rouge, le vert et le bleu (ligne 11). Après avoir passé le pixel en gris on le met sur la copie de l'image originale (ligne 12). Enfin quand on a fini de parcourir l'image originale, on enregistre l'image copiée.
 
+cela donne l'image : 
+
+![Image](/SAE/Image/images/Imageout2.bmp)
+
 ## B.4
 ![Image](/SAE/Image/Screenshots/ScreenShotB.4.png)
 Pour passer l'image en noir en blanc, on doit utiliser cette formule : (R * R+V * V+B * B) > 255 * 255 * 3/2. A la ligne 5 on défini la deuxième partie de la formule qui nous servira de comparaison pour savoir si l'on met un pixel noir ou blanc. Quand on récupère la valeur d'un pixel (ligne 10), on calcule la partie gauche de la formule. Ensuite on compare les deux parties entre elles, si la partie gauche est supérieure à la partie droite, on met un pixel blanc sinon, on met un pixel noir.
 
+cela donne l'image :
+
+![Image](/SAE/Image/images/Imageout3.bmp)
+
 ## B.5
+![Image](/SAE/Image/Screenshots/ScreenshotB.5.1.png)
+la fonction valeur_rouge_pair va mettre toutes les valeurs rouges des pixels à une valeur paire. Ici on utilise la formule: valeur_R=valeur_R-(valeur_R%2). Cette fonction va donc parcourir l'image hote, et pour chacun de ses pixels, elle va passer la valeur rouge du pixel à une valeur paire. c'est ce que font les lignes 17 et 18. après avoir transformé les valeurs, elle va mettre les nouveaux pixels dans la copie de l'image faite à la ligne 12. Enfin, elle va enregistrer la nouvelle image.
+
+cela donne l'image :
+
+![Image](/SAE/Image/images/Imageout_steg_0.bmp)
+
+Maintenant que chaque pixel de la nouvelle image réserve une place dans ses unités pour un bit de l'image à cacher, il faut cacher cette image.
+
+![Image](/SAE/Image/Screenshots/ScreenShotB.5.2.png)
+
+La fonction cacher_image va prendre deux arguments, une image hôte et l'image à cacher dans l'image hôte. Elle va parcourir l'image à cacher et récupérer la valeur des pixels de l'image à cacher mais aussi ceux de l'image hôte (lignes 29 et 30). Une fois les valeur récupérées, elle va tester si le pixel de l'image à cachée est un pixel noir c'est-à-dire qu'il est égal à (0,0,0). Si il est noir, on utilise la méthode putpixel sur l'image hôte en utilisant la fonction cacher pour mettre la valaur rouge du pixel de l'image hôte a une valeur impaire. Si le pixel n'est pas noir, on met tout simplement le pixel de l'image hôte que l'on est entrain de lire (lignes 31 à 34). L'image est donc cachée de cette manière : si la valeur rouge d'un pixel de l'image hôte est impaire, c'est un pixel noir, sinon c'est un pixel blanc.
+
+cela donne l'image :
+
+![Image](/SAE/Image/images/Imageout_steg_1.bmp)
+
+Mais comment savoir que l'image est bien cachée et au bon endroit ? Pour la révéler, il suffit d'augmenter la valeur rouge quand on cache un pixel noir dans l'image hôte. Cela se fait à la ligne 32.
+
+```
+image_hote.putpixel((colone, ligne),(cacher(pixel_hote[0], 1), pixel_hote[1], pixel_hote[2]))
+```
+En mettant 60 à la place du 1 ici : ```(cacher(pixel_hote[0], 1)```
+On obtient cette image:
+
+![Image](/SAE/Image/Screenshots/ScreenShotImgcachee.png)
+
+Sur cette image on voit bien apparaître le logo de l'iut ce qui montre que l'image est bien cachée.
+
+![Image](/SAE/Image/Screenshots/ScreenShotB.5.3.png)
+La dernière fonction trouver_image va permettre de retrouver et recréer l'image cachée. La fonction va donc parcourir l'image hôte, récupérer la valeur des pixels qu'elle rencontre et va tester grace à la fonction trouver, si la valeur rouge du pixel est paire ou non (si la valeur modulo 2 est égale à 0). Dans notre cas, si la valeur est paire, c'est un pixel blanc et si elle est impaire c'est un pixel noir.
+
+Cela donne cette image :
+
+![Image](/SAE/Image/images/Imageout3trouve.bmp)
