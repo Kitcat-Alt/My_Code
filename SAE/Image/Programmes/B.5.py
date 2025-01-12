@@ -17,7 +17,7 @@ def valeur_rouge_pair(image):
             pixel = image.getpixel((colone, ligne))
             Rouge_pair = pixel[0]-(pixel[0]%2)
             image.putpixel((colone,ligne), (Rouge_pair, pixel[1], pixel[2]))
-    return image.save("SAE/Image/images/hall-mod-rouge-pair.bmp")
+    return image.save("SAE/Image/images/Imageout_steg_0.bmp")
 valeur_rouge_pair(image_hote)
 
 #------------------------------------------------------------------------------------------------------
@@ -33,7 +33,7 @@ def cacher_image(image_hote, image_a_cacher):
                 else:
                     image_hote.putpixel((colone, ligne), image_hote.getpixel((colone, ligne)))
     return image_hote.save("SAE/Image/images/Imageout_steg_1.bmp")
-cacher_image(Image.open("SAE/Image/images/hall-mod-rouge-pair.bmp"), image_a_cacher)
+cacher_image(Image.open("SAE/Image/images/Imageout_steg_0.bmp"), image_a_cacher)
 
 #------------------------------------------------------------------------------------------------------
 

@@ -244,7 +244,28 @@ J'ai donc remplacé le couple 01 00 par le couple 01 02. 01 pour 1 fois un pixel
 2. 
 
 ## B.1
+Pour créer la transposée d'une image il faut inverser les lignes et les colonnes.
+Voici le programme qui permet de faire cela :
 
+![Image](/SAE/Image/Screenshots/ScreenShotB.1.png)
 
+Tout d'abord, on ouvre l'image à transposer et on en fait une copie (lignes 3 et 4). Ensuite, on définit une fonction qui va parcourir l'image ligne par ligne en partant en haut à droite. c'est ce que font les deux boucles for. La ligne 9 va s'occuper de récupérer la valeur de chaque pixel que l'on rencontre. C'est-à-dire qu'elle va stocker un tuple qui va stocker la couleur comme ceci : (R,G,B). Quand on a récupéré un pixel, on le met sur l'image copiée et on inverse ligne et colonne dans "putpixel". Quand on a fini de parcourir l'image, on enregistre l'image transposée (ligne 11).
 
+## B.2
+![Image](/SAE/Image/Screenshots/ScreenShotB.2.png)
 
+Pour inverser une image comme dans un miroir il faut que le dernier pixel d'une ligne, devienne le premier pixel de cette ligne et inversement (le premier doit devenir le dernier). Il faut faire cela pour chaque ligne de l'image.
+On va donc commencer par définir une variable "colonneInverse" qui stockera l'indice de la colonne opposée du pixel qu'on est entrain de lire. Comme précédement, on commence par ouvrir l'image à inverser et on en fait une copie(lignes 5 et 6). Ensuite, on parcour l'image par lignes et par colones avec les deux boucles for. 
+La ligne 11 permet de parcourir l'image de droite à gauche. En effet, on prend la longueur de l'image à laquelle on enlève la colone ou on se trouve en lui ajoutant 1 car on commence à 0. Cela permet d'aller récuperer le pixel opposé à celui que l'on regarde.
+Quand on a cet indice, on va aller chercher la valeur du pixel à cet indice et on le met sur l'image copiée (ligne 12 et 13). Enfin on enregistre l'image copiée.
+
+## B.3
+![Image](/SAE/Image/Screenshots/ScreenShotB.3.png)
+
+les lignes 3 et 4 permettent d'ouvrir l'image que l'on veut passer en niveau de gris et d'en faire une copie. La variable pixel_gray à la ligne 5 va permettre de stocker la valeur d'un pixel passé en niveau de gris. Ensuite dans le fonction, on parcour l'image de gauce à droite en partant d'en haut à gauche. Pour chaque indice (colone, ligne) on récupère la valeur du pixel grâce à la ligne 10 puis on passe ce pixel en niveau de gris grace à la formule donnée : Gris=(R+V+B)/3. On fait cela pour le rouge, le vert et le bleu (ligne 11). Après avoir passé le pixel en gris on le met sur la copie de l'image originale (ligne 12). Enfin quand on a fini de parcourir l'image originale, on enregistre l'image copiée.
+
+## B.4
+![Image](/SAE/Image/Screenshots/ScreenShotB.4.png)
+Pour passer l'image en noir en blanc, on doit utiliser cette formule : (R * R+V * V+B * B) > 255 * 255 * 3/2. A la ligne 5 on défini la deuxième partie de la formule qui nous servira de comparaison pour savoir si l'on met un pixel noir ou blanc. Quand on récupère la valeur d'un pixel (ligne 10), on calcule la partie gauche de la formule. Ensuite on compare les deux parties entre elles, si la partie gauche est supérieure à la partie droite, on met un pixel blanc sinon, on met un pixel noir.
+
+## B.5
