@@ -236,7 +236,7 @@ def mon_IA(num_joueur:int, la_partie:dict)->str:
         meilleur_dir=random.choice("NSEO")
     return meilleur_dir
  
-
+test
 
 def meilleure_direction(l_arene:dict,num_joueur:int):
     position_joueur = arene.get_serpent(l_arene, num_joueur)[0]
