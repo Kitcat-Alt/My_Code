@@ -14,6 +14,8 @@ import random
 import arene
 import serpent
 import case
+import matrice
+DIRECTIONS={"N":(-1,0),"E":(0,1),"S":(1,0),"O":(0,-1)}
 
 direction_prec='X' # variable indiquant la décision précédente prise par le joueur. A mettre à jour soi-même
 
@@ -111,53 +113,30 @@ def direction_possibles_coords(l_arene: dict,ligne: int,col: int,num_joueur: int
     return possible_dir
 
 def directions_possibles(l_arene:dict,num_joueur:int)->str:
-    """Indique les directions possible pour le joueur num_joueur
-        c'est à dire les directions qu'il peut prendre sans se cogner dans
-        un mur, sortir de l'arène ou se cogner sur une boîte trop grosse pour sa tête
-
-    Args:
-        l_arene (dict): l'arène considérée
-        num_joueur (int): le numéro du joueur
-
-    Returns:
-        str: une chaine composée de NOSE qui indique les directions
-            pouvant être prise par le joueur. Attention il est possible
-            qu'aucune direction ne soit possible donc la fonction peut retourner la chaine vide
-    """    
-    # copier l_arene
+    res=''
+    mat=l_arene["matrice"]
+    nb_lig=matrice.get_nb_lignes(mat)
+    nb_col=matrice.get_nb_colonnes(mat)
+    lig_dep,col_dep=serpent.get_liste_pos(l_arene["serpents"][num_joueur-1])[0]
     copy_arena = arene.copy_arene(l_arene)
-    nb_ligne,nb_col = arene.get_dim(copy_arena) 
 
-    # position tête du serpent du joueur (1ère position)
     player_head_ligne,player_head_col = arene.get_serpent(copy_arena,num_joueur)[0]
-    last_dir = arene.get_derniere_direction(copy_arena,num_joueur)
-    # valeur de la tête du joueur
-    player_head_val = arene.get_val_boite(copy_arena,player_head_ligne,player_head_col)
+    player_head_val = arene.get_val_boite(l_arene,player_head_ligne,player_head_col)
 
-    directions = ["N","O","S","E"]
-    possible_dir = ""
-
-    for dir in directions:
-        next_pos_ligne,next_pos_col = get_next_pos(player_head_ligne,player_head_col,dir)
-        possible = True
-
-        if next_pos_ligne < 0 or next_pos_ligne >= nb_ligne or next_pos_col <0 or next_pos_col >= nb_col:
-            possible = False
-
-        next_case = arene.matrice.get_val(copy_arena,next_pos_ligne,next_pos_col)
-
-        if arene.est_mur(copy_arena,next_pos_ligne,next_pos_col):
-            possible = False
-
-        if case.contient_boite(next_case) and player_head_val < arene.get_val_boite(next_case):
-            possible = False
-
-        if possible:
-            if going_back(last_dir) != dir:
-                possible_dir += dir
-
-
-    return possible_dir
+    for dir in 'NOSE':
+        delta_lig,delta_col=DIRECTIONS[dir]
+        lig_arr=lig_dep+delta_lig
+        col_arr=col_dep+delta_col
+        if lig_arr<0 or lig_arr>=nb_lig or col_arr<0 or col_arr>=nb_col:
+            continue
+        if case.est_mur(matrice.get_val(mat,lig_arr,col_arr)):
+            continue
+        if case.get_proprietaire(matrice.get_val(mat,lig_arr,col_arr))==num_joueur:
+            continue
+        if player_head_val < case.get_val_boite (matrice.get_val(mat,lig_arr,col_arr)):
+            continue
+        res+=dir
+    return res
 
 #def objets_voisinage(l_arene:dict, num_joueur, dist_max:int):
 #    """Retourne un dictionnaire indiquant pour chaque direction possibles, 
