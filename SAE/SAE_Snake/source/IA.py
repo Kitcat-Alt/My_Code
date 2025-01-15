@@ -14,10 +14,11 @@ import random
 import arene
 import serpent
 import case
+
 import matrice
-DIRECTIONS={"N":(-1,0),"E":(0,1),"S":(1,0),"O":(0,-1)}
 
 direction_prec='X' # variable indiquant la décision précédente prise par le joueur. A mettre à jour soi-même
+DIRECTIONS={"N":(-1,0),"E":(0,1),"S":(1,0),"O":(0,-1)}
 
 ####################################################################
 ### A partir d'ici, implémenter toutes les fonctions qui vous seront 
@@ -221,7 +222,7 @@ def meilleure_direction(l_arene:dict,num_joueur:int):
     position_joueur = arene.get_serpent(l_arene, num_joueur)[0]
     ligne = position_joueur[0]
     col = position_joueur[1]
-    directions = arene.directions_possibles(l_arene,num_joueur)
+    directions = directions_possibles(l_arene,num_joueur)
     points = {}
     for direction in directions:
         if direction == "N":
@@ -239,11 +240,12 @@ def meilleure_direction(l_arene:dict,num_joueur:int):
     for Dir, val in points.items():
         if val == arene.MULTIPLIE:
             return Dir
+    for Dir, val in points.items():
         if val == arene.PROTECTION:
             return Dir
+    for Dir, val in points.items():
         if val == arene.AJOUTE:
             return Dir
-
     return max(points, key=points.get)
                                                                                                                                                                                                                     
 def mon_IA_bete(num_joueur:int, la_partie:dict)->str:
@@ -261,7 +263,6 @@ def mon_IA_bete(num_joueur:int, la_partie:dict)->str:
     dir_pos=arene.directions_possibles(partie.get_arene(la_partie),num_joueur)
     if dir_pos=='':
         direction=random.choice('NOSE')
-        print("random")
     else:
         direction=random.choice(dir_pos)
     return direction

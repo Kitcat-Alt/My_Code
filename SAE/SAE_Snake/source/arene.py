@@ -175,8 +175,7 @@ def get_val_boite(arene:dict,lig:int,col:int)->int:
 
     Returns:
         int: valeur de la boite qui se trouve sur la case lig,col de l'arene
-    """
-    #print(matrice.get_val(arene["matrice"],lig,col))    
+    """    
     return case.get_val_boite(matrice.get_val(arene["matrice"],lig,col))
 
 def get_proprietaire(arene:dict, lig:int, col:int)->int:
