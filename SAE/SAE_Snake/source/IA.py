@@ -201,10 +201,8 @@ def mon_IA(num_joueur:int, la_partie:dict)->str:
     arene = partie.get_arene(la_partie)
     meilleur_dir = meilleure_direction(arene, num_joueur)
     print()
-
     if meilleur_dir is None:
         meilleur_dir=random.choice("NSEO")
-
     return meilleur_dir
  
 
@@ -214,29 +212,29 @@ def meilleure_direction(l_arene:dict,num_joueur:int):
     ligne = position_joueur[0]
     col = position_joueur[1]
     directions = directions_possibles(l_arene,num_joueur)
-    points = {}
+    points = dict()
     for direction in directions:
         if direction == "N":
-            points["N"] = [arene.get_val_boite(l_arene, ligne - 1, col),(ligne -1 ,col)]
+            points["N"] = arene.get_val_boite(l_arene, ligne - 1, col),(ligne -1 ,col)
         if direction == "S":
-            points["S"] = [arene.get_val_boite(l_arene, ligne + 1, col),(ligne + 1,col)]
+            points["S"] = arene.get_val_boite(l_arene, ligne + 1, col),(ligne + 1,col)
         if direction == "E":
-            points["E"] = [arene.get_val_boite(l_arene, ligne, col + 1),(ligne,col + 1)]
+            points["E"] = arene.get_val_boite(l_arene, ligne, col + 1),(ligne,col + 1)
         if direction == "O":
-            points["O"] = [arene.get_val_boite(l_arene, ligne, col - 1),(ligne,col - 1)]
+            points["O"] = arene.get_val_boite(l_arene, ligne, col - 1),(ligne,col - 1)
     
     #pas de directions possibles donc marche arrière
     if points == dict():
         return going_back(arene.get_derniere_direction(l_arene,num_joueur))
     
     for Dir, val in points.items():
-        if val[0] == arene.MULTIPLIE and not est_impasse(l_arene,val[1][0],val[1][1],num_joueur,Dir):
+        if val[0] == arene.MULTIPLIE and not est_impasse(l_arene,ligne,col,num_joueur,Dir):
             return Dir
     for Dir, val in points.items():
-        if val[0] == arene.PROTECTION and not est_impasse(l_arene,val[1][0],val[1][1],num_joueur,Dir):
+        if val[0] == arene.PROTECTION and not est_impasse(l_arene,ligne,col,num_joueur,Dir):
             return Dir
     for Dir, val in points.items():
-        if val[0] == arene.AJOUTE and not est_impasse(l_arene,val[1][0],val[1][1],num_joueur,Dir):
+        if val[0] == arene.AJOUTE and not est_impasse(l_arene,ligne,col,num_joueur,Dir):
             return Dir
         
     return max(points, key=points.get)

@@ -69,3 +69,40 @@ def test_to_str():
     #assert serpent.to_str({"nom_joueur": "", "num_joueur": 3, "points": 5, "positions": [[0,0], [1,2], [3,2]], "tps_s": 0, "tps_m": 0, "tps_p": 0, "direction": "N" }) == " -> 5 s:0 m:0 p:0"
     assert serpent.to_str({"nom_joueur": "Kit", "num_joueur": 2, "points": 5, "positions": [[5,2], [6,2], [7,2]], "tps_s": 5, "tps_m": 0, "tps_p": 0, "direction": "E" }) == "Kit -> 5 s:0 m:11 p:0"
     assert serpent.to_str({"nom_joueur": "cat", "num_joueur": 1, "points": 5, "positions": [[5,2], [6,2], [7,2]], "tps_s": 0, "tps_m": 0, "tps_p": 10, "direction": "O" }) == "cat -> 5 s:10 m:11 p:0"
+
+
+
+def fabrique_calque(l_arene, num_joueur):
+    calque = arene.copy_arene(l_arene)
+    distance = 1 
+    lig,col = arene.get_serpent(l_arene, num_joueur)[0]
+    possibilities = directions_possibles(calque, num_joueur)
+    new_possibilities = set()
+    while len(possibilities.difference(seen_case)) != 0:
+        for pos in possibilities:
+            if pos not in seen_case:
+                if pos == "N":
+                    if not arene.est_mur(l_arene, lig-1, col):
+                        matrice.set_val(calque, lig-1, col, distance)
+                if pos == "S":
+                    if not arene.est_mur(l_arene, lig+1, col):
+                        matrice.set_val(calque, lig+1, col, distance)
+                if pos == "E":
+                    if not arene.est_mur(l_arene, lig, col+1):
+                        matrice.set_val(calque, lig, col+1, distance)
+                if pos == "O":
+                    if not arene.est_mur(l_arene, lig, col-1):
+                        matrice.set_val(calque, lig, col-1, distance)
+
+                for possible in voisins(le_plateau,pos):
+                    new_possibilities.add(possible)
+
+            seen_case.add(pos)
+
+        distance += 1
+        possibilities = new_possibilities
+        new_possibilities = set()
+
+    matrice.set_val(calque,lig,col,0)
+    print(calque)
+    return calque
