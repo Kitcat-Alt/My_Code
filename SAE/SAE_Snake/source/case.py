@@ -31,7 +31,7 @@ def est_mur(case:dict)->bool:
 
     Returns:
         bool: True si la case est un mur False sinon
-    """    
+    """ 
     return case["mur"]
 
 def compare(case1:dict, case2:dict)->int:

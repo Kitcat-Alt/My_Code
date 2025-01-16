@@ -201,9 +201,39 @@ def voisins(le_plateau, position):
     return ens_pos
 #print(voisins(le_plateau,(4,3)))
 
+#def fabrique_le_calque(le_plateau, position_depart):
+#    """fabrique le calque d'un labyrinthe en utilisation le principe de l'inondation :
+#       
+#    Args:
+#        le_plateau (plateau): un plateau de jeu
+#        position_depart (tuple): un tuple de deux entiers de la forme (no_ligne, no_colonne) 
+#
+#    Returns:
+#        matrice: une matrice qui a la taille du plateau dont la case qui se trouve à la
+#       position_de_depart est à 0 les autres cases contiennent la longueur du
+#       plus court chemin pour y arriver (les murs et les cases innaccessibles sont à None)
+#    """
+#    longueur_max = mat.get_nb_lignes(le_plateau) + mat.get_nb_colonnes(le_plateau)
+#    i2 = 0
+#    count_pos = 0
+#    ens_pos = voisins(le_plateau, position_depart)
+#    while i2 <= longueur_max:
+#        for position in ens_pos:
+#            if get(le_plateau, position)!= COULOIR:
+#                mat.set_val(le_plateau, position[0], position[1], None)
+#            else:
+#                mat.set_val(le_plateau, position[0], position[1], i2+1)
+#        ens_pos = (voisins(le_plateau, position))
+#        if len(ens_pos) >= 2:
+#            ens_pos.add(voisins(le_plateau, position))
+#
+#        i2 += 1
+#    return le_plateau
+#print(fabrique_le_calque(le_plateau, (0,0)))
+
 def fabrique_le_calque(le_plateau, position_depart):
     """fabrique le calque d'un labyrinthe en utilisation le principe de l'inondation :
-       
+       get(le_plateau,pos) == MUR
     Args:
         le_plateau (plateau): un plateau de jeu
         position_depart (tuple): un tuple de deux entiers de la forme (no_ligne, no_colonne) 
@@ -213,23 +243,29 @@ def fabrique_le_calque(le_plateau, position_depart):
        position_de_depart est à 0 les autres cases contiennent la longueur du
        plus court chemin pour y arriver (les murs et les cases innaccessibles sont à None)
     """
-    longueur_max = mat.get_nb_lignes(le_plateau) + mat.get_nb_colonnes(le_plateau)
-    i2 = 0
-    count_pos = 0
-    ens_pos = voisins(le_plateau, position_depart)
-    while i2 <= longueur_max:
-        for position in ens_pos:
-            if get(le_plateau, position)!= COULOIR:
-                mat.set_val(le_plateau, position[0], position[1], None)
-            else:
-                mat.set_val(le_plateau, position[0], position[1], i2+1)
-        ens_pos = (voisins(le_plateau, position))
-        if len(ens_pos) >= 2:
-            ens_pos.add(voisins(le_plateau, position))
+    calque = matrice.new_matrice(matrice.get_nb_lignes(le_plateau),matrice.get_nb_colonnes(le_plateau),None)
+    distance = 1
+    possibilities = voisins(calque,position_depart)
+    new_possibilities = set()
+    seen_case = set(position_depart)
 
-        i2 += 1
-    return le_plateau
-print(fabrique_le_calque(le_plateau, (0,0)))
+    while len(possibilities.difference(seen_case)) != 0:
+        for pos in possibilities:
+            if pos not in seen_case:
+                if not est_un_mur(le_plateau,pos):
+                    matrice.set_val(calque,pos[0],pos[1],distance)
+
+                for possible in voisins(le_plateau,pos):
+                    new_possibilities.add(possible)
+
+            seen_case.add(pos)
+
+        distance += 1
+        possibilities = new_possibilities
+        new_possibilities = set()
+
+    matrice.set_val(calque,position_depart[0],position_depart[1],0)
+    return calque
         
 
 
@@ -246,8 +282,27 @@ def fabrique_chemin(le_plateau, position_depart, position_arrivee):
         list: Une liste de positions entre position_arrivee et position_depart
         qui représente un plus court chemin entre les deux positions
     """
-    ...
+    calque = fabrique_le_calque(le_plateau,position_depart)
 
+    chemin = [position_arrivee]
+    cpt = matrice.get_val(calque,position_arrivee[0],position_arrivee[1])
+
+    if cpt == None:
+        return None
+    pos = position_arrivee
+
+    while cpt > 1:
+        vois = voisins(le_plateau,pos)
+        trouve = False
+
+        for case in vois:
+            if matrice.get_val(calque,case[0],case[1]) == cpt -1:
+                if not trouve:
+                    chemin.append(case)
+                    pos = case
+                    trouve = True
+        cpt -= 1
+    return chemin
 
 def deplace_fantome(le_plateau, fantome, personnage):
     """déplace le FANTOME sur le plateau vers le personnage en prenant le chemin le plus court

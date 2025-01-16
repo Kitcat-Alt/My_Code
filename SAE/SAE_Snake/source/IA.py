@@ -80,38 +80,29 @@ def direction_possibles_coords(l_arene: dict,ligne: int,col: int,num_joueur: int
             pouvant être prise par le joueur. Attention il est possible
             qu'aucune direction ne soit possible donc la fonction peut retourner la chaine vide
     """ 
-    # copier l_arene
+    res=''
+    mat=l_arene["matrice"]
+    nb_lig=matrice.get_nb_lignes(mat)
+    nb_col=matrice.get_nb_colonnes(mat)
     copy_arena = arene.copy_arene(l_arene)
-    nb_ligne,nb_col = arene.get_dim(copy_arena) 
 
-    # position tête du serpent du joueur (1ère position)
     player_head_ligne,player_head_col = arene.get_serpent(copy_arena,num_joueur)[0]
-    # valeur de la tête du joueur
-    player_head_val = arene.get_val_boite(copy_arena,player_head_ligne,player_head_col)
-    last_dir = arene.get_derniere_direction(copy_arena,num_joueur)
+    player_head_val = arene.get_val_boite(l_arene,player_head_ligne,player_head_col)
 
-    directions = ["N","O","S","E"]
-    possible_dir = ""
-
-    for dir in directions:
-        next_pos_ligne,next_pos_col = get_next_pos(ligne,col,dir)
-        next_case_val = arene.get_val_boite(copy_arena,next_pos_ligne,next_pos_col)
-        possible = True
-        
-        if next_pos_ligne < 0 or next_pos_ligne >= nb_ligne or next_pos_col <0 or next_pos_col >= nb_col:
-            possible = False
-        elif arene.est_mur(copy_arena,next_pos_ligne,next_pos_col):
-            possible = False
-        elif case.contient_boite(next_case_val) and player_head_val < next_case_val:
-            possible = False
-
-        if possible:
-            if going_back(last_dir) != dir:
-                possible_dir += dir
-
-        
-
-    return possible_dir
+    for dir in 'NOSE':
+        delta_lig,delta_col=DIRECTIONS[dir]
+        lig_arr=ligne+delta_lig
+        col_arr=col+delta_col
+        if lig_arr<0 or lig_arr>=nb_lig or col_arr<0 or col_arr>=nb_col:
+            continue
+        if case.est_mur(matrice.get_val(mat,lig_arr,col_arr)):
+            continue
+        if case.get_proprietaire(matrice.get_val(mat,lig_arr,col_arr))==num_joueur:
+            continue
+        if player_head_val < case.get_val_boite (matrice.get_val(mat,lig_arr,col_arr)):
+            continue
+        res+=dir
+    return res
 
 def directions_possibles(l_arene:dict,num_joueur:int)->str:
     res=''
@@ -139,63 +130,63 @@ def directions_possibles(l_arene:dict,num_joueur:int)->str:
         res+=dir
     return res
 
-#def objets_voisinage(l_arene:dict, num_joueur, dist_max:int):
-#    """Retourne un dictionnaire indiquant pour chaque direction possibles, 
-#        les objets ou boites pouvant être mangés par le serpent du joueur et
-#        se trouvant dans voisinage de la tête du serpent 
-#
-#    Args:
-#        l_arene (dict): l'arène considérée
-#        num_joueur (int): le numéro du joueur considéré
-#        dist_max (int): le nombre de cases maximum qu'on s'autorise à partir du point de départ
-#    Returns:
-#        dict: un dictionnaire dont les clés sont des directions  et les valeurs une liste de triplets
-#            (distance,val_objet,prop) où distance indique le nombre de cases jusqu'à l'objet et id_objet
-#            val_obj indique la valeur de l'objet ou de la boite et prop indique le propriétaire de la boite
-#    """
-#    chemins_dico = {}
-#    tout_les_chemins = {}
-#    cle_actuelle = ""
-#    dist_actuelle = 1
-#    position_joueur = arene.get_serpent(l_arene,num_joueur)[0]
-#    directions_possible = directions_possibles(l_arene,num_joueur)
-#    while len(chemins_dico) < len(directions_possible) and not chemins_complets(chemins_dico, dist_max):
-#        directions_possibles_actuelles = directions_possibles(l_arene,num_joueur)
-#        for direction in directions_possibles_actuelles:
-#            if len(cle_actuelle) == dist_max:
-#                chemins_dico[cle_actuelle] = 0
-#            else:
-#                cle_actuelle = cle_actuelle + direction
-#    
-#    while len(chemins_dico) <= dist_max:
-#        for direction in directions_possible:
-#            cle_actuelle = cle_actuelle + direction
-#            if arene.est_bonus(l_arene, position_joueur[0], position_joueur[1]):
-#                chemins_dico[cle_actuelle] = arene.get_val_boite(l_arene, position_joueur[0], position_joueur[1])
-#            if arene.get_val_boite(l_arene, position_joueur[0], position_joueur[1]) != 0:
-#                chemins_dico[cle_actuelle] = arene.get_val_boite(l_arene, position_joueur[0], position_joueur[1])
-        
-                
-                
-                
-            
-    #return objets_voisinage(arene:dict, num_joueur, dist_max:int)
-     
-def objets_voisinage_2(l_arene:dict, num_joueur, dist_max:int):
-    """Retourne un dictionnaire indiquant pour chaque direction possibles, 
-        les objets ou boites pouvant être mangés par le serpent du joueur et
-        se trouvant dans voisinage de la tête du serpent 
+def est_impasse(l_arene:dict,ligne:int,col:int,num_joueur:int,dir:str):
+    
+    next_ligne,next_col = get_next_pos(ligne,col,dir)
+    next_possibilities = direction_possibles_coords(l_arene,next_ligne,next_col,num_joueur)
 
-        Args:
-            l_arene (dict): l'arène considérée
-            num_joueur (int): le numéro du joueur considéré
-            dist_max (int): le nombre de cases maximum qu'on s'autorise à partir du point de départ
-        Returns:
-            dict: un dictionnaire dont les clés sont des directions  et les valeurs une liste de triplets
-                (distance,val_objet,prop) où distance indique le nombre de cases jusqu'à l'objet et id_objet
-                val_obj indique la valeur de l'objet ou de la boite et prop indique le propriétaire de la boite
-        """
-    pass
+    if len(next_possibilities) > 1:
+        return False
+    
+    if len(next_possibilities) == 0:
+        return True
+    
+    while len(next_possibilities) == 1:
+        next_ligne,next_col = get_next_pos(next_ligne,next_col,next_possibilities[0])
+        next_possibilities = direction_possibles_coords(l_arene,next_ligne,next_col,num_joueur)
+
+        if len(next_possibilities) > 1:
+            return False
+    
+        if len(next_possibilities) == 0:
+            return True
+
+    return True
+
+def fabrique_calque(l_arene, num_joueur):
+    calque = arene.copy_arene(l_arene)
+    distance = 1 
+    lig,col = arene.get_serpent(l_arene, num_joueur)[0]
+    possibilities = directions_possibles(calque, num_joueur)
+    new_possibilities = set()
+    while len(possibilities.difference(seen_case)) != 0:
+        for pos in possibilities:
+            if pos not in seen_case:
+                if pos == "N":
+                    if not arene.est_mur(l_arene, lig-1, col):
+                        matrice.set_val(calque, lig-1, col, distance)
+                if pos == "S":
+                    if not arene.est_mur(l_arene, lig+1, col):
+                        matrice.set_val(calque, lig+1, col, distance)
+                if pos == "E":
+                    if not arene.est_mur(l_arene, lig, col+1):
+                        matrice.set_val(calque, lig, col+1, distance)
+                if pos == "O":
+                    if not arene.est_mur(l_arene, lig, col-1):
+                        matrice.set_val(calque, lig, col-1, distance)
+
+                for possible in voisins(le_plateau,pos):
+                    new_possibilities.add(possible)
+
+            seen_case.add(pos)
+
+        distance += 1
+        possibilities = new_possibilities
+        new_possibilities = set()
+
+    matrice.set_val(calque,lig,col,0)
+    print(calque)
+    return calque
 
 def mon_IA(num_joueur:int, la_partie:dict)->str:
     """Fonction qui va prendre la decision du prochain coup pour le joueur de numéro ma_couleur
@@ -212,8 +203,8 @@ def mon_IA(num_joueur:int, la_partie:dict)->str:
     print()
 
     if meilleur_dir is None:
-
         meilleur_dir=random.choice("NSEO")
+
     return meilleur_dir
  
 
@@ -226,26 +217,28 @@ def meilleure_direction(l_arene:dict,num_joueur:int):
     points = {}
     for direction in directions:
         if direction == "N":
-            points["N"] = arene.get_val_boite(l_arene, ligne - 1, col)
+            points["N"] = [arene.get_val_boite(l_arene, ligne - 1, col),(ligne -1 ,col)]
         if direction == "S":
-            points["S"] = arene.get_val_boite(l_arene, ligne +1, col)
+            points["S"] = [arene.get_val_boite(l_arene, ligne + 1, col),(ligne + 1,col)]
         if direction == "E":
-            points["E"] = arene.get_val_boite(l_arene, ligne, col + 1)
+            points["E"] = [arene.get_val_boite(l_arene, ligne, col + 1),(ligne,col + 1)]
         if direction == "O":
-            points["O"] = arene.get_val_boite(l_arene, ligne, col - 1)
+            points["O"] = [arene.get_val_boite(l_arene, ligne, col - 1),(ligne,col - 1)]
     
+    #pas de directions possibles donc marche arrière
     if points == dict():
-        return arene.get_derniere_direction(l_arene,num_joueur)
+        return going_back(arene.get_derniere_direction(l_arene,num_joueur))
     
     for Dir, val in points.items():
-        if val == arene.MULTIPLIE:
+        if val[0] == arene.MULTIPLIE and not est_impasse(l_arene,val[1][0],val[1][1],num_joueur,Dir):
             return Dir
     for Dir, val in points.items():
-        if val == arene.PROTECTION:
+        if val[0] == arene.PROTECTION and not est_impasse(l_arene,val[1][0],val[1][1],num_joueur,Dir):
             return Dir
     for Dir, val in points.items():
-        if val == arene.AJOUTE:
+        if val[0] == arene.AJOUTE and not est_impasse(l_arene,val[1][0],val[1][1],num_joueur,Dir):
             return Dir
+        
     return max(points, key=points.get)
                                                                                                                                                                                                                     
 def mon_IA_bete(num_joueur:int, la_partie:dict)->str:
