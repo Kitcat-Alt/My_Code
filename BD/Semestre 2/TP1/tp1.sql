@@ -7,6 +7,8 @@
 -- Ecrire une requête qui renvoie les informations suivantes:
 --  Donner la liste des panels dont fait partie Caroline BOURIER.
 
+
+
 -- Voici le début de ce que vous devez obtenir.
 -- ATTENTION à l'ordre des colonnes et leur nom!
 -- +-----------------+
