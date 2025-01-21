@@ -1,27 +1,36 @@
 public class Vaisseau{
-    public Vaisseau(String nom, int puissance, int passage){
-        
+    private String nom;
+    private int puissance;
+    private int passagers;
+
+    public Vaisseau(String nom, int puissance, int passagers){
+        this.nom = nom;
+        this.puissance = puissance;
+        this.passagers = passagers;
     }
 
     public Vaisseau(String nom, int puissance){
-
+        this.passagers = 0;
+        this.puissance = puissance;
+        this.nom = nom;
     }
 
     public String getNom(){
-        return "";
+        return this.nom;
     }
 
 
     public int getNombrePassagers(){
-        return 0;
+        return this.passagers;
     }
 
     public int getPuissance(){
-        return 0;
+        return this.puissance;
     }
 
     public boolean transportePassagers(){
-        return false;
+        return this.passagers > 0;
+
     }
 
 }
