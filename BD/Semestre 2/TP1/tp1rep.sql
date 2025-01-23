@@ -67,4 +67,14 @@ where numsond in (select numsond from SONDE s where s.numsond = r.numsond and no
 --2
 select nompan
 from SONDE natural join PANEL natural join CARACTERISTIQUE natural join TRANCHE
-where valdebut = 70 and valfin = 120;
+where idtr = 6;
+
+
+--3
+select distinct nomsond, prenomsond
+from SONDE natural join CARACTERISTIQUE natural join CATEGORIE natural join TRANCHE
+where intituleCat = "Ouvriers" and idtr = 6;
+
+select distinct nomsond, prenomsond
+from SONDE 
+where EXISTS (select intituleCat from CATEGORIE natural join TRANCHE where intituleCat = "Ouvriers" and idtr = 6);

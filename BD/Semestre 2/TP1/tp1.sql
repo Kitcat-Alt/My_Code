@@ -1,11 +1,12 @@
 -- TP 1
--- Nom:  , Prenom: 
+-- Nom: Foucher , Prenom: Mattéo
 
 -- +------------------+--
 -- * Question 1 :     --
 -- +------------------+--
 -- Ecrire une requête qui renvoie les informations suivantes:
 --  Donner la liste des panels dont fait partie Caroline BOURIER.
+
 
 
 
@@ -18,6 +19,17 @@
 -- +-----------------+
 -- = Reponse question 1.
 
+select nompan
+from SONDE natural join PANEL natural join CONSTITUER
+where nomsond = 'BOURIER';
+
+select nompan 
+from PANEL natural join CONSTITUER r
+where EXISTS (select numsond from SONDE s where s.numsond = r.numsond and nomsond = 'BOURIER');
+
+select nompan 
+from PANEL natural join CONSTITUER r
+where numsond in (select numsond from SONDE s where s.numsond = r.numsond and nomsond = 'BOURIER');
 
 
 -- +------------------+--
@@ -36,6 +48,9 @@
 -- +-----------------+
 -- = Reponse question 2.
 
+select nompan
+from SONDE natural join PANEL natural join CARACTERISTIQUE natural join TRANCHE
+where idtr = 6;
 
 
 -- +------------------+--
@@ -57,6 +72,17 @@
 -- | etc...
 -- = Reponse question 3.
 
+select distinct nomsond, prenomsond
+from SONDE natural join CARACTERISTIQUE natural join CATEGORIE natural join TRANCHE
+where intituleCat = "Ouvriers" and idtr = 6;
+
+select distinct nomsond, prenomsond
+from SONDE natural join CARACTERISTIQUE
+where nomsond in (select nomsond from TRANCHE natural join CARACTERISTIQUE natural join CATEGORIE natural join SONDE where intituleCat = "Ouvriers" and idtr = 6);
+
+--select distinct nomsond, prenomsond
+--from SONDE natural join CARACTERISTIQUE
+--where EXISTS (select nomsond from TRANCHE natural join CARACTERISTIQUE natural join CATEGORIE natural join SONDE where intituleCat = "Ouvriers" and idtr = 6);
 
 
 -- +------------------+--
@@ -75,6 +101,13 @@
 -- +-----------+------------+
 -- = Reponse question 4.
 
+select nomsond, prenomsond
+from SONDE natural join CARACTERISTIQUE natural join CATEGORIE
+where prenomsond = "Olivier" and intituleCat = "Ouvriers";
+
+select nomsond, prenomsond
+from SONDE natural join CARACTERISTIQUE natural join CATEGORIE
+where prenomSond in (select prenomSond from SONDE natural join CARACTERISTIQUE natural join CATEGORIE where prenomsond = "Olivier" and intituleCat = "Ouvriers");
 
 
 -- +------------------+--
