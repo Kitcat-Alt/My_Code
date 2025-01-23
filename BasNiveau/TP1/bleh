@@ -1,0 +1,55 @@
+.main
+BIPUSH 6
+BIPUSH 7
+IADD
+.end-main
+
+Exo 8
+.main
+.var
+a
+b
+c
+d
+e
+f
+g
+h
+.end-var
+BIPUSH 1
+ISTORE a
+BIPUSH 2
+ISTORE b
+BIPUSH 3
+ISTORE c
+BIPUSH 4
+ISTORE d
+BIPUSH 5
+ISTORE e
+BIPUSH 6
+ISTORE f
+BIPUSH 7
+ISTORE g
+BIPUSH 8
+ISTORE h
+.end-main
+
+Exo 9
+b) 
+.main
+.var
+i
+k
+aux
+.end-var
+BIPUSH 1
+ISTORE i
+BIPUSH 2 
+ISTORE k
+ILOAD i
+ISTORE aux
+ILOAD k
+ISTORE i
+ILOAD aux
+ISTORE k
+.end-main
