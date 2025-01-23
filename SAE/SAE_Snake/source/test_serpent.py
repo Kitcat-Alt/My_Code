@@ -73,6 +73,17 @@ def test_to_str():
 
 
 def fabrique_calque(l_arene, num_joueur):
+    """Fonction qui réalise l'innondation d'une arène par rapport à la 
+       position du joueur. 
+
+
+    Args:
+        l_arene (dict): l'arène considérée
+        num_joueur (int): le joueur considéré
+
+    Returns:
+        dict: le calque de l'arène
+    """
     calque = arene.copy_arene(l_arene)
     distance = 1 
     lig,col = arene.get_serpent(l_arene, num_joueur)[0]
