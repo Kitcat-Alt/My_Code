@@ -1,0 +1,112 @@
+Main1: PC=PC+1; fetch; goto(MBR)
+(0x00)nop1:; goto Main1
+(0x60)iadd1: MAR=SP=SP-1; rd
+H=TOS
+MDR=TOS=MDR+H; wr; goto Main1
+(0x64)isub1: MAR=SP=SP-1; rd
+H=TOS
+MDR=TOS=MDR-H; wr; goto Main1
+(0x7E)iand1: MAR=SP=SP-1; rd
+H=TOS
+MDR=TOS=MDR AND H; wr; goto Main1
+(0x80)ior1:MAR=SP=SP-1; rd
+H=TOS
+MDR=TOS=MDR OR H; wr; goto Main1
+(0x59)dup1: MAR = SP = SP+1
+MDR=TOS;wr;goto Main1
+(0x57)pop1: MAR=SP=SP-1; rd;
+
+TOS=MDR;goto Main1
+(0x5F)swap1: MAR=SP-1; rd;
+MAR=SP
+H=MDR;wr
+MDR=TOS
+MAR=SP-1; wr
+TOS=H; goto Main1
+(0x10)bipush1: SP=MAR=SP+1;
+PC=PC+1; fetch
+MDR=TOS=MBR; wr; goto Main1;
+(0x15)iload1:H=LV;
+MAR=MBRU+H;rd;
+iload3: MAR=SP=SP+1;
+PC=PC+1; fetch; wr;
+TOS=MDR; goto Main1
+(0x36)istore1: H=LV
+MAR=MBRU+H
+istore3: MDR=TOS;wr;
+SP=MAR=SP-1;rd
+PC=PC+1;fetch
+TOS=MDR; goto Main1
+(0xC4)wide1: PC=PC+1; fetch; goto(MBR or 0x100)
+(0x115)wideiload1: PC=PC+1; fetch;
+H=MBRU <<8
+H=MBRU OR H
+MAR=LV + H; rd; goto iload3
+(0x136)wideistore1: PC=PC+1; fetch
+H=MBRU <<8
+H=MBRU OR H
+MAR=LV+H; goto istore3
+(0x13)ldcw1: PC=PC+1; fetch;
+H=MBRU <<8
+H=MBRU OR H
+MAR=H+CPP; rd; goto iload3
+(0x84)iinc1: H=LV
+MAR=MBRU+H; rd
+PC=PC+1; fetch
+H=MDR
+PC=PC+1; fetch
+MDR=MBR+H; wr; goto Main1
+(0xA7)goto1:OPC=PC-1
+goto2: PC=PC+1; fetch;
+H=MBR <<8
+H=MBRU OR H
+PC=OPC+H; fetch
+goto Main1
+(0x9B)iflt1: MAR=SP=SP-1; rd;
+OPC=TOS
+TOS=MDR
+N=OPC; if(N) goto T; else goto F
+(0x99)ifeq1:MAR=SP=SP-1; rd;
+OPC=TOS
+TOS=MDR
+Z=OPC; if(Z) goto T; else goto F
+(0x9F)ifcmpeq1: MAR=SP=SP-1; rd
+MAR=SP=SP-1
+H=MDR;rd
+OPC=TOS
+TOS=MDR
+Z=OPC-H; if(Z) goto T; else goto F
+T:OPC=PC-1;fetch; goto goto2
+F:PC=PC+1
+PC=PC+1; fetch;
+goto Main1
+(0xB6)invokevirtual1:PC=PC+1; fetch
+H=MBRU <<8
+H = MBRU OR H
+MAR=CPP + H; rd
+OPC = PC+1
+PC=MDR; fetch
+PC=PC+1; fetch
+H = MBRU <<8
+H = MBRU OR H
+PC=PC+1; fetch
+TOS=SP-H
+TOS=MAR=TOS+1
+PC=PC+1; fetch
+H = MBRU <<8
+H = MBRU OR H
+MDR = SP + H +1; wr
+MAR=SP=MDR
+MDR = OPC; wr
+MAR = SP = SP+1
+MDR = LV; wr
+PC=PC+1; fetch
+LV=TOS; goto Main1
+(0xAC)ireturn1:MAR=SP=LV; rd
+//aspetta che finisca la lettura
+LV=MAR=MDR; rd
+MAR=LV+1
+PC=MDR;rd;fetch
+MAR=SP
+LV=MDR
+MDR=TOS; wr; goto Main1
