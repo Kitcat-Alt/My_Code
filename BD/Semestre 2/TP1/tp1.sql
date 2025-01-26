@@ -77,12 +77,8 @@ from SONDE natural join CARACTERISTIQUE natural join CATEGORIE natural join TRAN
 where intituleCat = "Ouvriers" and idtr = 6;
 
 select distinct nomsond, prenomsond
-from SONDE natural join CARACTERISTIQUE
-where nomsond in (select nomsond from TRANCHE natural join CARACTERISTIQUE natural join CATEGORIE natural join SONDE where intituleCat = "Ouvriers" and idtr = 6);
-
---select distinct nomsond, prenomsond
---from SONDE natural join CARACTERISTIQUE
---where EXISTS (select nomsond from TRANCHE natural join CARACTERISTIQUE natural join CATEGORIE natural join SONDE where intituleCat = "Ouvriers" and idtr = 6);
+from SONDE natural join CARACTERISTIQUE natural join CATEGORIE natural join TRANCHE
+where (nomsond, prenomsond) in (select nomsond, prenomsond from CATEGORIE natural join SONDE natural join CARACTERISTIQUE where intituleCat = "Ouvriers") and idtr = 6;
 
 
 -- +------------------+--
@@ -107,7 +103,11 @@ where prenomsond = "Olivier" and intituleCat = "Ouvriers";
 
 select nomsond, prenomsond
 from SONDE natural join CARACTERISTIQUE natural join CATEGORIE
-where prenomSond in (select prenomSond from SONDE natural join CARACTERISTIQUE natural join CATEGORIE where prenomsond = "Olivier" and intituleCat = "Ouvriers");
+where (nomsond,prenomSond) in (select nomsond, prenomsond from SONDE where prenomsond = "Olivier") and intituleCat = "Ouvriers";
+
+select nomsond, prenomsond
+from SONDE s natural join CARACTERISTIQUE natural join CATEGORIE
+where EXISTS (select nomsond, prenomsond from SONDE where prenomsond = "Olivier" and s.prenomsond = prenomsond and s.nomsond = nomsond) and intituleCat = "Ouvriers";
 
 
 -- +------------------+--
@@ -125,7 +125,13 @@ where prenomSond in (select prenomSond from SONDE natural join CARACTERISTIQUE n
 -- +----------+--------+
 -- = Reponse question 5.
 
+select distinct valDebut, valFin 
+from TRANCHE natural join SONDE natural join CARACTERISTIQUE 
+where sexe='F' and month(dateNaisSond) = '04' and day(dateNaisSond) = '25';
 
+select distinct valDebut, valFin 
+from TRANCHE natural join SONDE natural join CARACTERISTIQUE 
+where (valDebut, valFin) in (select valDebut, valFin from TRANCHE natural join SONDE natural join CARACTERISTIQUE where sexe='F' and month(dateNaisSond) = '04' and day(dateNaisSond) = '25');
 
 -- +------------------+--
 -- * Question 6 :     --
