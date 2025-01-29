@@ -70,7 +70,12 @@ ORDER BY prenomsond;
 -- +-----------------+
 -- = Reponse question 3.
 
-
+select nomPan
+from PANEL natural join CONSTITUER natural join SONDE 
+except
+select nomPan
+from PANEL natural join CONSTITUER natural join SONDE 
+where DATEDIFF(CURDATE(), dateNaisSond)/365 > 60; 
 
 -- +------------------+--
 -- * Question 4 :     --
@@ -91,7 +96,9 @@ ORDER BY prenomsond;
 -- +-------------------------------------------------+
 -- = Reponse question 4.
 
-
+select distinct intituleCat
+from CATEGORIE natural join CARACTERISTIQUE natural join SONDE
+where YEAR(dateNaisSond) = 1979;
 
 -- +------------------+--
 -- * Question 5 :     --
@@ -110,6 +117,9 @@ ORDER BY prenomsond;
 -- +------------+------------+
 -- = Reponse question 5.
 
+select nomsond, prenomsond
+from SONDE natural join CONSTITUER natural join PANEL p1
+where (nomsond, prenomsond) in (select nomsond, prenomsond from PANEL p2 natural join SONDE natural join CONSTITUER where YEAR(dateNaisSond) = 2001 and p1.nomPan = "France global 1" and p2.nomPan = "France global 2");
 
 
 -- +------------------+--
@@ -126,3 +136,15 @@ ORDER BY prenomsond;
 -- | DASA    | Maxime     | PEKARDAC | Bilal      |
 -- +---------+------------+----------+------------+
 -- = Reponse question 6.
+
+select distinct s1.nomsond, s1.prenomsond, s1.dateNaisSond, s2.nomsond, s2.prenomsond, s2.dateNaisSond
+from SONDE natural join SONDE s1 natural join SONDE s2
+where YEAR(dateNaisSond) = 1979 and s1.dateNaisSond = s2.dateNaisSond;
+
+select distinct s1.nomsond, s1.prenomsond, s1.dateNaisSond, s2.nomsond, s2.prenomsond, s2.dateNaisSond
+from SONDE s1, SONDE s2 
+where YEAR(s1.dateNaisSond) = 1979 and (s1.nomsond, s1.prenomsond) in (select s2.nomsond, s2.prenomsond where s1.dateNaisSond = s2.dateNaisSond);
+
+select nomsond, prenomsond
+from SONDE
+where YEAR(dateNaisSond) = 1979 and (nomsond, prenomsond) in (select s1.nomsond, s1.prenomsond from SONDE s1, SONDE s2 where s1.dateNaisSond = s2.dateNaisSond);

@@ -34,4 +34,4 @@ return this.nom +"(force "+ this.force + ")";
 }
 }
 
-//sophie.anglade@univ-orleans.fr
+//sophie.anglade@univ-orleans.fr (le démon en personne)
