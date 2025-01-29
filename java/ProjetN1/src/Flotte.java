@@ -43,4 +43,22 @@ public class Flotte {
     public String getNom(){
         return this.nom;
     }
+
+    public int nombreDeVaisseauxSansPassagers(){
+        int vaisseauxSansPassagers = 0;
+        for(int i=0; i<this.vaisseaux.size(); i++){
+            if (this.vaisseaux.get(i).getNombrePassagers() == 0){
+                vaisseauxSansPassagers++;
+            }
+        }
+        return vaisseauxSansPassagers;
+    }
+
+    public int puissanceDeFeuMax(){
+        int puissanceDeFeuMaxCpt = 0;
+        for(int i=0; i<this.vaisseaux.size(); i++){
+            puissanceDeFeuMaxCpt += this.vaisseaux.get(i).getPuissance();
+        }
+        return puissanceDeFeuMaxCpt;
+    }
 }
