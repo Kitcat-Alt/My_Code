@@ -57,7 +57,9 @@ public class Flotte {
     public int puissanceDeFeuMax(){
         int puissanceDeFeuMaxCpt = 0;
         for(int i=0; i<this.vaisseaux.size(); i++){
-            puissanceDeFeuMaxCpt += this.vaisseaux.get(i).getPuissance();
+            if(puissanceDeFeuMaxCpt <= this.vaisseaux.get(i).getPuissance()){
+                puissanceDeFeuMaxCpt = this.vaisseaux.get(i).getPuissance();
+            }
         }
         return puissanceDeFeuMaxCpt;
     }
