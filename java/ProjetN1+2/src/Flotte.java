@@ -67,6 +67,7 @@ public class Flotte {
     public String nomDuVaisseauLeMoinsPuissant(){
         int puissanceDeFeuMin = this.vaisseaux.get(0).getPuissance();
         String vaisseauLeMoinsPuissant = "";
+
         for(int i=0; i <this.vaisseaux.size(); i++){
             if(puissanceDeFeuMin >= this.vaisseaux.get(i).getPuissance()){
                 puissanceDeFeuMin = this.vaisseaux.get(i).getPuissance();
