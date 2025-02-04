@@ -1,0 +1,91 @@
+Exo1: 
+
+.main
+.var
+i
+.end-var
+BIPUSH -10
+ISTORE i
+ILOAD i
+IFLT L2
+ILOAD i 
+GOTO L3
+L2 : BIPUSH 0
+ILOAD i
+ISUB
+L3 : NOP  
+.end-main
+
+Exo2 : 
+a.
+
+.main
+.var
+n
+cpt
+.end-var
+IINC cpt -12
+IINC n 0
+L1 : ILOAD cpt
+ILOAD n
+ISUB
+IFEQ L2
+IINC n 1
+ILOAD n 
+GOTO L1
+L2: NOP
+.end-main
+
+b.
+
+.constant
+cpt 20
+.end-constant
+.main
+.var
+n
+.end-var
+IINC n 0
+L1 : LDCW cpt 
+ILOAD n
+ISUB
+IFEQ L2
+IINC n 1
+ILOAD n 
+GOTO L1
+L2: NOP
+.end-main
+
+Exo 3
+
+.constant
+cpt 4
+.end-constant
+.main
+.var
+k
+u
+n
+s
+.end-var
+IINC k 2
+IINC n 0
+IINC u 1
+ILOAD u
+L1 : LDCW cpt
+ILOAD n
+ISUB
+IFEQ L2
+ILOAD k
+ILOAD u
+IADD
+ISTORE u
+ILOAD u
+ILOAD s
+IADD
+ISTORE s
+ILOAD u
+IINC n 1
+GOTO L1
+L2: ILOAD s
+.end-main -> pas fini

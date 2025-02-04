@@ -41,7 +41,7 @@ public class ExecutableVaisseau{
     assert 2 == alliance.nombreDeVaisseauxSansPassagers();
     assert 250 == empire.puissanceDeFeuMax();
     assert 175 == alliance.puissanceDeFeuMax();
-    //assert "Chasseur Tie".equals(empire.nomDuVaisseauLeMoinsPuissant());
-    //assert "Corvette".equals(alliance.nomDuVaisseauLeMoinsPuissant());
+    assert "Chasseur Tie".equals(empire.nomDuVaisseauLeMoinsPuissant());
+    assert "Corvette".equals(alliance.nomDuVaisseauLeMoinsPuissant());
   }
 }
