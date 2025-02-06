@@ -14,5 +14,6 @@ public class ExecutableMagasin {
         assert fleurus.getOuvertDimanche() == false;
         assert fleurus.getOuvertLundi() == true;
 
+        
     }    
 }
