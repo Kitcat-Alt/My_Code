@@ -1,5 +1,5 @@
 -- TP 3
--- Nom:  , Prenom: 
+-- Nom: Foucher  , Prenom: Mattéo
 
 -- +------------------+--
 -- * Question 1 :     --
@@ -71,7 +71,9 @@ from SONDE;
 -- | 21     |
 -- +--------+
 -- = Reponse question 4.
-
+select round(min(DATEDIFF(CURDATE(), datenaissond)/365)) as minAge
+from SONDE natural join CARACTERISTIQUE natural join PANEL
+where sexe = 'F' and nomPan = "France global 2";
 
 
 -- +------------------+--
@@ -89,6 +91,9 @@ from SONDE;
 -- +----------+
 -- = Reponse question 5.
 
+select round(avg(DATEDIFF(CURDATE(), datenaissond)/365)) as ageMoyen
+from PANEL natural join SONDE natural join CONSTITUER
+where nomPan = "Moins de 50 ans";
 
 
 -- +------------------+--
@@ -106,7 +111,9 @@ from SONDE;
 -- +---------+------------+
 -- = Reponse question 6.
 
-
+select nomSond, prenomSond
+from SONDE
+where datenaissond >=ALL(select datenaissond from SONDE);
 
 -- +------------------+--
 -- * Question 7 :     --
@@ -125,7 +132,9 @@ from SONDE;
 -- +-----------------+--------+
 -- = Reponse question 7.
 
-
+select nomPan, count(numSond) as nbSond
+from PANEL natural join CONSTITUER natural join SONDE
+group by nomPan;
 
 -- +------------------+--
 -- * Question 8 :     --
@@ -146,6 +155,9 @@ from SONDE;
 -- | etc...
 -- = Reponse question 8.
 
+select intituleCat, round(avg(DATEDIFF(CURDATE(), datenaissond)/365)) as ageMoy
+from SONDE natural join CARACTERISTIQUE natural join CATEGORIE
+group by intituleCat;
 
 
 -- +------------------+--
@@ -167,7 +179,9 @@ from SONDE;
 -- | etc...
 -- = Reponse question 9.
 
-
+select nomPan, intituleCat, round(avg(DATEDIFF(CURDATE(), datenaissond)/365)) as ageMoy
+from PANEL natural join CONSTITUER natural join SONDE natural join CARACTERISTIQUE natural join CATEGORIE
+group by nomPan, intituleCat;
 
 -- +-------------------+--
 -- * Question 10 :     --
@@ -188,7 +202,10 @@ from SONDE;
 -- | etc...
 -- = Reponse question 10.
 
-
+select intituleCat, count(sexe)
+from SONDE natural join CARACTERISTIQUE natural join CATEGORIE
+where sexe = 'F'
+group by intituleCat;
 
 -- +-------------------+--
 -- * Question 11 :     --
@@ -209,6 +226,10 @@ from SONDE;
 -- | etc...
 -- = Reponse question 11.
 
+select prenomSond, count(*) as nbPers
+from SONDE
+group by prenomSond
+having count(*) > 20;
 
 
 -- +-------------------+--
@@ -230,5 +251,8 @@ from SONDE;
 -- +-------------------------------------------------+--------+
 -- = Reponse question 12.
 
-
+select intituleCat, count(*) as nbPers
+from SONDE natural join CARACTERISTIQUE natural join CATEGORIE natural join CONSTITUER natural join PANEL
+where YEAR(datenaissond) = 2001 and nomPan = "France Global 1"
+group by intituleCat;
 
