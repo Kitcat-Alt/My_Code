@@ -89,3 +89,108 @@ IINC n 1
 GOTO L1
 L2: ILOAD s
 .end-main -> pas fini
+
+Exo4
+
+a.
+
+.main
+.var
+i
+j
+res
+.end-var
+IINC i 5
+IINC j 3
+L2: ILOAD j
+IFEQ L1
+ILOAD res
+ILOAD i
+IADD
+ISTORE res
+IINC j -1
+GOTO L2
+L1: ILOAD res
+.end-main
+
+b.
+
+marche pour tout les cas de la multiplication (signe des nombres)
+
+.main
+.var
+i
+j
+res
+.end-var
+IINC i 5
+IINC j -3
+
+ILOAD j
+IFLT L2
+ILOAD i 
+IFLT L4
+GOTO L5
+
+L1: ILOAD j
+IFLT L2
+GOTO L3
+L2: ILOAD res
+ILOAD i
+ISUB
+ISTORE res
+IINC j 1
+GOTO L1
+
+L4: ILOAD i
+ILOAD res
+IADD
+ISTORE res
+IINC j -1
+ILOAD j 
+IFEQ L3
+GOTO L4
+
+L5: ILOAD j
+IFEQ L3
+ILOAD res
+ILOAD i
+IADD
+ISTORE res
+IINC j -1
+GOTO L5
+
+L3 : ILOAD res
+.end-main
+
+Exo 5
+.main
+.var
+i
+j
+k
+.end-var
+BIPUSH 3
+ISTORE k
+BIPUSH 1
+ISTORE i
+BIPUSH 5
+ISTORE j
+L2: ILOAD j
+ILOAD i
+ISUB
+IFLT L1
+ILOAD i
+DUP
+DUP
+IADD
+IADD
+ILOAD k
+DUP
+ISTORE k
+IINC i 1
+GOTO L2
+L1: NOP
+NOP
+NOP
+NOP
