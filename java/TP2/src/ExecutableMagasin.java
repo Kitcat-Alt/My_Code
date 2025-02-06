@@ -15,5 +15,7 @@ public class ExecutableMagasin {
         assert fleurus.getOuvertLundi() == true;
 
         
+
+        
     }    
 }
