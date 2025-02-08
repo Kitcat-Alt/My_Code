@@ -39,11 +39,11 @@ public class Pluviometrie {
      * 
      * @return
      */
-    public Integer quantiteTotale(){
-        Integer totalQuantite = 0;
+    public int quantiteTotale(){
+        int totalQuantite = 0;
         for(int i=0; i<this.precipitations.size(); i++){
             if(this.precipitations.get(i) != null){
-                totalQuantite += this.precipitations.get(i).getPluie(i);
+                totalQuantite += (int) this.precipitations.get(i);
             }
         }
         return totalQuantite;
@@ -54,7 +54,13 @@ public class Pluviometrie {
      * @return
      */
     public int quantiteMax(){
-        return 0;
+        int maxQuantite = 0;
+        for(int i = 0; i<this.precipitations.size(); i++){
+            if(this.precipitations.get(i) != null && this.precipitations.get(i) > maxQuantite){
+                maxQuantite = this.precipitations.get(i);
+            }
+        }
+        return maxQuantite;
     }
 
     /**
@@ -62,6 +68,14 @@ public class Pluviometrie {
      * @return
      */
     public boolean estPluvieuse(){
-        return false;
+        boolean semainePluvieuse = false;
+        for(int i = 0; i<this.precipitations.size()-1; i++){
+            if(this.precipitations.get(i) != null && this.precipitations.get(i+1) != null){
+                if(this.precipitations.get(i) != 0 && this.precipitations.get(i+1) != 0){
+                    return true;
+                }
+            }
+        }
+        return semainePluvieuse;
     }
 }

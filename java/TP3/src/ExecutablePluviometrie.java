@@ -17,5 +17,7 @@ public class ExecutablePluviometrie{
     //true
 
     assert s35.getPluie(0) == 3;
+    assert s35.quantiteMax() == 16;
+    assert s35.estPluvieuse() == true;
     }
 }
