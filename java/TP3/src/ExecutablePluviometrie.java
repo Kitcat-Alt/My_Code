@@ -18,6 +18,20 @@ public class ExecutablePluviometrie{
 
     assert s35.getPluie(0) == 3;
     assert s35.quantiteMax() == 16;
+    assert s35.quantiteTotale() == 22;
     assert s35.estPluvieuse() == true;
+
+    Pluviometrie s36 = new Pluviometrie(2025, 36);
+    s36.setPrecipitation(0, 0);
+    s36.setPrecipitation(1, 8);
+    s36.setPrecipitation(3, 0);
+    s36.setPrecipitation(4, 42);
+    s36.setPrecipitation(5, 0);
+    s36.setPrecipitation(6, 14);
+
+    assert s36.getPluie(4) == 42;
+    assert s36.quantiteMax() == 42;
+    assert s36.quantiteTotale() == 64;
+    assert s36.estPluvieuse() == false;
     }
 }
