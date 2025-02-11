@@ -38,4 +38,8 @@ public class Cave{
         }
         return plusVielle;
     }
+
+    public boolean contient(String region, String appellation, int millesime){
+        return this.cave.contains(new Bouteille(region, appellation, millesime));
+    }
 }
