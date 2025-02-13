@@ -23,8 +23,21 @@ public class Texte {
     public String toMorse(){
         String chaine = "";
         for(int i=0; i<this.ListeLettre.size(); i++){
-            chaine = chaine + this.ListeLettre.get(i).toMorse();
+            if(i+1 == this.ListeLettre.size()){
+                return chaine + this.ListeLettre.get(i).toMorse();
+            }
+            if(this.ListeLettre.get(i).toNumero() == 27){
+                chaine = chaine + this.ListeLettre.get(i).toMorse() + "_______";
+            }
+            else{
+                chaine = chaine + this.ListeLettre.get(i).toMorse() + "___";
+            }
+
         }
         return chaine;
+    }
+
+    public boolean contient(Lettre lettre){
+        return ListeLettre.contains(lettre);
     }
 }  
