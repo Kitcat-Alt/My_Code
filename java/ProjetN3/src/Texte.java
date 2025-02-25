@@ -3,34 +3,34 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Texte {
-    private List<Lettre> ListeLettre;
+    private List<Lettre> listeLettre;
     
     public Texte (String lettre){
-        this.ListeLettre = new ArrayList<>();
+        this.listeLettre = new ArrayList<>();
         for(int i=0; i<lettre.length(); i++){
-            this.ListeLettre.add(new Lettre(lettre.charAt(i)));
+            this.listeLettre.add(new Lettre(lettre.charAt(i)));
         }
     }
 
     public String toString(){
         String chaine = "";
-        for(int i=0; i<this.ListeLettre.size(); i++){
-            chaine = chaine + this.ListeLettre.get(i).toChar();
+        for(int i=0; i<this.listeLettre.size(); i++){
+            chaine = chaine + this.listeLettre.get(i).toChar();
         }
         return chaine;
     }
 
     public String toMorse(){
         String chaine = "";
-        for(int i=0; i<this.ListeLettre.size(); i++){
-            if(i+1 == this.ListeLettre.size()){
-                return chaine + this.ListeLettre.get(i).toMorse();
+        for(int i=0; i<this.listeLettre.size(); i++){
+            if(i+1 == this.listeLettre.size()){
+                return chaine + this.listeLettre.get(i).toMorse();
             }
-            if(this.ListeLettre.get(i).toNumero() == 27){
-                chaine = chaine + this.ListeLettre.get(i).toMorse() + "_______";
+            if(this.listeLettre.get(i).toNumero() == 27){
+                chaine = chaine + this.listeLettre.get(i).toMorse() + "_______";
             }
             else{
-                chaine = chaine + this.ListeLettre.get(i).toMorse() + "___";
+                chaine = chaine + this.listeLettre.get(i).toMorse() + "___";
             }
 
         }
@@ -38,6 +38,18 @@ public class Texte {
     }
 
     public boolean contient(Lettre lettre){
-        return ListeLettre.contains(lettre);
+        return listeLettre.contains(lettre);
+    }
+
+    public static String decode(String texteMorse){
+        String texte = "";
+        for(String motMorse:texteMorse.split("_______")){
+            for(String lettreMorse:motMorse.split("___")){
+                texte += new Lettre(lettreMorse);
+                System.out.println(texte);
+            }
+            texte += " ";
+        }
+        return texte;
     }
 }  

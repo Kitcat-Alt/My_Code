@@ -13,6 +13,8 @@ public class ExecutableMorse {
 
         System.out.println(phrase.toString());
         System.out.println(phrase.toMorse());
-        assert phrase.contient(a);
+
+
+        System.out.println(Texte.decode("===_=_=_=___=_===_______===_=_=_=___=_==="));
     }
 }

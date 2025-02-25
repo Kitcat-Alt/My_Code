@@ -40,5 +40,14 @@ public class Lettre {
         return "";
     }
 
+    @Override
+    public boolean equals(Object objet){
+        if (objet == null) {return false;}
+        if(objet == this) {return true;}
+        if(!(objet instanceof Lettre)) {return false;}
+        Lettre tmp = (Lettre) objet;
+        return tmp.toChar() == this.lettre;
+     }
+
 }
 
