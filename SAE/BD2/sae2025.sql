@@ -20,6 +20,9 @@
 -- | etc...
 -- = Reponse question 127156.
 
+select distinct isbn, titre, nbpages, datepubli, prix
+from LIVRE natural join POSSEDER natural join MAGASIN natural join COMMANDE
+where datecom = DATE('2024-12-1');
 
 
 -- +-----------------------+--
@@ -36,6 +39,9 @@
 -- | etc...
 -- = Reponse question 127202.
 
+select distinct idcli, nomcli, prenomcli, adressecli, codepostal, villecli
+from CLIENT natural join COMMANDE natural join DETAILCOMMANDE natural join LIVRE natural join AUTEUR
+where nomauteur = "René Goscinny" and  YEAR(datecom) = 2021;
 
 
 -- +-----------------------+--
