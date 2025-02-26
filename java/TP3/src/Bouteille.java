@@ -21,26 +21,12 @@ public class Bouteille{
         return this.millesime;
     }
 
-    public boolean equals(Bouteille bouteille){
-        boolean res;
-        if(bouteille == null){
-            return false;
-        }
-        if(this.region == bouteille.getRegion()){
-            res = true;
-        }
-
-        if(this.appellation == bouteille.getAppellation()){
-            res = true;
-        }
-
-        if(this.millesime == bouteille.getMillesime()){
-            res = true;
-        }
-
-        else{
-            res = false;
-        }
-        return res;
+    @Override
+    public boolean equals(Object objet){
+        if (objet == null) {return false;}
+        if(objet == this) {return true;}
+        if(!(objet instanceof Bouteille)) {return false;}
+        Bouteille cydre = (Bouteille) objet;
+        Bouteille cydre.toChar() == this.Bouteille;
     }
 }
