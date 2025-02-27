@@ -1,0 +1,103 @@
+Exo1)
+a)
+
+.method mul(i,j)
+.var
+res
+.end-var
+
+ILOAD j
+IFLT L2
+ILOAD i 
+IFLT L4
+GOTO L5
+
+L1: ILOAD j
+IFLT L2
+GOTO L3
+L2: ILOAD res
+ILOAD i
+ISUB
+ISTORE res
+IINC j 1
+GOTO L1
+
+L4: ILOAD i
+ILOAD res
+IADD
+ISTORE res
+IINC j -1
+ILOAD j 
+IFEQ L3
+GOTO L4
+
+L5: ILOAD j
+IFEQ L3
+ILOAD res
+ILOAD i
+IADD
+ISTORE res
+IINC j -1
+GOTO L5
+
+L3 : ILOAD res
+IRETURN
+.end-method
+.main
+BIPUSH 40
+BIPUSH 5
+BIPUSH -3
+INVOKEVIRTUAL mul
+.end-main
+
+b)
+
+.method mul(i,j)
+.var
+res
+.end-var
+
+ILOAD j
+IFLT L2
+ILOAD i 
+IFLT L4
+GOTO L5
+
+
+L1: ILOAD j
+IFLT L2
+GOTO L3
+L2: ILOAD res
+ILOAD i
+ISUB
+ISTORE res
+IINC j 1
+GOTO L1
+
+L4: ILOAD i
+ILOAD res
+IADD
+ISTORE res
+IINC j -1
+ILOAD j 
+IFEQ L3
+GOTO L4
+
+L5: ILOAD j
+IFEQ L3
+ILOAD res
+ILOAD i
+IADD
+ISTORE res
+IINC j -1
+GOTO L5
+
+L3 : ILOAD res
+IRETURN
+.end-method
+.main
+BIPUSH 40
+BIPUSH 5
+BIPUSH -3
+INVOKEVIRTUAL mul
+.end-main

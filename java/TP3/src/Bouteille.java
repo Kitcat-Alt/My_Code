@@ -1,4 +1,5 @@
 public class Bouteille{
+    
     private String region;
     private String appellation;
     private int millesime;
@@ -27,6 +28,6 @@ public class Bouteille{
         if(objet == this) {return true;}
         if(!(objet instanceof Bouteille)) {return false;}
         Bouteille cydre = (Bouteille) objet;
-        Bouteille cydre.toChar() == this.Bouteille;
+        return cydre.getRegion().equals(this.region) && cydre.getAppellation().equals(this.appellation) && cydre.getMillesime() == this.millesime;
     }
 }

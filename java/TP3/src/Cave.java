@@ -4,14 +4,27 @@ import java.util.List;
 public class Cave{
     private List<Bouteille> cave;
 
+    /**
+     * 
+     * @param 
+     * 
+     */
     public Cave(){
         this.cave = new ArrayList<>();
     }
 
+    /**
+     * 
+     * @param region
+     * @param appellation
+     * @param millesime
+     * @return
+     */
     public void ajouteBouteille(String region, String appellation, int millesime){
         this.cave.add(new Bouteille(region, appellation, millesime));
     }
 
+    
     public int nbBouteilles(){
         return this.cave.size();
     }
