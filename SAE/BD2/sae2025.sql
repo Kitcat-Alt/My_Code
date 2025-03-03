@@ -74,7 +74,14 @@ where nomauteur = "René Goscinny" and  YEAR(datecom) = 2021;
 -- | etc...
 -- = Reponse question 127279.
 
+select idmag, nommag, IFNULL(count(distinct idcli),0) as nbCli
+from CLIENT right join MAGASIN on villecli = villemag
+group by idmag, nommag; 
 
+select idmag, nommag, IFNULL(count(distinct idcli),0) as nbCli
+from CLIENT natural left join COMMANDE natural join MAGASIN
+where villecli = villemag
+group by idmag, nommag; 
 
 -- +-----------------------+--
 -- * Question 127291 : 2pts --
@@ -90,7 +97,10 @@ where nomauteur = "René Goscinny" and  YEAR(datecom) = 2021;
 -- | etc...
 -- = Reponse question 127291.
 
-
+select nommag, IFNULL(sum(qte), 0) as nbex
+from DETAILCOMMANDE natural left join COMMANDE natural join MAGASIN
+where datecom = DATE('2022-09-15')
+group by nommag;
 
 -- +-----------------------+--
 -- * Question 127314 : 2pts --
