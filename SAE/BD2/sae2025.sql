@@ -58,7 +58,7 @@ where nomauteur = "René Goscinny" and  YEAR(datecom) = 2021;
 -- | etc...
 -- = Reponse question 127235.
 
-
+with sansAuteur8(select isbn, titre )
 
 -- +-----------------------+--
 -- * Question 127279 : 2pts --
@@ -98,8 +98,12 @@ group by idmag, nommag;
 -- = Reponse question 127291.
 
 select nommag, IFNULL(sum(qte), 0) as nbex
-from DETAILCOMMANDE natural left join COMMANDE natural join MAGASIN
+from MAGASIN natural left join COMMANDE natural join DETAILCOMMANDE
 where datecom = DATE('2022-09-15')
+group by nommag;
+
+select nommag, IFNULL(sum(qte), 0) as nbex
+from MAGASIN m left join COMMANDE c on m.idmag = c.idmag and datecom = DATE('2022-09-15') natural left join DETAILCOMMANDE 
 group by nommag;
 
 -- +-----------------------+--
