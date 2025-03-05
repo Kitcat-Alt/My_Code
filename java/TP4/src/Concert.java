@@ -20,7 +20,7 @@ public class Concert {
         if(obj == this){return true;}
         if(!(obj instanceof Concert)){return false;}
         Concert concert = (Concert) obj;
-        return concert.getNomConcert().equals(obj.getNomConcert()) && concert.getNomGroupe().equals(obj.getNomGroupe());
+        return concert.getNomConcert().equals(this.getNomConcert()) && concert.getNomGroupe().equals(this.getNomGroupe());
 
     }
 }

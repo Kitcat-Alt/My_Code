@@ -9,6 +9,8 @@ public class Festival {
 
     public Festival(String nom){
         this.nom = nom;
+        this.concerts = new ArrayList<>();
+        this.billets = new ArrayList<>();
     }
     
     public Festival(String nom, String adresse){
@@ -24,6 +26,12 @@ public class Festival {
 
     public void reserver(Spectateur spectateur, Concert concert, int prix){
         this.billets.add(new Billet(concert, spectateur, prix));
+    }
+
+    public void ajouterConcert(Concert concert){
+        if(this.concerts.contains(concert) == false){
+            this.concerts.add(concert);
+        }
     }
 
     public int nombreBilletConcert(Concert concert){
