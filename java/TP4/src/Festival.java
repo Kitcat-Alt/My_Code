@@ -18,6 +18,28 @@ public class Festival {
         this.billets = new ArrayList<>();
     }
 
+    public List getConcert(){
+        return this.concerts;
+    }
+
+    public void reserver(Spectateur spectateur, Concert concert, int prix){
+        this.billets.add(new Billet(concert, spectateur, prix));
+    }
+
+    public int nombreBilletConcert(Concert concert){
+        int nbBillets = 0;
+        for(int i=0; i<this.billets.size(); ++i){
+            if(this.billets.get(i).getConcert().equals(concert)){
+                ++nbBillets;
+            }
+        }
+        return nbBillets;
+    }
+
+    public int nombreConcert(){
+        return this.concerts.size();
+    }
+
     
 
 

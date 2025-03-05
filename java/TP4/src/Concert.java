@@ -6,4 +6,23 @@ public class Concert {
         this.nomConcert = nomConcert;
         this.nomGroupe = nomGroupe;
     }
+
+    public String getNomConcert(){
+        return this.nomConcert;
+    }
+
+    public String getNomGroupe(){
+        return this.nomGroupe;
+    }
+
+    public boolean equals(Objetc obj){
+        if(obj == null){return false;}
+        if(obj == this){return true;}
+        if(!(obj instanceof Concert)){return false;}
+        Concert concert = (Concert) obj;
+        return concert.getNomConcert().equals(obj.getNomConcert()) && concert.getNomGroupe().equals(obj.getNomGroupe());
+
+    }
 }
+
+

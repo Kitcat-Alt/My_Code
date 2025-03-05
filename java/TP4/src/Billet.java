@@ -1,8 +1,8 @@
 public class Billet {
 
     private int prix;
-    Concert concert;
-    Spectateur spectateur;
+    private Concert concert;
+    private Spectateur spectateur;
 
     public Billet(Concert concert, Spectateur spectateur, int prix){
         this.concert = concert;
