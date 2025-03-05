@@ -15,7 +15,7 @@ public class Concert {
         return this.nomGroupe;
     }
 
-    public boolean equals(Objetc obj){
+    public boolean equals(Object obj){
         if(obj == null){return false;}
         if(obj == this){return true;}
         if(!(obj instanceof Concert)){return false;}
