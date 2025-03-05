@@ -178,10 +178,18 @@ group by nomProd;
 -- +--------+--------+-----------+-------+--------+
 -- = Reponse question 8.
 
-with Annee as (select nomCli, prenomCli, distinct YEAR(dateFac) as annee from FACTURE natural join CLIENT
-group by nomCli, prenomCli)
-select * from Annee;
-
+with Annee as (select distinct YEAR(dateFac) as annee
+                from FACTURE
+                order by annee),
+    ClientAnnee as (select numCli, nomCli, prenomCli,annee
+                    from CLIENT, Annee),
+    CAParClientParAn as (select distinct numCli,YEAR(dateFac) annee, sum(qte*puProd) CA
+                        from FACTURE natural join DETAIL natural join PRODUIT
+                        group by numCli,annee)
+select numCli, nomCli, prenomCli, annee, IFNULL(CA,0) CA 
+from  ClientAnnee natural left join CAParClientParAn
+where prenomCli = 'Mathieu' and nomCli = "ZET"
+group by annee;
 
 
 --select numCli, nomCli, prenomCli, YEAR(dateFac) as annee, IFNULL(sum(qte*puProd), 0) as CA
@@ -207,4 +215,15 @@ select * from Annee;
 -- = Reponse question 9.
 
 
-
+with Annee as (select distinct YEAR(dateFac) as annee
+                from FACTURE 
+                order by annee),
+    ProduitAnnee as (select refProd, nomProd, annee
+                    from PRODUIT, Annee),
+    CAProduitParAn as (select refProd,YEAR(dateFac) annee, sum(qte*puProd) CA
+                        from FACTURE natural join DETAIL natural join PRODUIT
+                        group by refProd,annee)
+select refProd, nomProd, annee, IFNULL(CA,0) CA 
+from  ProduitAnnee natural left join CAProduitParAn
+where nomProd like "T%"
+group by refProd, annee;
