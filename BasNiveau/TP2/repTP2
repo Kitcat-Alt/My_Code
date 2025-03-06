@@ -87,8 +87,37 @@ ISTORE s
 ILOAD u
 IINC n 1
 GOTO L1
-L2: ILOAD s
+L2: IINC s 1
+ILOAD s
 .end-main -> pas fini
+
+.main
+.var
+k
+u
+n
+s
+.end-var
+IINC k 2
+IINC u 1
+IINC n 4
+L2 : ILOAD u
+ILOAD k
+IADD
+ISTORE u
+ILOAD u
+ILOAD s
+IADD
+ISTORE s
+ILOAD u
+IINC n -1
+ILOAD n
+IFLT L1
+GOTO L2
+L1: ILOAD s
+.end-main
+
+
 
 Exo4
 

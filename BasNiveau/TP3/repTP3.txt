@@ -52,52 +52,63 @@ INVOKEVIRTUAL mul
 
 b)
 
-.method mul(i,j)
-.var
-res
-.end-var
-
-ILOAD j
-IFLT L2
+.method mul_rec(i,j)
 ILOAD i 
-IFLT L4
-GOTO L5
-
-
-L1: ILOAD j
-IFLT L2
-GOTO L3
-L2: ILOAD res
+IFEQ cas_base
+BIPUSH 40
+IINC i -1
 ILOAD i
-ISUB
-ISTORE res
-IINC j 1
-GOTO L1
-
-L4: ILOAD i
-ILOAD res
+ILOAD j
+INVOKEVIRTUAL mul_rec
+ILOAD j
 IADD
-ISTORE res
-IINC j -1
-ILOAD j 
-IFEQ L3
-GOTO L4
-
-L5: ILOAD j
-IFEQ L3
-ILOAD res
-ILOAD i
-IADD
-ISTORE res
-IINC j -1
-GOTO L5
-
-L3 : ILOAD res
+IRETURN
+cas_base: BIPUSH 0
 IRETURN
 .end-method
 .main
 BIPUSH 40
 BIPUSH 5
-BIPUSH -3
-INVOKEVIRTUAL mul
+BIPUSH 3
+INVOKEVIRTUAL mul_rec
+.end-main
+
+Exo2)
+.method suite(u0,k,n)
+.var
+u
+.end-var
+ILOAD u0
+IDTORE u
+boucle: ILOAD n
+IFEQ end
+ILAOD n
+BIPUSH 1
+ISUB
+ISTORE n
+ILOAD u
+ILOAD k
+IADD 
+ISTORE u 
+GOTO boucle
+end: ILOAD u
+IRETURN
+.end-method
+
+.method suite_rec(u0,k,n)
+ILOAD n
+IFEQ end
+BIPUSH 40
+ILOAD u0
+ILOAD k
+IINC n -1
+ILOAD n 
+INVOKEVIRTUAL suite_rec
+ILOAD k
+IADD
+IRETURN
+end: ILOAD u0
+IRETURN
+.end-method
+.main
 .end-main
