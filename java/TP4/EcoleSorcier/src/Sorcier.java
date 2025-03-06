@@ -1,7 +1,7 @@
 public class Sorcier{
-    private String nom
-    private int sagesse
-    private int courage
+    private String nom;
+    private int sagesse;
+    private int courage;
 
     public Sorcier(String nom, int sagesse, int courage){
         this.nom = nom;
@@ -30,6 +30,6 @@ public class Sorcier{
         if(obj == this){return true;}
         if(!(obj instanceof Sorcier)){return false;}
         Sorcier sorcier = (Sorcier) obj;
-        return sorcier.getNom().equals(this.getNom()) && sorcier.getCourage() == this.getCourage && sorcier.getSagesse() == this.getSagesse();
+        return sorcier.getNom().equals(this.getNom()) && sorcier.getCourage() == this.getCourage() && sorcier.getSagesse() == this.getSagesse();
     }
 }

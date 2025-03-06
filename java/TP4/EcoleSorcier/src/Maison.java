@@ -33,4 +33,23 @@ public class  Maison{
         }
         return false;
     }
+
+    public Sorcier leMoinsCourageux(){
+        Sorcier moinsCourageux = this.sorciers.get(0);
+        for(int i=0; i<this.sorciers.size(); ++i){
+            if(moinsCourageux.getCourage() > this.sorciers.get(i).getCourage())
+            moinsCourageux = this.sorciers.get(i);
+        }
+        return moinsCourageux;
+    }
+
+    public Sorcier lePlusSage(){
+        Sorcier plusSage = this.sorciers.get(0);
+        for(int i=0; i<this.sorciers.size(); ++i){
+            if(plusSage.getSagesse() < this.sorciers.get(i).getSagesse()){
+                plusSage = this.sorciers.get(i);
+            }
+        }
+        return plusSage;
+    }
 }
