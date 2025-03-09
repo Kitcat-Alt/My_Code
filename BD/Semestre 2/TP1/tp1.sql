@@ -48,9 +48,14 @@ where numsond in (select numsond from SONDE s where s.numsond = r.numsond and no
 -- +-----------------+
 -- = Reponse question 2.
 
-select nompan
+select distinct nompan
 from SONDE natural join PANEL natural join CARACTERISTIQUE natural join TRANCHE
 where idtr = 6;
+
+select nomPan from PANEL
+where nomPan in (select nomPan
+                from SONDE natural join PANEL natural join CARACTERISTIQUE natural join TRANCHE
+                where idtr = 6);
 
 
 -- +------------------+--
@@ -80,6 +85,11 @@ select distinct nomsond, prenomsond
 from SONDE natural join CARACTERISTIQUE natural join CATEGORIE natural join TRANCHE
 where (nomsond, prenomsond) in (select nomsond, prenomsond from CATEGORIE natural join SONDE natural join CARACTERISTIQUE where intituleCat = "Ouvriers") and idtr = 6;
 
+select distinct nomSond, prenomsond
+from SONDE natural join CARACTERISTIQUE natural join CATEGORIE natural join TRANCHE
+where EXISTS (select distinct nomsond, prenomsond
+              from SONDE natural join CARACTERISTIQUE natural join CATEGORIE natural join TRANCHE
+              where intituleCat = 'Ouvriers') and idtr = 6;
 
 -- +------------------+--
 -- * Question 4 :     --
@@ -159,5 +169,9 @@ where nomsond in (select nomsond from TRANCHE natural join CARACTERISTIQUE natur
 -- +------------+----------+
 -- = Reponse question 6.
 
-
+select distinct prenomsond, nomsond
+from SONDE 
+where prenomsond in (select prenomsond
+                        from SONDE natural join CONSTITUER natural join PANEL p1, PANEL p2
+                        where p1.idpan != p2.idpan) and prenomSond = "Jean";
 
