@@ -136,8 +136,10 @@ group by nommag;
 -- | etc...
 -- = Reponse question 127369.
 
-
-
+select distinct nommag as Magasin, YEAR(datecom) as annee, sum(qte) as qte
+from MAGASIN natural join COMMANDE natural join DETAILCOMMANDE
+group by Magasin, annee
+order by annee;
 -- +-----------------------+--
 -- * Question 127370 : 2pts --
 -- +-----------------------+--
@@ -152,7 +154,10 @@ group by nommag;
 -- | etc...
 -- = Reponse question 127370.
 
-
+select nomclass as Theme, sum(qte*prixvente)/100 as Montant
+from CLASSIFICATION natural join THEMES natural join LIVRE natural join COMMANDE natural join DETAILCOMMANDE natural join MAGASIN
+where YEAR(datecom) = 2025
+group by Theme; 
 
 -- +-----------------------+--
 -- * Question 127381 : 2pts --
