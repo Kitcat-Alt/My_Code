@@ -154,7 +154,7 @@ order by annee;
 -- | etc...
 -- = Reponse question 127370.
 
-select nomclass as Theme, sum(qte*prixvente)/100 as Montant
+select nomclass as Theme, sum(qte*prix) as Montant
 from CLASSIFICATION natural join THEMES natural join LIVRE natural join COMMANDE natural join DETAILCOMMANDE natural join MAGASIN
 where YEAR(datecom) = 2025
 group by Theme; 
@@ -189,7 +189,9 @@ group by Theme;
 -- | etc...
 -- = Reponse question 127437.
 
-
+select YEAR(datecom) as annee, enligne as typevente, sum(qte*prix) as montant
+from COMMANDE natural join DETAILCOMMANDE natural join LIVRE
+group by annee, typevente;
 
 -- +-----------------------+--
 -- * Question 127471 : 2pts --
@@ -228,11 +230,11 @@ group by Theme;
 -- +-----------------------+--
 -- Ecrire une requête qui renvoie les informations suivantes:
 --  Requête Graphique 7 Valeur du stock par magasin
- Requête Graphique 8 Statistiques sur l'évolution du chiffre d'affaire total par client 
+ --Requête Graphique 8 Statistiques sur l'évolution du chiffre d'affaire total par client 
 
 -- Voici le début de ce que vous devez obtenir.
 -- ATTENTION à l'ordre des colonnes et leur nom!
--- +-------------------------+---------+
+-- +-------------------------+---------+enligne
 -- | Magasin                 | total   |
 -- +-------------------------+---------+
 -- | etc...
