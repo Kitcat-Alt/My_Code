@@ -103,5 +103,6 @@ public class  Maison{
     //    List<Sorcier> trieParCourage = new ArrayList<>();
     //    int courage = this.sorciers.get(i).getCourage(0);
     //    trieParCourage = this.sorciers.sort(courage<? super int> c);
+    // List<Sorcier> copie = new Arraylist<>(this.sorciers);
     //}
 }

@@ -50,4 +50,9 @@ public class Sorcier{
         Sorcier sorcier = (Sorcier) obj;
         return sorcier.getNom().equals(this.getNom()) && sorcier.getCourage() == this.getCourage() && sorcier.getSagesse() == this.getSagesse();
     }
+
+    @Override
+    public String toString(){
+        return "Nom: "+this.nom+" Courage: "+this.courage+" Sagesse: "+this.sagesse;
+    }
 }

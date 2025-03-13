@@ -30,5 +30,7 @@ public class ExecutableSorcier{
 
         assert poudlard.plusGrandeMaison().equals(grifondor);
 
+        harry.toString();
+
     }
 }

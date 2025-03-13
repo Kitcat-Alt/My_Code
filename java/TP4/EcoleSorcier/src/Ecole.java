@@ -21,7 +21,7 @@ public class Ecole{
      * @return Maison : la maison avec le plus d'élèves
      */
     public Maison plusGrandeMaison(){
-        Maison plusGrande = this.maisons.get(0);
+        Maison plusGrande = null;
         for(int i=0; i<this.maisons.size(); ++i){
             if(plusGrande.nombreEleve() < this.maisons.get(i).nombreEleve()){
                 plusGrande = this.maisons.get(i);
@@ -43,4 +43,6 @@ public class Ecole{
     //    }
     //    return lescourageux;
     //}
+
+    
 }

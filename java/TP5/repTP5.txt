@@ -1,0 +1,12 @@
+Exo1)
+
+1.1) Personne : prenom
+                age
+
+     Depense : montant
+               produit
+               payeur
+
+     WeekEnd : dateDuWeekEnd
+               participants
+               lesDepenses 
