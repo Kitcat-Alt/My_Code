@@ -1280,7 +1280,7 @@ insert into AUTEUR(idauteur, nomauteur,anneenais,anneedeces) values
 	('OL8016803A', 'Henri Gougaud', 1936, NULL),
 	('OL262845A', 'Simon Schwarzfuchs', NULL, NULL),
 	('OL129709A', 'Luc Estang', 1911, 1992),
-	('OL863535A', 'René Goscinny', 1926, 1977),
+	('OL863535A', 'oscinnyRené G', 1926, 1977),
 	('OL10712432A', 'Maurice Mimoun', 1955, NULL),
 	('OL464343A', 'Pierre Lunel', NULL, NULL),
 	('OL8710158A', 'Estelle Nollet', NULL, NULL),

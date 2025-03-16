@@ -173,8 +173,10 @@ group by Theme;
 -- | etc...
 -- = Reponse question 127381.
 
-
-
+select nommag, MONTH(datecom) as mois, sum(qte*prix) as CA 
+from MAGASIN natural join COMMANDE natural join DETAILCOMMANDE natural join LIVRE 
+where YEAR(datecom) = 2024 
+group by nommag, MONTH(datecom);
 -- +-----------------------+--
 -- * Question 127437 : 2pts --
 -- +-----------------------+--
@@ -191,6 +193,7 @@ group by Theme;
 
 select YEAR(datecom) as annee, enligne as typevente, sum(qte*prix) as montant
 from COMMANDE natural join DETAILCOMMANDE natural join LIVRE
+where YEAR(datecom)<>2025
 group by annee, typevente;
 
 -- +-----------------------+--
@@ -207,7 +210,11 @@ group by annee, typevente;
 -- | etc...
 -- = Reponse question 127471.
 
-
+select nomedit, count(idauteur) as nbauteurs
+from EDITEUR natural join EDITER natural join LIVRE natural join ECRIRE natural join AUTEUR
+group by nomedit
+order by count(idauteur) desc
+limit 10; --fini mais prblm avec graphique
 
 -- +-----------------------+--
 -- * Question 127516 : 2pts --
@@ -223,8 +230,10 @@ group by annee, typevente;
 -- | etc...
 -- = Reponse question 127516.
 
-
-
+select count(idcli) as nbCli, villecli
+from CLIENT natural join COMMANDE natural join DETAILCOMMANDE natural join LIVRE natural join ECRIRE natural join AUTEUR
+where nomauteur = 'René Goscinny'
+group by villecli;  --presque fini
 -- +-----------------------+--
 -- * Question 127527 : 2pts --
 -- +-----------------------+--
