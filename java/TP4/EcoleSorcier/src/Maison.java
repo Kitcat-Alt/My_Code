@@ -88,6 +88,34 @@ public class  Maison{
         return plusSage;
     }
 
+
+    public void trierParCourage(){
+        Sorcier moinsCourageux = null;
+        List<Sorcier> trieCourage = new ArrayList<>();
+        List<Sorcier> copieSorciers = new ArrayList<>();
+        for(Sorcier sorcier : this.sorciers){
+            copieSorciers.add(sorcier);
+        }
+    
+        for(int i=0; i<copieSorciers.size(); ++i){
+            if(moinsCourageux == null || moinsCourageux.getCourage() > copieSorciers.get(i).getCourage()){
+                moinsCourageux = copieSorciers.get(i);
+                trieCourage.add(copieSorciers.get(i));
+                copieSorciers.remove(copieSorciers.get(i));
+            }   
+        }
+        
+    }
+
+    @Override
+    public String toString(){
+        String res = " ";
+        for(Sorcier sorcier : this.sorciers){
+            res = res + " " + sorcier.getNom() + ",";
+        }
+        return "La Maison " + this.nom + " contient ces sorciers :" + res;   
+    }
+
     @Override
     public boolean equals(Object obj){
         if(obj == null){return false;}
@@ -97,12 +125,5 @@ public class  Maison{
         return this.nom.equals(maison.getNom());
     }
 
-    
 
-    //public void trierParCourage(){
-    //    List<Sorcier> trieParCourage = new ArrayList<>();
-    //    int courage = this.sorciers.get(i).getCourage(0);
-    //    trieParCourage = this.sorciers.sort(courage<? super int> c);
-    // List<Sorcier> copie = new Arraylist<>(this.sorciers);
-    //}
 }

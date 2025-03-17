@@ -23,26 +23,22 @@ public class Ecole{
     public Maison plusGrandeMaison(){
         Maison plusGrande = null;
         for(int i=0; i<this.maisons.size(); ++i){
-            if(plusGrande.nombreEleve() < this.maisons.get(i).nombreEleve()){
+            if(plusGrande == null || plusGrande.nombreEleve() < this.maisons.get(i).nombreEleve()){
                 plusGrande = this.maisons.get(i);
             }
         }
         return plusGrande;
     }
 
-    //public List lesCourageux(){
-    //    List courageux = new ArrayList<>();
-    //    List lescourageux = new ArrayList<>();
-    //    for(int i=0; i<this.maisons.size(); ++i){
-    //        courageux = this.maisons.get(i);
-    //        for(int j = 0; j<courageux.size(); ++i){
-    //            if(courageux.get(i).estCourageux()){
-    //                lescourageux.add(courageux.get(i));
-    //            }
-    //        }
-    //    }
-    //    return lescourageux;
-    //}
+    public static List lesCourageux(){
+        List<Sorcier> courageux = new ArrayList<>();
+        for(Sorcier sorcier : Maison.sorciers){
+            if(sorcier.estCourageux()){
+                courageux.add(sorcier);
+            }
+        }
+        return courageux;
+    }
 
     
 }

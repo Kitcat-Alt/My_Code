@@ -30,7 +30,7 @@ public class WeekEnd {
 
     public double totalDepense(Personne personne){
         for(Depense dep : depenses){
-            if()
+            if(dep)
         }
     }
 

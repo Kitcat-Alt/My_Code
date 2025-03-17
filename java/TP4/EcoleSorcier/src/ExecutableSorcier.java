@@ -8,6 +8,8 @@ public class ExecutableSorcier{
         assert harry.estCourageux();
         assert !ron.estCourageux();
 
+        System.out.println(harry.toString());
+
         Maison grifondor = new Maison("Grifondor");
         grifondor.ajouter("harry", 10, 5);
         grifondor.ajouter("hermione", 9, 10);
@@ -24,13 +26,15 @@ public class ExecutableSorcier{
         assert grifondor.leMoinsCourageux().equals(ron);
         assert grifondor.lePlusSage().equals(hermione);
 
+        grifondor.trierParCourage();
+        System.out.println(grifondor.toString());
+
         Ecole poudlard = new Ecole("Poudlard");
         poudlard.ajouter(grifondor);
         poudlard.ajouter(serpentar);
 
+        
         assert poudlard.plusGrandeMaison().equals(grifondor);
-
-        harry.toString();
 
     }
 }
