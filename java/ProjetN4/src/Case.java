@@ -10,30 +10,36 @@ public class Case {
     }
 
     public void reset(){
-
+        this.contientUneBombe = false;
+        this.estDecouverte = false;
+        this.estMarquee = false;
     }
 
     public void poseBombe(){
-
+        this.contientUneBombe = true;
     }
 
     public boolean contientUneBombe(){
-        return false;
+        return this.contientUneBombe;
     }
 
     public boolean estDecouverte(){
-        return false;
+        return this.estDecouverte();
     }
 
     public boolean estMarquee(){
-        return false;
+        return this.estMarquee();
     }
 
     public boolean reveler(){
-        return false;
+        if(this.estDecouverte){
+            return false;
+        }
+        this.estDecouverte = true;
+        return true;
     }
 
     public void marquer(){
-        
+        this.estMarquee = true;
     }
 }
