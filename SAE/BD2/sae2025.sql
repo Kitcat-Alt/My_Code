@@ -213,7 +213,7 @@ group by annee, typevente;
 select nomedit, count(idauteur) as nbauteurs
 from EDITEUR natural join EDITER natural join LIVRE natural join ECRIRE natural join AUTEUR
 group by nomedit
-order by count(idauteur) desc
+order by nbauteurs desc
 limit 10; --fini mais prblm avec graphique
 
 -- +-----------------------+--
@@ -230,9 +230,10 @@ limit 10; --fini mais prblm avec graphique
 -- | etc...
 -- = Reponse question 127516.
 
-select count(idcli) as nbCli, villecli
+
+select villecli, count(idcli) as nbCli
 from CLIENT natural join COMMANDE natural join DETAILCOMMANDE natural join LIVRE natural join ECRIRE natural join AUTEUR
-where nomauteur = 'René Goscinny'
+where nomauteur = 'René Goscinny';
 group by villecli;  --presque fini
 -- +-----------------------+--
 -- * Question 127527 : 2pts --
@@ -249,7 +250,9 @@ group by villecli;  --presque fini
 -- | etc...
 -- = Reponse question 127527.
 
-
+select nommag, sum(qte*prix) as stock
+from MAGASIN natural join POSSEDER natural join LIVRE
+group by nommag;
 
 -- +-----------------------+--
 -- * Question 127538 : 2pts --
