@@ -1,5 +1,5 @@
 -- Devoir 127
--- Nom: CHER , Prenom: Naick
+-- Nom: , Prenom: 
 
 -- Feuille SAE2.05 Exploitation d'une base de données: Livre Express
 -- 
@@ -24,7 +24,6 @@ select distinct isbn, titre, nbpages, datepubli, prix
 from LIVRE natural join POSSEDER natural join MAGASIN natural join COMMANDE
 where datecom = DATE('2024-12-1');
 
-
 -- +-----------------------+--
 -- * Question 127202 : 2pts --
 -- +-----------------------+--
@@ -43,7 +42,6 @@ select distinct idcli, nomcli, prenomcli, adressecli, codepostal, villecli
 from CLIENT natural join COMMANDE natural join DETAILCOMMANDE natural join LIVRE natural join AUTEUR
 where nomauteur = "René Goscinny" and  YEAR(datecom) = 2021;
 
-
 -- +-----------------------+--
 -- * Question 127235 : 2pts --
 -- +-----------------------+--
@@ -57,6 +55,7 @@ where nomauteur = "René Goscinny" and  YEAR(datecom) = 2021;
 -- +---------------+-----------------------------------+-------------------------+-----+
 -- | etc...
 -- = Reponse question 127235.
+
 
 
 -- +-----------------------+--
@@ -80,7 +79,7 @@ group by idmag, nommag;
 select idmag, nommag, IFNULL(count(distinct idcli),0) as nbCli
 from CLIENT natural left join COMMANDE natural join MAGASIN
 where villecli = villemag
-group by idmag, nommag; 
+group by idmag, nommag;
 
 -- +-----------------------+--
 -- * Question 127291 : 2pts --
@@ -139,6 +138,7 @@ select distinct nommag as Magasin, YEAR(datecom) as annee, sum(qte) as qte
 from MAGASIN natural join COMMANDE natural join DETAILCOMMANDE
 group by Magasin, annee
 order by annee;
+
 -- +-----------------------+--
 -- * Question 127370 : 2pts --
 -- +-----------------------+--
@@ -176,6 +176,7 @@ select nommag, MONTH(datecom) as mois, sum(qte*prix) as CA
 from MAGASIN natural join COMMANDE natural join DETAILCOMMANDE natural join LIVRE 
 where YEAR(datecom) = 2024 
 group by nommag, MONTH(datecom);
+
 -- +-----------------------+--
 -- * Question 127437 : 2pts --
 -- +-----------------------+--
@@ -199,7 +200,7 @@ group by annee, typevente;
 -- * Question 127471 : 2pts --
 -- +-----------------------+--
 -- Ecrire une requête qui renvoie les informations suivantes:
---  Requête Graphique 5
+--  Requête Graphique 5 
 
 -- Voici le début de ce que vous devez obtenir.
 -- ATTENTION à l'ordre des colonnes et leur nom!
@@ -209,17 +210,18 @@ group by annee, typevente;
 -- | etc...
 -- = Reponse question 127471.
 
+
 select nomedit, count(idauteur) as nbauteurs
 from EDITEUR natural join EDITER natural join LIVRE natural join ECRIRE natural join AUTEUR
 group by nomedit
 order by nbauteurs desc
-limit 10; --fini mais prblm avec graphique
+limit 10;
 
 -- +-----------------------+--
 -- * Question 127516 : 2pts --
 -- +-----------------------+--
 -- Ecrire une requête qui renvoie les informations suivantes:
---  Requête Graphique 6 Origine des clients ayant acheter des livres de R. Goscinny
+--  Requête Graphique 6 Qté de livres de R. Goscinny achetés en fonction de l'orgine des clients
 
 -- Voici le début de ce que vous devez obtenir.
 -- ATTENTION à l'ordre des colonnes et leur nom!
@@ -229,21 +231,19 @@ limit 10; --fini mais prblm avec graphique
 -- | etc...
 -- = Reponse question 127516.
 
-
 select villecli, sum(qte) as nbCli
 from CLIENT natural join COMMANDE natural join DETAILCOMMANDE natural join LIVRE natural join ECRIRE natural join AUTEUR
 where nomauteur = 'René Goscinny'
-group by villecli;  --presque fini
+group by villecli;
+
 -- +-----------------------+--
 -- * Question 127527 : 2pts --
 -- +-----------------------+--
 -- Ecrire une requête qui renvoie les informations suivantes:
 --  Requête Graphique 7 Valeur du stock par magasin
- --Requête Graphique 8 Statistiques sur l'évolution du chiffre d'affaire total par client 
-
 -- Voici le début de ce que vous devez obtenir.
 -- ATTENTION à l'ordre des colonnes et leur nom!
--- +-------------------------+---------+enligne
+-- +-------------------------+---------+
 -- | Magasin                 | total   |
 -- +-------------------------+---------+
 -- | etc...
@@ -257,8 +257,7 @@ group by nommag;
 -- * Question 127538 : 2pts --
 -- +-----------------------+--
 -- Ecrire une requête qui renvoie les informations suivantes:
---  Requête Palmarès
-
+-- Requête Graphique 8 Statistiques sur l'évolution du chiffre d'affaire total par client 
 -- Voici le début de ce que vous devez obtenir.
 -- ATTENTION à l'ordre des colonnes et leur nom!
 -- +-------+---------+---------+---------+
@@ -267,13 +266,18 @@ group by nommag;
 -- | etc...
 -- = Reponse question 127538.
 
-
+with MaxCAParClient as (select idcli, YEAR(datecom) as annee, sum(qte*prix) as CA
+from CLIENT natural join COMMANDE natural join DETAILCOMMANDE natural join LIVRE
+group by annee, idcli)
+select annee, max(CA) as maximum, min(CA) as minimum, avg(CA) as moyenne
+from MaxCAParClient 
+group by annee;
 
 -- +-----------------------+--
 -- * Question 127572 : 2pts --
 -- +-----------------------+--
 -- Ecrire une requête qui renvoie les informations suivantes:
---  Requête imprimer les commandes en considérant que l'on veut celles de février 2020
+--  Requête Palmarès
 
 -- Voici le début de ce que vous devez obtenir.
 -- ATTENTION à l'ordre des colonnes et leur nom!
@@ -283,5 +287,22 @@ group by nommag;
 -- | etc...
 -- = Reponse question 127572.
 
+select YEAR(datecom) as annee, nomauteur, sum(qte)
+from COMMANDE natural join DETAILCOMMANDE natural join LIVRE natural join ECRIRE natural join AUTEUR
+where YEAR(datecom) <> 2025
+group by annee;
 
+with MaxVenteAuteur as (select YEAR(datecom) as annee, nomauteur, sum(qte) as total
+from COMMANDE natural join DETAILCOMMANDE natural join LIVRE natural join ECRIRE natural join AUTEUR
+group by annee)
+select annee, nomauteur, max(total)
+from MaxVenteAuteur
+where annee <> 2025
+group by annee;
+-- +-----------------------+--
+-- * Question 127574 : 2pts --
+-- +-----------------------+--
+-- Ecrire une requête qui renvoie les informations suivantes:
+--  Requête imprimer les commandes en considérant que l'on veut celles de février 2020
+-- = Reponse question 127574
 
