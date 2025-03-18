@@ -18,10 +18,20 @@ public class ExecutableWeekEnd {
         weekend.ajoutePerticipant("Gaby", 24);
         weekend.ajoutePerticipant("Anna", 31);
 
-        weekend.ajouteDepense(12, "pain", "davy");
-        weekend.ajouteDepense(100, "pizza", "elie");
-        weekend.ajouteDepense(70, "essence", "davy");
-        weekend.ajouteDepense(15, "vin", "gaby");
-        weekend.ajouteDepense(10, "vin", "elie");
+        weekend.ajouteDepense(12, "pain", "Davy");
+        weekend.ajouteDepense(100, "pizza", "Elie");
+        weekend.ajouteDepense(70, "essence", "Davy");
+        weekend.ajouteDepense(15, "vin", "Gaby");
+        weekend.ajouteDepense(10, "vin", "Elie");
+
+        
+        //System.out.println(weekend.totalDepense(elie));
+        //System.out.println(weekend.totalDepense());
+        assert weekend.totalDepense() == 207;
+        assert weekend.totalDepense(elie) == 110;
+        //System.out.println(weekend.avoirPersonne(gaby));
+        assert weekend.avoirPersonne(gaby) == 26.4;
     }
+
+
 }

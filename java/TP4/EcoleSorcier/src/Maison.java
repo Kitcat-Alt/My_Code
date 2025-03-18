@@ -18,6 +18,10 @@ public class  Maison{
         return this.nom;
     }
 
+    public List<Sorcier> getSorciers(){
+        return this.sorciers;
+    }
+
     /**
      * 
      * @param nomSorcier
@@ -87,12 +91,12 @@ public class  Maison{
         }
         return plusSage;
     }
-
-
+    
     public void trierParCourage(){
         Sorcier moinsCourageux = null;
         List<Sorcier> trieCourage = new ArrayList<>();
         List<Sorcier> copieSorciers = new ArrayList<>();
+        
         for(Sorcier sorcier : this.sorciers){
             copieSorciers.add(sorcier);
         }
@@ -106,6 +110,7 @@ public class  Maison{
         }
         
     }
+
 
     @Override
     public String toString(){

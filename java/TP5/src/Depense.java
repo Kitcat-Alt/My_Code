@@ -1,7 +1,3 @@
-import java.util.List;
-import java.util.ArrayList;
-
-
 public class Depense {
     private double montant;
     private String produit;
@@ -19,5 +15,9 @@ public class Depense {
 
     public double getMontant(){
         return this.montant;
+    }
+
+    public Personne getPayeur(){
+        return this.payeur;
     }
 }

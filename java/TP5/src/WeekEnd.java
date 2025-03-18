@@ -29,9 +29,32 @@ public class WeekEnd {
     }
 
     public double totalDepense(Personne personne){
-        for(Depense dep : depenses){
-            if(dep)
+        double totalPersonne = 0;
+        for(Depense dep : this.depenses){
+            if(dep.getPayeur().equals(personne)){
+                totalPersonne += dep.getMontant();
+            }
         }
+        return totalPersonne;
     }
+
+    public double totalDepense(){
+        double total = 0;
+        for(Depense dep : this.depenses){
+            total += dep.getMontant();
+        }
+        return total;
+    }
+
+    public double avoirPersonne(Personne personne){
+        double avoir = 0;
+        double moyenneDep = totalDepense()/this.depenses.size();
+        for(Depense dep : this.depenses){
+            if(dep.getPayeur().equals(personne)){
+                avoir = moyenneDep - dep.getMontant();
+            }
+        }
+        return avoir;   
+    } 
 
 }

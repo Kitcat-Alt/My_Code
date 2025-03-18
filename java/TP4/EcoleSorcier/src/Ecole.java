@@ -29,16 +29,30 @@ public class Ecole{
         }
         return plusGrande;
     }
-
-    public static List lesCourageux(){
+    /**
+     * @return List<Sorcier> : La liste des sorciers courageux de l'école
+     */
+    public List<Sorcier> lesCourageux(){
         List<Sorcier> courageux = new ArrayList<>();
-        for(Sorcier sorcier : Maison.sorciers){
-            if(sorcier.estCourageux()){
-                courageux.add(sorcier);
+        for(Maison maison : this.maisons){
+            for(Sorcier sorcier : maison.getSorciers()){
+                if(sorcier.estCourageux()){
+                    courageux.add(sorcier);
+                }
             }
         }
         return courageux;
     }
+
+    ///**
+    // * @return List<Sorcier> : La liste des sorciers de l'école triés par leur courage
+    // */
+    //public List<Sorcier> elevesTriesParCourage(){
+    //    for(Maison maison : this.maisons){
+    //        maison.trierParCourage();
+    //    }
+    //}
+
 
     
 }
