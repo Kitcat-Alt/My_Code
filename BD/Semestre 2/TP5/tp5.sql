@@ -12,6 +12,15 @@ from SONDE natural join CATEGORIE natural join CARACTERISTIQUE natural join TRAN
 select intituleCat, YEAR(CURDATE())-YEAR(dateNaisSond)
 from CATEGORIE natural join CARACTERISTIQUE natural join TRANCHE;
 
-select fil_lib_voe_acc, fili, nb_voe_pp_bg as nb_gene, nb_voe_pp_bt as nb_techno
-from STATS natural join VOEUX natural join FORMATION natural join FILIERE
-where fili = 'BUT' and session = 2023;
+select fil_lib_voe_acc as specialité, fili as filière, nb_voe_pp_bg as nb_gene, nb_voe_pp_bt as nb_techno
+from STATS natural join VOEUX natural join FORMATION natural join FILIERE natural join ETABLISSEMENT natural join DEPARTEMENT natural join REGION
+where fili = 'BUT' and session = 2023 and reg_etab_aff = 'Centre-Val de Loire';
+
+select reg_etab_aff as region, contrat_etab as contrat, count(cod_uai) as nbEtablissements
+from ETABLISSEMENT natural join DEPARTEMENT natural join REGION
+group by region, contrat;
+
+select g_ea_lib_vx as Etablissement, voe_tot as VoeuxTotal, nb_cla_pp as nbPrincipal
+from STATS natural join VOEUX natural join ETABLISSEMENT natural join DEPARTEMENT
+where session = 2023 and dep_lib = 'Indre';
+
