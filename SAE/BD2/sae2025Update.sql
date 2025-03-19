@@ -299,10 +299,12 @@ select annee, nomauteur, max(total)
 from MaxVenteAuteur
 where annee <> 2025
 group by annee;
+
+
 -- +-----------------------+--
 -- * Question 127574 : 2pts --
 -- +-----------------------+--
 -- Ecrire une requête qui renvoie les informations suivantes:
 --  Requête imprimer les commandes en considérant que l'on veut celles de février 2020
 -- = Reponse question 127574
-
+--
