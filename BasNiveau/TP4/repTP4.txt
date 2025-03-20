@@ -1,0 +1,66 @@
+Exo1]
+
+c) 000000000 000 00 110001 100000000 000 1111
+
+000000000 -> prochaine adresse, ici 0 donc on va boucler
+
+000 -> 
+
+00
+
+110001 -> ALU opération : 1
+
+100000000 -> on envoie la sortie de l'alu sur H (H=1)
+
+000 -> pas de read, pas de write, pas de fecth 
+
+Exo2]
+
+a) OPC=1
+   TOS=1
+
+b) OPC = 2 -> H=1
+              MDR=1
+              OPC=MDR+H
+
+   TOS = 4 -> H=1
+              MDR=1
+              OPC=MDR+H
+              TOS=OPC
+              TOS=TOS+1
+              TOS=TOS+1
+
+   MAR = 6 -> H=1
+              MDR=1
+              OPC=MDR+H
+              TOS=OPC
+              TOS=TOS+1
+              TOS=TOS+1
+              H=TOS
+              H=H+1
+              H=H+1
+              MAR=H
+
+   MDR = 8 -> MDR=1
+              OPC=MDR+H
+              TOS=OPC
+              TOS=TOS+1
+              TOS=TOS+1
+              H=TOS
+              H=H+1
+              H=H+1
+              H=H+1
+              H=H+1
+              MDR=H
+
+Exo4]  MAR=H=1
+       H=H+1
+       H=H+1
+       H=H+1
+       H=H+1
+       H=H+1
+       H=H+1
+       MDR=H=H+1
+       wr
+
+Exo5] 
