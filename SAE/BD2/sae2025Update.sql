@@ -24,6 +24,11 @@ select distinct isbn, titre, nbpages, datepubli, prix
 from LIVRE natural join POSSEDER natural join MAGASIN natural join COMMANDE
 where datecom = DATE('2024-12-1');
 
+select  isbn, titre, nbpages, datepubli, prix
+from LIVRE natural join COMMANDE natural join DETAILCOMMANDE
+WHERE DAY(datecom) = 1 and month(datecom) =12 and year(datecom) = 2024;
+--requete gwen
+
 -- +-----------------------+--
 -- * Question 127202 : 2pts --
 -- +-----------------------+--
@@ -41,6 +46,12 @@ where datecom = DATE('2024-12-1');
 select distinct idcli, nomcli, prenomcli, adressecli, codepostal, villecli
 from CLIENT natural join COMMANDE natural join DETAILCOMMANDE natural join LIVRE natural join AUTEUR
 where nomauteur = "René Goscinny" and  YEAR(datecom) = 2021;
+
+select distinct idcli, nomcli, prenomcli, adressecli, codepostal, villecli
+from CLIENT natural join COMMANDE natural join DETAILCOMMANDE natural join LIVRE natural join AUTEUR natural join ECRIRE
+where nomauteur='René Goscinny' and year(datecom) = 2021
+order by idcli;
+--requete gwen
 
 -- +-----------------------+--
 -- * Question 127235 : 2pts --
@@ -118,7 +129,25 @@ group by nommag;
 -- | etc...
 -- = Reponse question 127314.
 
+insert into LIVRE(isbn, titre, nbpages, datepubli, prix) values
+    ('9782844273765', 'SQL pour les nuls', 292, 2002, 33.5);
 
+insert into ECRIRE(isbn, idauteur) values
+    ('9782844273765', 'OL246259A'),
+    ('9782844273765', 'OL7670824A');
+
+insert into AUTEUR(idauteur, nomauteur,anneenais,anneedeces) values
+    ('OL246259A', 'Allen G. Taylor', NULL, NULL),
+    ('OL7670824A', 'Reinhard Engel', NULL, NULL);
+
+insert into EDITEUR(nomedit, idedit) values
+    ('First Interactive', 240);
+
+insert into EDITER(isbn, idedit) values
+    ('9782844273765', 240);
+
+insert into POSSEDER(idmag, isbn, qte) values
+    (7, '9782844273765', 3);
 
 -- +-----------------------+--
 -- * Question 127369 : 2pts --
@@ -158,6 +187,19 @@ from CLASSIFICATION natural join THEMES natural join LIVRE natural join COMMANDE
 where YEAR(datecom) = 2025
 group by Theme;
 
+with CA2024 as (
+    select sum(qte*prixvente) montant
+    from DETAILCOMMANDE natural join COMMANDE 
+    where YEAR(datecom)=2024
+)
+
+select nomclass Theme, CONCAT(ROUND((sum(qte*prixvente)/montant)*100),'%') Montant
+from CA2024 natural join DETAILCOMMANDE natural join COMMANDE natural join LIVRE natural join THEMES natural join CLASSIFICATION
+where YEAR(datecom) =2024
+group by LEFT(LPAD(iddewey,3,'0'),1)
+order by nomclass; 
+--requete gwen
+
 -- +-----------------------+--
 -- * Question 127381 : 2pts --
 -- +-----------------------+--
@@ -172,7 +214,7 @@ group by Theme;
 -- | etc...
 -- = Reponse question 127381.
 
-select nommag, MONTH(datecom) as mois, sum(qte*prix) as CA 
+select MONTH(datecom) as mois, nommag as Magasin, sum(qte*prix) as CA 
 from MAGASIN natural join COMMANDE natural join DETAILCOMMANDE natural join LIVRE 
 where YEAR(datecom) = 2024 
 group by nommag, MONTH(datecom);
@@ -211,7 +253,7 @@ group by annee, typevente;
 -- = Reponse question 127471.
 
 
-select nomedit, count(idauteur) as nbauteurs
+select nomedit as Editeur, count(idauteur) as nbauteurs
 from EDITEUR natural join EDITER natural join LIVRE natural join ECRIRE natural join AUTEUR
 group by nomedit
 order by nbauteurs desc
@@ -231,7 +273,7 @@ limit 10;
 -- | etc...
 -- = Reponse question 127516.
 
-select villecli, sum(qte) as nbCli
+select villecli as ville, sum(qte) as qte
 from CLIENT natural join COMMANDE natural join DETAILCOMMANDE natural join LIVRE natural join ECRIRE natural join AUTEUR
 where nomauteur = 'René Goscinny'
 group by villecli;
@@ -249,7 +291,7 @@ group by villecli;
 -- | etc...
 -- = Reponse question 127527.
 
-select nommag, sum(qte*prix) as stock
+select nommag as Magasin, sum(qte*prix) as total
 from MAGASIN natural join POSSEDER natural join LIVRE
 group by nommag;
 
@@ -266,9 +308,10 @@ group by nommag;
 -- | etc...
 -- = Reponse question 127538.
 
-with MaxCAParClient as (select idcli, YEAR(datecom) as annee, sum(qte*prix) as CA
-from CLIENT natural join COMMANDE natural join DETAILCOMMANDE natural join LIVRE
-group by annee, idcli)
+create or replace view MaxCAParClient(idcli, annee, CA) as 
+    select idcli, YEAR(datecom), sum(qte*prixvente)
+    from CLIENT natural join COMMANDE natural join DETAILCOMMANDE natural join LIVRE
+    group by YEAR(datecom), idcli;
 select annee, max(CA) as maximum, min(CA) as minimum, avg(CA) as moyenne
 from MaxCAParClient 
 group by annee;
@@ -287,20 +330,55 @@ group by annee;
 -- | etc...
 -- = Reponse question 127572.
 
-select YEAR(datecom) as annee, nomauteur, sum(qte)
+with MaxVenteAuteur as (select YEAR(datecom) as annee, nomauteur, count(qte) as total
 from COMMANDE natural join DETAILCOMMANDE natural join LIVRE natural join ECRIRE natural join AUTEUR
-where YEAR(datecom) <> 2025
-group by annee;
-
-with MaxVenteAuteur as (select YEAR(datecom) as annee, nomauteur, sum(qte) as total
-from COMMANDE natural join DETAILCOMMANDE natural join LIVRE natural join ECRIRE natural join AUTEUR
-group by annee)
-select annee, nomauteur, max(total)
+group by nomauteur)
+select annee, nomauteur, max(total) as total
 from MaxVenteAuteur
 where annee <> 2025
 group by annee;
 
+with MaxVenteAuteur as (select YEAR(datecom) as annee, nomauteur, sum(qte) as total
+from COMMANDE natural join DETAILCOMMANDE natural join LIVRE natural join ECRIRE natural join AUTEUR
+where nomauteur = 'René Goscinny' and YEAR(datecom) = 2023
+group by nomauteur)
+select annee, nomauteur, max(total) as total
+from MaxVenteAuteur;
 
+with MaxVenteAuteur as (select YEAR(datecom) as annee, nomauteur, count(qte) as total
+from COMMANDE natural join DETAILCOMMANDE natural join LIVRE natural join ECRIRE natural join AUTEUR
+group by nomauteur)
+select annee, nomauteur, max(total) as total
+from MaxVenteAuteur
+where annee <> 2025
+group by annee;
+
+with Annee as (select YEAR(datecom) as annee
+                from COMMANDE),
+            VenteAuteur as (select idauteur, nomauteur, count(qte) as total
+                from COMMANDE natural join DETAILCOMMANDE natural join LIVRE natural join ECRIRE natural join AUTEUR
+                )
+select annee, nomauteur, max(total) as total
+from Annee natural join VenteAuteur
+where annee <> 2025
+group by annee, nomauteur;
+
+with QteAuteur as (select YEAR(datecom) as annee, nomauteur, sum(qte) as total
+                from COMMANDE natural join DETAILCOMMANDE natural join LIVRE natural join ECRIRE natural join AUTEUR
+                group by annee, nomauteur)
+select annee, nomauteur, max(total) as total
+from QteAuteur
+where annee <> 2025
+group by annee
+order by annee;with Annee as (select YEAR(datecom) as annee
+                from COMMANDE),
+            VenteAuteur as (select idauteur, nomauteur, count(qte) as total
+                from COMMANDE natural join DETAILCOMMANDE natural join LIVRE natural join ECRIRE natural join AUTEUR
+                )
+select annee, nomauteur, max(total) as total
+from Annee natural join VenteAuteur
+where annee <> 2025
+group by annee, nomauteur;
 -- +-----------------------+--
 -- * Question 127574 : 2pts --
 -- +-----------------------+--
@@ -308,3 +386,26 @@ group by annee;
 --  Requête imprimer les commandes en considérant que l'on veut celles de février 2020
 -- = Reponse question 127574
 --
+select nommag as Magasin, nomcli as Nom, prenomcli as Prenom, adressecli as adresse, codepostal as CodePostal, villecli as Ville, numcom, datecom as date, numlig, isbn, titre, qte, prixvente from CLIENT natural join COMMANDE natural join DETAILCOMMANDE natural join LIVRE natural join MAGASIN where MONTH(datecom) = ? and YEAR(datecom) = ? order by nommag;
+
+
+
+
+
+
+
+select MONTH(datecom) as mois, nommag as Magasin, sum(qte*prix) as CA 
+from MAGASIN natural join COMMANDE natural join DETAILCOMMANDE natural join LIVRE 
+where YEAR(datecom) = 2024 
+group by nommag, MONTH(datecom);
+
+select MONTH(datecom) as mois, sum(qte) as qte
+from MAGASIN natural join COMMANDE natural join DETAILCOMMANDE
+group by mois
+order by mois;
+
+select MONTH(datecom) as mois, sum(qte) as qte, sum(qte*prixvente) as CA
+from MAGASIN natural join COMMANDE natural join DETAILCOMMANDE
+group by mois
+order by mois;
+
