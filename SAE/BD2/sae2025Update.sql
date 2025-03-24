@@ -317,58 +317,15 @@ group by annee;
 -- +-------+-----------------------+-------+
 -- | etc...
 -- = Reponse question 127572.
-
-with MaxVenteAuteur as (select YEAR(datecom) as annee, nomauteur, count(qte) as total
-from COMMANDE natural join DETAILCOMMANDE natural join LIVRE natural join ECRIRE natural join AUTEUR
-group by nomauteur)
-select annee, nomauteur, max(total) as total
-from MaxVenteAuteur
-where annee <> 2025
+with QteAuteurAnnee as (select YEAR(datecom) as annee, idauteur, nomauteur, sum(qte) as total
+                        from COMMANDE natural join DETAILCOMMANDE natural join LIVRE natural join ECRIRE natural join AUTEUR 
+                        where YEAR(datecom) <> 2025
+                        group by annee, idauteur, nomauteur
+                        order by annee)
+select annee, nomauteur, total
+from QteAuteurAnnee
+where total >= ALL(select total from QteAuteurAnnee q2 where q2.annee = QteAuteurAnnee.annee)
 group by annee;
-
-with MaxVenteAuteur as (select YEAR(datecom) as annee, nomauteur, sum(qte) as total
-from COMMANDE natural join DETAILCOMMANDE natural join LIVRE natural join ECRIRE natural join AUTEUR
-where nomauteur = 'René Goscinny' and YEAR(datecom) = 2023
-group by nomauteur)
-select annee, nomauteur, max(total) as total
-from MaxVenteAuteur;
-
-with MaxVenteAuteur as (select YEAR(datecom) as annee, nomauteur, count(qte) as total
-from COMMANDE natural join DETAILCOMMANDE natural join LIVRE natural join ECRIRE natural join AUTEUR
-group by nomauteur)
-select annee, nomauteur, max(total) as total
-from MaxVenteAuteur
-where annee <> 2025
-group by annee;
-
-with Annee as (select YEAR(datecom) as annee
-                from COMMANDE),
-            VenteAuteur as (select idauteur, nomauteur, count(qte) as total
-                from COMMANDE natural join DETAILCOMMANDE natural join LIVRE natural join ECRIRE natural join AUTEUR
-                )
-select annee, nomauteur, max(total) as total
-from Annee natural join VenteAuteur
-where annee <> 2025
-group by annee, nomauteur;
-
-with QteAuteur as (select YEAR(datecom) as annee, nomauteur, sum(qte) as total
-                from COMMANDE natural join DETAILCOMMANDE natural join LIVRE natural join ECRIRE natural join AUTEUR
-                group by annee, nomauteur)
-select annee, nomauteur, max(total) as total
-from QteAuteur
-where annee <> 2025
-group by annee
-order by annee;
-
-with Annee as (select YEAR(datecom) as annee
-                from COMMANDE),
-            VenteAuteur as (select idauteur, nomauteur, count(qte) as total
-                from COMMANDE natural join DETAILCOMMANDE natural join LIVRE natural join ECRIRE natural join AUTEUR
-                )
-select annee, nomauteur, max(total) as total
-from Annee natural join VenteAuteur
-where annee <> 2025
-group by annee, nomauteur;
 -- +-----------------------+--
 -- * Question 127574 : 2pts --
 -- +-----------------------+--
@@ -381,21 +338,10 @@ select nommag as Magasin, nomcli as Nom, prenomcli as Prenom, adressecli as adre
 
 
 
-
-
-
-select MONTH(datecom) as mois, nommag as Magasin, sum(qte*prix) as CA 
-from MAGASIN natural join COMMANDE natural join DETAILCOMMANDE natural join LIVRE 
-where YEAR(datecom) = 2024 
-group by nommag, MONTH(datecom);
-
-select MONTH(datecom) as mois, sum(qte) as qte
+select  sum(qte*prixvente) as CA, sum(qte) as qte
 from MAGASIN natural join COMMANDE natural join DETAILCOMMANDE
-group by mois
-order by mois;
+group by YEAR(datecom), MONTH(datecom);
 
-select MONTH(datecom) as mois, YEAR(datecom) as annee, sum(qte) as qte, sum(qte*prixvente) as CA
+select  sum(qte*prixvente) as CA, count(numcom) as qte
 from MAGASIN natural join COMMANDE natural join DETAILCOMMANDE
-group by mois, annee
-order by mois, annee;
-
+group by YEAR(datecom), MONTH(datecom);

@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 def Exo1():
     X = np.random.randint(0, 10, 100)
     N = len(X)
-    print(N)
+    print(N)Y = 2 * X + np.random.normal(-1,0.2,50)
 
     print("Moyenne :",np.mean(X))
 
