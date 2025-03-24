@@ -107,11 +107,6 @@ group by idmag, nommag;
 -- = Reponse question 127291.
 
 select nommag, IFNULL(sum(qte), 0) as nbex
-from MAGASIN natural left join COMMANDE natural join DETAILCOMMANDE
-where datecom = DATE('2022-09-15')
-group by nommag;
-
-select nommag, IFNULL(sum(qte), 0) as nbex
 from MAGASIN m left join COMMANDE c on m.idmag = c.idmag and datecom = DATE('2022-09-15') natural left join DETAILCOMMANDE 
 group by nommag;
 
@@ -181,12 +176,6 @@ order by annee;
 -- +--------------------------------------+---------+
 -- | etc...
 -- = Reponse question 127370.
-
-select nomclass as Theme, sum(qte*prix) as Montant
-from CLASSIFICATION natural join THEMES natural join LIVRE natural join COMMANDE natural join DETAILCOMMANDE natural join MAGASIN
-where YEAR(datecom) = 2025
-group by Theme;
-
 with CA2024 as (
     select sum(qte*prixvente) montant
     from DETAILCOMMANDE natural join COMMANDE 
@@ -308,10 +297,9 @@ group by nommag;
 -- | etc...
 -- = Reponse question 127538.
 
-create or replace view MaxCAParClient(idcli, annee, CA) as 
-    select idcli, YEAR(datecom), sum(qte*prixvente)
+with MaxCAParClient as (select idcli, YEAR(datecom) as annee, sum(qte*prixvente) as CA
     from CLIENT natural join COMMANDE natural join DETAILCOMMANDE natural join LIVRE
-    group by YEAR(datecom), idcli;
+    group by YEAR(datecom), idcli)
 select annee, max(CA) as maximum, min(CA) as minimum, avg(CA) as moyenne
 from MaxCAParClient 
 group by annee;
@@ -370,7 +358,9 @@ select annee, nomauteur, max(total) as total
 from QteAuteur
 where annee <> 2025
 group by annee
-order by annee;with Annee as (select YEAR(datecom) as annee
+order by annee;
+
+with Annee as (select YEAR(datecom) as annee
                 from COMMANDE),
             VenteAuteur as (select idauteur, nomauteur, count(qte) as total
                 from COMMANDE natural join DETAILCOMMANDE natural join LIVRE natural join ECRIRE natural join AUTEUR
@@ -404,8 +394,8 @@ from MAGASIN natural join COMMANDE natural join DETAILCOMMANDE
 group by mois
 order by mois;
 
-select MONTH(datecom) as mois, sum(qte) as qte, sum(qte*prixvente) as CA
+select MONTH(datecom) as mois, YEAR(datecom) as annee, sum(qte) as qte, sum(qte*prixvente) as CA
 from MAGASIN natural join COMMANDE natural join DETAILCOMMANDE
-group by mois
-order by mois;
+group by mois, annee
+order by mois, annee;
 

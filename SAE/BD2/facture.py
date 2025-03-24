@@ -35,7 +35,7 @@ def faire_factures(requete:str, mois:int, annee:int, bd:MySQL):
     magasins = ["La librairie parisienne", "Cap au Sud", "Ty Li-Breizh-rie", "L'européenne", "Le Ch'ti livre", "Rhône à lire", "Loire et livres"]
     res="en cours d'implementation"
     print(f'Factures du {mois}/{annee}')
-    for i in range(len(curseur)):
+    for ligne in curseur:
         # parcours du résultat de la requête. 
         # ligne peut être vu comme un dictionnaire dont les clés sont les noms des colonnes de votre requête
         # est les valeurs sont les valeurs de ces colonnes pour la ligne courante
@@ -45,6 +45,7 @@ def faire_factures(requete:str, mois:int, annee:int, bd:MySQL):
             magasins.remove(ligne[0])
         else:
             print("---------------------------------------------------------------------")
+            #if client_prec = {ligne[1]},{ligne[2]}:
             print(f'{ligne[1]} {ligne[2]}')
             print(f'{ligne[3]}')
             print(f'{ligne[4]} {ligne[5]}')
@@ -53,6 +54,7 @@ def faire_factures(requete:str, mois:int, annee:int, bd:MySQL):
             print(f'              {ligne[8]} {ligne[9]} {ligne[10]}                     {ligne[11]}  {ligne[12]} {ligne[11]*ligne[12]}')
             print(f'                                                                                                 -------') #provisoire
             print(f'                                                                                              Total   {ligne[11]}') #provisoire
+            client_prec = {ligne[1]},{ligne[2]}
         
 
 
