@@ -64,7 +64,57 @@ if __name__ == '__main__':
         requete=fic_req.read()
 
 CA,qte = extraire_requetes(requete,ms)
+moyCa = sum(CA)/len(CA)
+moyQte = sum(qte)/len(qte)
+
+def MoyCaQte(CA,qte):
+    moyCAQte = []
+    for i in range(len(CA)):
+        moyCAQte.append(CA[i]*qte[i])
+    return sum(moyCAQte)/len(moyCAQte)
+
+def Covariance(CA, qte, moyCa, moyQte):
+    return (MoyCaQte(CA,qte)) - (moyCa * moyQte)
+
+def regression_lineaire(qte, CA):
+    # Etape 1 : Calcul des moyennes
+    mean_qte = sum(qte) / len(qte)
+    mean_CA = sum(CA) / len(CA)
+
+    print(mean_qte)
+    print(mean_CA)
+
+
+    # Etape 2 : Calcul de la difference qte - moyenne
+    qte_diff = [qte - mean_qte for qte in qte]
+    CA_diff = [ca - mean_CA for ca in CA]
+
+    # Etape 3 : Calcul du numerateur (somme des produits des ecarts quadratiques)
+    
+    num = sum(qted * CAd for qted, CAd in zip(qte_diff, CA_diff)) 
+    print(f'covariance regession lineaire : {num}')
+    # Etape 4 : Calcul du denominateur (les variances de qte et Y)
+    denom_qte = sum(qted ** 2 for qted in qte_diff) #variance de qte
+
+    a = num/denom_qte
+    b = mean_CA - a*mean_qte
+
+    return(a,b)
+
+
+print(f' moyenne CA : {moyCa}')
+print(f' moyenne qte : {moyQte}')
+print(f' moyenne CA*qte : {MoyCaQte(CA,qte)}')
+print(f' Covariance de CA,qte : {Covariance(CA, qte, moyCa, moyQte)}')
 #print(CA)
 #print(qte)
+
+Qte,Ca = regression_lineaire(qte,CA)
+
+x_vals1 = np.linspace(min(qte), max(qte))
+y_vals1 = Qte * x_vals1 + Ca
+
 plt.scatter(qte, CA, color='blue', marker='o', alpha=0.7)
-plt.show()
+plt.plot(x_vals1, y_vals1, color='red')
+#plt.show()
+
