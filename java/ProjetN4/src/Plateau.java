@@ -15,13 +15,13 @@ public class Plateau{
         this.pourcentageDeBombe = pourcentage;
         this.nbBombes = 0;
         this.cases = new ArrayList<>();
-        for(int i = 0; i<this.nbColonnes; ++i){
-            this.cases.add(new ArrayList<>());
-        }
+        this.creerLesCasesVides();
+        this.rendLesCasesIntelligentes();
     }
 
     private void creerLesCasesVides(){
         for(int i = 0; i<this.nbColonnes; ++i){
+            this.cases.add(new ArrayList<>());  
             for(int j = 0; j<this.nbLignes; ++j){
                 this.cases.get(i).add(new CaseIntelligente());
             }
@@ -31,9 +31,11 @@ public class Plateau{
     private void rendLesCasesIntelligentes(){
         for(int i=0; i<this.cases.size(); ++i){
             for(int j=0; j<this.cases.size(); ++j){
-                for(int x=i-1; x<i+1; ++x){
-                    for(int y=j-1; y<j+1; ++y){
-                        this.cases.get(i).get(j).ajouteVoisine(this.cases.get(x).get(y));
+                for(int x=i-1; x<=i+1; ++x){
+                    for(int y=j-1; y<=j+1; ++y){
+                        if(x >= 0 && y >= 0 && x<this.nbLignes && y<this.nbColonnes){
+                            this.cases.get(i).get(j).ajouteVoisine(this.cases.get(x).get(y));
+                        }
                     }
                 }
             }
@@ -47,6 +49,7 @@ public class Plateau{
             for(int j=0; j<this.cases.size(); ++j){
                 if(rand.nextInt(borneMax) < this.pourcentageDeBombe){
                     this.cases.get(i).get(j).poseBombe();
+                    this.nbBombes++;
                 }    
             }
         }
@@ -81,8 +84,20 @@ public class Plateau{
         return nbCasesMarquees;
     }
 
+    public int getNbCasesRevele(){
+        int nbCasesRevele = 0;
+        for(int i=0; i<this.cases.size(); ++i){
+            for(int j=0; j<this.cases.size(); ++j){
+                if(this.cases.get(i).get(j).estDecouverte()){
+                    nbCasesRevele++;
+                }
+            }
+        }
+        return nbCasesRevele;
+    }
+
     public void poseBombe(int x, int y){
-        this.cases.get(x).get(y).poseBombe();
+        this.cases.get(x).get(y).poseBombe(); 
     }
 
     public void reset(){

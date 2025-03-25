@@ -24,11 +24,11 @@ public class Case {
     }
 
     public boolean estDecouverte(){
-        return this.estDecouverte();
+        return this.estDecouverte;
     }
 
     public boolean estMarquee(){
-        return this.estMarquee();
+        return this.estMarquee;
     }
 
     public boolean reveler(){
