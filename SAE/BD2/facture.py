@@ -82,7 +82,7 @@ if __name__ == '__main__':
     parser.add_argument("--requete", dest="fichierRequete", help="Fichier contenant la requete des commandes", type=str)    
     args = parser.parse_args()
     #passwd = getpass.getpass("mot de passe SQL:")
-    passwd = "Maria_K|DB_2109"
+    passwd = "foucher"
     try:
         ms = MySQL(args.nomLogin, passwd, args.nomServeur, args.nomBaseDeDonnees)
     except Exception as e:

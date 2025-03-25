@@ -63,10 +63,10 @@ def regression_lineaire(X, Z):
 
     return(a,b)
 
-a,b = regression_lineaire(X,Y)
-
-x_vals1 = np.linspace(min(X), max(X), 100)
-y_vals1 = a * x_vals1 + b
+#a,b = regression_lineaire(X,Y)
+#
+#x_vals1 = np.linspace(min(X), max(X), 100)
+#y_vals1 = a * x_vals1 + b
 #plt.scatter(X, Y, color='blue', marker='o', alpha=0.7)
 #plt.plot(x_vals1, y_vals1, color='red')
 #plt.show()
@@ -75,18 +75,52 @@ Annees = np.array([1950, 1960, 1965, 1973, 1985, 1990, 2000, 2005, 2006, 2008, 2
 W = np.array([63, 90, 115, 180, 202, 229, 269, 277, 276, 273, 263, 259])
 G = np.array([30, 50, 66, 100, 132, 154, 188, 203, 208, 213, 210, 214])
 P = np.array([41, 46, 49, 52, 55, 57, 59, 61, 61.4, 62.1, 62.8, 63.4])
+#
+#W1 = W[:7]
+#G2 = G[:7]
+#
+#a,b = regression_lineaire(W1,G2)
+#
+#x_vals1 = np.linspace(min(W1), max(W1), 100)
+#y_vals1 = a * x_vals1 + b
+#
+#plt.scatter(W1,G2, color='blue', marker='o', alpha=0.7)
+#plt.plot(x_vals1, y_vals1, color='red')
+#plt.show()
 
-W1 = W[:7]
-G2 = G[:7]
+#W1 = W[7:12]
+#G2 = G[7:12]
+#
+#a,b = regression_lineaire(W1,G2)
+#
+#x_vals1 = np.linspace(min(W1), max(W1))
+#y_vals1 = a * x_vals1 + b
+#
+#plt.scatter(W1,G2, color='blue', marker='o', alpha=0.7)
+#plt.plot(x_vals1, y_vals1, color='red')
+#plt.show()
+
+W1 = W[:12]
+G2 = G[:12]
+
+def WG(W1, G2):
+    W1G2 = []
+    i = 0
+    for elem in W1:
+        W1G2.append(G2[i]/elem)
+        i += 1
+    return W1G2
+    
 
 a,b = regression_lineaire(W1,G2)
 
-x_vals1 = np.linspace(min(W1), max(G2))
+x_vals1 = np.linspace(min(W1), max(W1))
 y_vals1 = a * x_vals1 + b
 
-plt.scatter(W1,G2, color='blue', marker='o', alpha=0.7)
+Y = WG(W1, G2)
+print(Y)
+
+plt.scatter(Annees,Y, color='blue', marker='o', alpha=0.7)
 plt.plot(x_vals1, y_vals1, color='red')
 plt.show()
 
-
-    
