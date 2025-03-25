@@ -66,5 +66,5 @@ if __name__ == '__main__':
 CA,qte = extraire_requetes(requete,ms)
 #print(CA)
 #print(qte)
-plt.scatter(CA, qte, color='blue', marker='o', alpha=0.7)
+plt.scatter(qte, CA, color='blue', marker='o', alpha=0.7)
 plt.show()

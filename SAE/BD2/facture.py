@@ -33,7 +33,7 @@ def faire_factures(requete:str, mois:int, annee:int, bd:MySQL):
     curseur=bd.execute(requete,(mois,annee))
     # Initialisations du traitement
     magasins = ["La librairie parisienne", "Cap au Sud", "Ty Li-Breizh-rie", "L'européenne", "Le Ch'ti livre", "Rhône à lire", "Loire et livres"]
-    res="en cours d'implementation"
+    client_prec = ()
     print(f'Factures du {mois}/{annee}')
     for ligne in curseur:
         # parcours du résultat de la requête. 
@@ -43,25 +43,27 @@ def faire_factures(requete:str, mois:int, annee:int, bd:MySQL):
         if ligne[0] in magasins:
             print(f'Edition des factures du magasin {ligne[0]}')
             magasins.remove(ligne[0])
-        else:
             print("---------------------------------------------------------------------")
-            #if client_prec = {ligne[1]},{ligne[2]}:
-            print(f'{ligne[1]} {ligne[2]}')
-            print(f'{ligne[3]}')
-            print(f'{ligne[4]} {ligne[5]}')
-            print(f'                                        commande n°{ligne[6]} du {ligne[7]}')
-            print(f'                    ISBN                           Titre                     qte  prix  total')
-            print(f'              {ligne[8]} {ligne[9]} {ligne[10]}                     {ligne[11]}  {ligne[12]} {ligne[11]*ligne[12]}')
+        else:
+            if client_prec != ({ligne[1]},{ligne[2]}):
+                print(f'{ligne[1]} {ligne[2]}')
+                print(f'{ligne[3]}')
+                print(f'{ligne[4]} {ligne[5]}')
+                print(f'                                        commande n°{ligne[6]} du {ligne[7]}')
+                print(f'                    ISBN                           Titre                     qte  prix  total')
+                print(f'              {ligne[8]} {ligne[9]} {ligne[10]}                     {ligne[11]}  {ligne[12]} {ligne[11]*ligne[12]}')
+                print("---------------------------------------------------------------------")
+            else:
+                print(f'              {ligne[8]} {ligne[9]} {ligne[10]}                     {ligne[11]}  {ligne[12]} {ligne[11]*ligne[12]}')
             print(f'                                                                                                 -------') #provisoire
             print(f'                                                                                              Total   {ligne[11]}') #provisoire
-            client_prec = {ligne[1]},{ligne[2]}
+            client_prec = ({ligne[1]},{ligne[2]})
         
 
 
     #ici fin du traitement
     # fermeture de la requête
     curseur.close()
-    return res
         
 
 
@@ -73,7 +75,7 @@ if __name__ == '__main__':
     parser.add_argument("--requete", dest="fichierRequete", help="Fichier contenant la requete des commandes", type=str)    
     args = parser.parse_args()
     #passwd = getpass.getpass("mot de passe SQL:")
-    passwd = "foucher"
+    passwd = "Maria_K|DB_2109"
     try:
         ms = MySQL(args.nomLogin, passwd, args.nomServeur, args.nomBaseDeDonnees)
     except Exception as e:
