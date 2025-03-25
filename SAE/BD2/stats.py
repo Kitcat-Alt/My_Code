@@ -116,5 +116,5 @@ y_vals1 = Qte * x_vals1 + Ca
 
 plt.scatter(qte, CA, color='blue', marker='o', alpha=0.7)
 plt.plot(x_vals1, y_vals1, color='red')
-#plt.show()
+plt.show()
 
