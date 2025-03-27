@@ -177,14 +177,14 @@ order by annee;
 -- | etc...
 -- = Reponse question 127370.
 with CA2024 as (
-    select sum(qte*prixvente) montant
+    select sum(qte*prixvente) Total
     from DETAILCOMMANDE natural join COMMANDE 
-    where YEAR(datecom)=2024
+    where YEAR(datecom)=2025
 )
 
-select nomclass Theme, CONCAT(ROUND((sum(qte*prixvente)/montant)*100),'%') Montant
+select nomclass Theme, ROUND((sum(qte*prixvente)/Total)*100) total
 from CA2024 natural join DETAILCOMMANDE natural join COMMANDE natural join LIVRE natural join THEMES natural join CLASSIFICATION
-where YEAR(datecom) =2024
+where YEAR(datecom) = 202------× 5
 group by LEFT(LPAD(iddewey,3,'0'),1)
 order by nomclass; 
 --requete gwen
