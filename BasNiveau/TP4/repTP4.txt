@@ -63,4 +63,18 @@ Exo4]  MAR=H=1
        MDR=H=H+1
        wr
 
-Exo5] 
+Exo7]
+   MAR=PC=1;rd;fetch
+   H=1               -> lit l'adresse 1 (MAR=PC=1) dans MAR et la place dans OPC
+   OPC=MDR
+
+Exo8]
+   MAR=0;rd
+   H=1
+   OPC=MDR
+   boucle:MAR=MDR=OPC;wr
+   OPC=OPC-1
+   Z=OPC;if(Z) goto fin; else goto boucle
+   fin:H=0
+
+
