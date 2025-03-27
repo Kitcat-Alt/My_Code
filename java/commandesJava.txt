@@ -1,3 +1,6 @@
 compiler : javac -d bin src/*.java
 executer : java -cp bin Executable
 executer et tester : java -cp bin -ea Executable
+
+javafx : 
+javac -d bin/ --module-path /usr/share/openjfx/lib --add-modules javafx.controls src/*.java
