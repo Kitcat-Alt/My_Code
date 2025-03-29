@@ -34,29 +34,54 @@ def faire_factures(requete:str, mois:int, annee:int, bd:MySQL):
     # Initialisations du traitement
     magasins = ["La librairie parisienne", "Cap au Sud", "Ty Li-Breizh-rie", "L'européenne", "Le Ch'ti livre", "Rhône à lire", "Loire et livres"]
     client_prec = ()
+    magasin_prec = None
+    totalCommande = 0
+    totalQteMagasin = 0
+    totalPrixMagasin = 0
+    nbFactureMag = 0
+    cptMag = 0
     print(f'Factures du {mois}/{annee}')
     for ligne in curseur:
         # parcours du résultat de la requête. 
         # ligne peut être vu comme un dictionnaire dont les clés sont les noms des colonnes de votre requête
         # est les valeurs sont les valeurs de ces colonnes pour la ligne courante
         # par exemple ligne['numcom'] va donner le numéro de la commande de la ligne courante 
+        if magasin_prec != ligne[0]:
+            print("---------------------------------------------------------------------")
+            print(f'{nbFactureMag} factures éditées')
+            print(f'{totalQteMagasin} livres vendus')
+            print('*********************************************************************' + "\n")
         if ligne[0] in magasins:
             print(f'Edition des factures du magasin {ligne[0]}')
             magasins.remove(ligne[0])
-            print("---------------------------------------------------------------------")
+            totalPrixMagasin = 0
+            totalQteMagasin = 0
+
+
+            
         else:
-            if client_prec != ({ligne[1]},{ligne[2]}):
+            if client_prec != ({ligne[1]},{ligne[2]}) or client_prec == ():
+                print(f'                                                                                     --------')
+                print(f'                                                                               Total    {totalCommande}')
+                totalCommande = 0
+                print("---------------------------------------------------------------------")
                 print(f'{ligne[1]} {ligne[2]}')
                 print(f'{ligne[3]}')
                 print(f'{ligne[4]} {ligne[5]}')
                 print(f'                                        commande n°{ligne[6]} du {ligne[7]}')
                 print(f'                    ISBN                           Titre                     qte  prix  total')
                 print(f'              {ligne[8]} {ligne[9]} {ligne[10]}                     {ligne[11]}  {ligne[12]} {ligne[11]*ligne[12]}')
+                totalQteMagasin += ligne[11]
+                totalCommande += ligne[11]*ligne[12]
             else:
                 print(f'              {ligne[8]} {ligne[9]} {ligne[10]}                     {ligne[11]}  {ligne[12]} {ligne[11]*ligne[12]}')
-            #print(f'                                                                                                 -------') #provisoire
-            #print(f'                                                                                              Total   {ligne[11]}') #provisoire
-            client_prec = ({ligne[1]},{ligne[2]})
+                totalCommande += ligne[11]*ligne[12]
+                totalQteMagasin += ligne[11]
+        client_prec = ({ligne[1]},{ligne[2]})
+        magasin_prec = ligne[0]
+        totalPrixMagasin += totalCommande
+        nbFactureMag += 1
+        cptMag += 1
         
 
 
