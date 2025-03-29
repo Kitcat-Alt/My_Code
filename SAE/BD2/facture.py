@@ -52,11 +52,10 @@ def faire_factures(requete:str, mois:int, annee:int, bd:MySQL):
                 print(f'                                        commande n°{ligne[6]} du {ligne[7]}')
                 print(f'                    ISBN                           Titre                     qte  prix  total')
                 print(f'              {ligne[8]} {ligne[9]} {ligne[10]}                     {ligne[11]}  {ligne[12]} {ligne[11]*ligne[12]}')
-                print("---------------------------------------------------------------------")
             else:
                 print(f'              {ligne[8]} {ligne[9]} {ligne[10]}                     {ligne[11]}  {ligne[12]} {ligne[11]*ligne[12]}')
-            print(f'                                                                                                 -------') #provisoire
-            print(f'                                                                                              Total   {ligne[11]}') #provisoire
+            #print(f'                                                                                                 -------') #provisoire
+            #print(f'                                                                                              Total   {ligne[11]}') #provisoire
             client_prec = ({ligne[1]},{ligne[2]})
         
 
