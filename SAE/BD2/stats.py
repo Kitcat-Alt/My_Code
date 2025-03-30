@@ -63,75 +63,75 @@ if __name__ == '__main__':
     with open(args.fichierRequete) as fic_req:
         requete=fic_req.read()
 
+#extraction des données de la requetes dans des listes
 CA,qte = extraire_requetes(requete,ms)
+
+#calcul des moyenne du CA et du nombre de livres vendus
 moyCa = sum(CA)/len(CA)
 moyQte = sum(qte)/len(qte)
 
-def MoyCaQte(CA,qte):
-    moyCAQte = []
-    for i in range(len(CA)):
-        moyCAQte.append(CA[i]*qte[i])
-    return sum(moyCAQte)/len(moyCAQte)
-
-def Covariance(CA, qte, moyCa, moyQte):
-    return (MoyCaQte(CA,qte)) - (moyCa * moyQte)
 
 def regression_lineaire(qte, CA):
+    """_summary_
+        calcule les coefficient a et b de l'equetion de la droite de régression
+    Args:
+        qte (List): la liste de nombre de livres vendu par mois
+        CA (List): la liste des chiffres d'affaire réalisés
+    """
     # Etape 1 : Calcul des moyennes
     mean_qte = sum(qte) / len(qte)
     mean_CA = sum(CA) / len(CA)
-
-    print(mean_qte)
-    print(mean_CA)
-
 
     # Etape 2 : Calcul de la difference qte - moyenne
     qte_diff = [qte - mean_qte for qte in qte]
     CA_diff = [ca - mean_CA for ca in CA]
 
     # Etape 3 : Calcul du numerateur (somme des produits des ecarts quadratiques)
-    
-    num = sum(qted * CAd for qted, CAd in zip(qte_diff, CA_diff)) 
-    print(f'covariance regession lineaire : {num}')
-    # Etape 4 : Calcul du denominateur (les variances de qte et Y)
-    denom_qte = sum(qted ** 2 for qted in qte_diff) #variance de qte
-
-    a = num/denom_qte
-    b = mean_CA - a*mean_qte
-
+    moyCa
     return(a,b)
+
+def coefficient_correlation(moyCa, moyQte):
+    """_summary_
+        Calcule le coefficient de corrélation
+    Args:
+        moyCa (float): la moyenne des chiffre d'affaire
+        moyQte (float): la moyenne des livres vendus par mois
+    """
+    # Etape 2 : Calcul de la difference X - moyenne
+    X_diff = [x - moyCa for x in CA]
+    Y_diff = [y - moyQte for y in qte]
+
+    # Etape 3 : Calcul du numerateur (somme des produits des ecarts quadratiques)
+    num = sum(xd * yd for xd, yd in zip(X_diff, Y_diff))
+
+    # Etape 4 : Calcul du denominateur (les variances de X et Y)
+    denom_X = sum(xd ** 2 for xd in X_diff)
+    #print(denom_X)
+    denom_Y = sum(yd ** 2 for yd in Y_diff)
+    #print(denom_Y)
+
+    # Etape 5 : Calcul du coefficient de correlation
+    correlation = num / (np.sqrt(denom_X) * np.sqrt(denom_Y))
+    print("Coefficient de correlation de Pearson :", correlation)
 
 
 print(f' moyenne CA : {moyCa}')
 print(f' moyenne qte : {moyQte}')
-print(f' moyenne CA*qte : {MoyCaQte(CA,qte)}')
-print(f' Covariance de CA,qte : {Covariance(CA, qte, moyCa, moyQte)}')
-#print(CA)
-#print(qte)
+coefficient_correlation(moyCa,moyQte)
 
+#coeficients a et b de la droite de régression
 Qte,Ca = regression_lineaire(qte,CA)
+
 
 x_vals1 = np.linspace(min(qte), max(qte))
 y_vals1 = Qte * x_vals1 + Ca
 
+plt.xlabel("Nombre de vente de livre")
+plt.ylabel("Chiffre d'affaire")
+plt.title("Evolution CA en fontion du nombre de ventes")
 plt.scatter(qte, CA, color='blue', marker='o', alpha=0.7)
 plt.plot(x_vals1, y_vals1, color='red')
 plt.show()
 
-# Etape 2 : Calcul de la difference X - moyenne
-X_diff = [x - moyCa for x in CA]
-Y_diff = [y - moyQte for y in qte]
 
-# Etape 3 : Calcul du numerateur (somme des produits des ecarts quadratiques)
-num = sum(xd * yd for xd, yd in zip(X_diff, Y_diff))
-
-# Etape 4 : Calcul du denominateur (les variances de X et Y)
-denom_X = sum(xd ** 2 for xd in X_diff)
-print(denom_X)
-denom_Y = sum(yd ** 2 for yd in Y_diff)
-print(denom_Y)
-
-# Etape 5 : Calcul du coefficient de correlation
-correlation = num / (np.sqrt(denom_X) * np.sqrt(denom_Y))
-print("Coefficient de correlation de Pearson :", correlation)
 
