@@ -1,70 +1,29 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-import sqlalchemy
-import argparse
-import getpass
-
-class MySQL(object):
-    def __init__(self, user, passwd, host, database,timeout=20):
-        self.user = user
-        self.passwd = passwd
-        self.host = host
-        self.database = database
-        #try:
-        self.engine = sqlalchemy.create_engine(
-                'mysql+mysqlconnector://' + self.user + ':' + self.passwd + '@' + self.host + '/' + self.database,
-                )
-        self.cnx = self.engine.connect()
-        print("connexion réussie")
-
-    def close(self):
-        self.cnx.close()
-
-    def execute(self, requete):
-        #for param in liste_parametres:
-        #    if type(param)==str:
-        #        requete=requete.replace('?',"'"+param+"'",1)
-        #    else:
-        #        requete=requete.replace('?',str(param),1)
-        requete = sqlalchemy.text(requete)
-        return self.cnx.execute(requete)
-
-def extraire_requetes(requete:str, bd:MySQL):
-    CA = []
-    qte = []
-    curseur=bd.execute(requete)
-    # Initialisations du traitement
-    for ligne in curseur:
-        # parcours du résultat de la requête. 
-        CA.append(ligne[0])
-        qte.append(ligne[1])
-    #ici fin du traitement
-    # fermeture de la requête
-    curseur.close()
-    return (CA,qte)
-        
 
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--serveur",dest="nomServeur", help="Nom ou adresse du serveur de base de données", type=str, default="127.0.0.1")
-    parser.add_argument("--bd",dest="nomBaseDeDonnees", help="Nom de la base de données", type=str,default='Librairie')
-    parser.add_argument("--login",dest="nomLogin", help="Nom de login sur le serveur de base de donnée", type=str, default='limet')
-    parser.add_argument("--requete", dest="fichierRequete", help="Fichier contenant la requete des commandes", type=str)    
-    args = parser.parse_args()
-    #passwd = getpass.getpass("mot de passe SQL:")
-    passwd = "Maria_K|DB_2109"
-    try:
-        ms = MySQL(args.nomLogin, passwd, args.nomServeur, args.nomBaseDeDonnees)
-    except Exception as e:
-        print("La connection a échoué avec l'erreur suivante:", e)
-        exit(0)
-    with open(args.fichierRequete) as fic_req:
-        requete=fic_req.read()
+CA = [
+    833.17, 1025.44, 1591.98, 840.95, 693.90, 1659.02, 1551.63, 1558.55,
+    3712.36, 3226.70, 3687.84, 3711.98, 1069.89, 797.59, 825.50, 980.68,
+    1083.62, 1169.57, 2258.52, 2363.32, 3566.82, 3172.77, 3651.71, 3648.87,
+    1280.37, 560.63, 1040.61, 908.52, 1434.43, 1697.37, 2402.41, 2295.32,
+    4028.01, 3152.43, 3732.31, 4021.45, 1352.44, 834.27, 916.02, 1229.69,
+    1453.42, 2224.74, 2439.95, 2548.73, 5559.79, 3104.95, 4364.57, 5313.24,
+    1674.16, 1992.89, 1619.45, 843.17, 1409.86, 1985.20, 2453.13, 2864.73,
+    5857.81, 4274.50, 5285.04, 5779.58, 1598.62, 1467.22
+]
 
-#extraction des données de la requetes dans des listes
-CA,qte = extraire_requetes(requete,ms)
+qte = [
+    64, 49, 63, 54, 42, 85, 102, 106,
+    232, 179, 200, 235, 68, 49, 56, 58,
+    68, 76, 112, 119, 237, 171, 213, 246,
+    76, 46, 60, 61, 72, 97, 134, 150,
+    288, 202, 227, 251, 85, 49, 77, 70,
+    72, 107, 148, 159, 319, 200, 264, 293,
+    90, 80, 106, 66, 82, 111, 159, 172,
+    338, 240, 291, 349, 112, 78
+]
 
 #calcul des moyenne du CA et du nombre de livres vendus
 moyCa = sum(CA)/len(CA)
