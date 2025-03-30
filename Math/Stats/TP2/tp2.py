@@ -16,28 +16,7 @@ Y = 2 * X + np.random.normal(-1,0.2,50)
 #plt.scatter(X, Y, color='blue', marker='o', alpha=0.7)
 #plt.show()
 
-# Etape 1 : Calcul des moyennes
-mean_X = sum(X) / len(X)
-mean_Y = sum(Y) / len(Y)
 
-print(mean_X)
-print(mean_Y)
-
-
-# Etape 2 : Calcul de la difference X - moyenne
-X_diff = [x - mean_X for x in X]
-Y_diff = [y - mean_Y for y in Y]
-
-# Etape 3 : Calcul du numerateur (somme des produits des ecarts quadratiques)
-num = sum(xd * yd for xd, yd in zip(X_diff, Y_diff))
-
-# Etape 4 : Calcul du denominateur (les variances de X et Y)
-denom_X = sum(xd ** 2 for xd in X_diff)
-denom_Y = sum(yd ** 2 for yd in Y_diff)
-
-# Etape 5 : Calcul du coefficient de correlation
-correlation = num / (np.sqrt(denom_X) * np.sqrt(denom_Y))
-print("Coefficient de correlation de Pearson :", correlation)
 
 def regression_lineaire(X, Z):
     # Etape 1 : Calcul des moyennes

@@ -118,3 +118,20 @@ plt.scatter(qte, CA, color='blue', marker='o', alpha=0.7)
 plt.plot(x_vals1, y_vals1, color='red')
 plt.show()
 
+# Etape 2 : Calcul de la difference X - moyenne
+X_diff = [x - moyCa for x in CA]
+Y_diff = [y - moyQte for y in qte]
+
+# Etape 3 : Calcul du numerateur (somme des produits des ecarts quadratiques)
+num = sum(xd * yd for xd, yd in zip(X_diff, Y_diff))
+
+# Etape 4 : Calcul du denominateur (les variances de X et Y)
+denom_X = sum(xd ** 2 for xd in X_diff)
+print(denom_X)
+denom_Y = sum(yd ** 2 for yd in Y_diff)
+print(denom_Y)
+
+# Etape 5 : Calcul du coefficient de correlation
+correlation = num / (np.sqrt(denom_X) * np.sqrt(denom_Y))
+print("Coefficient de correlation de Pearson :", correlation)
+
