@@ -28,65 +28,80 @@ class MySQL(object):
         return self.cnx.execute(requete)
 
 def faire_factures(requete:str, mois:int, annee:int, bd:MySQL):
-    # exécute la requête en remplaçant le premier ? par le numéro du mois 
-    # et le deuxième ? par l'année
     curseur=bd.execute(requete,(mois,annee))
-    # Initialisations du traitement
     magasins = ["La librairie parisienne", "Cap au Sud", "Ty Li-Breizh-rie", "L'européenne", "Le Ch'ti livre", "Rhône à lire", "Loire et livres"]
     client_prec = ()
     magasin_prec = None
     totalCommande = 0
     totalQteMagasin = 0
-    totalPrixMagasin = 0
+    totalPrixGlobal = 0
+    totalQteGlobal = 0
     nbFactureMag = 0
-    cptMag = 0
+    premierTour = True
+    writeMag = True
     print(f'Factures du {mois}/{annee}')
+
     for ligne in curseur:
-        # parcours du résultat de la requête. 
-        # ligne peut être vu comme un dictionnaire dont les clés sont les noms des colonnes de votre requête
-        # est les valeurs sont les valeurs de ces colonnes pour la ligne courante
-        # par exemple ligne['numcom'] va donner le numéro de la commande de la ligne courante 
-        if magasin_prec != ligne[0]:
-            print("---------------------------------------------------------------------")
+        if magasin_prec == ligne[0]:
+            writeMag = False
+            
+        if writeMag == False and client_prec != ({ligne[1]},{ligne[2]}):
+            totalPrixGlobal += totalCommande
+            print(f'                                                                                     --------')
+            print(f'                                                                               Total    {totalCommande}')
+            totalCommande = 0
+            nbFactureMag += 1
+
+        if magasin_prec != ligne[0] and premierTour == False:
+            print("---------------------------------------------------------------------------------------------")
             print(f'{nbFactureMag} factures éditées')
             print(f'{totalQteMagasin} livres vendus')
-            print('*********************************************************************' + "\n")
+            print('*********************************************************************************************' + "\n")
+            totalQteGlobal += totalQteMagasin
+            nbFactureMag = 0
+
         if ligne[0] in magasins:
-            print(f'Edition des factures du magasin {ligne[0]}')
-            magasins.remove(ligne[0])
-            totalPrixMagasin = 0
-            totalQteMagasin = 0
-
-
+            if premierTour == True:
+                print(f'Edition des factures du magasin {ligne[0]}')
+                magasins.remove(ligne[0])
+            else:
+                print(f'Edition des factures du magasin {ligne[0]}')
+                magasins.remove(ligne[0])
+                totalQteMagasin = 0
+                writeMag = True
+                    
+        if client_prec != ({ligne[1]},{ligne[2]}) or client_prec == ():
+            print("---------------------------------------------------------------------------------------------")
+            print(f'{ligne[1]} {ligne[2]}')
+            print(f'{ligne[3]}')
+            print(f'{ligne[4]} {ligne[5]}')
+            print(f'                                        commande n°{ligne[6]} du {ligne[7]}')
+            print(f'                    ISBN                           Titre                     qte  prix  total')
+            print(f'              {ligne[8]} {ligne[9]} {ligne[10]}', end = ' ')
+            print(f'{ligne[11]}  {ligne[12]} {ligne[11]*ligne[12]}')
+            totalQteMagasin += ligne[11]
+            totalCommande += ligne[11]*ligne[12]
             
         else:
-            if client_prec != ({ligne[1]},{ligne[2]}) or client_prec == ():
-                print(f'                                                                                     --------')
-                print(f'                                                                               Total    {totalCommande}')
-                totalCommande = 0
-                print("---------------------------------------------------------------------")
-                print(f'{ligne[1]} {ligne[2]}')
-                print(f'{ligne[3]}')
-                print(f'{ligne[4]} {ligne[5]}')
-                print(f'                                        commande n°{ligne[6]} du {ligne[7]}')
-                print(f'                    ISBN                           Titre                     qte  prix  total')
-                print(f'              {ligne[8]} {ligne[9]} {ligne[10]}                     {ligne[11]}  {ligne[12]} {ligne[11]*ligne[12]}')
-                totalQteMagasin += ligne[11]
-                totalCommande += ligne[11]*ligne[12]
-            else:
-                print(f'              {ligne[8]} {ligne[9]} {ligne[10]}                     {ligne[11]}  {ligne[12]} {ligne[11]*ligne[12]}')
-                totalCommande += ligne[11]*ligne[12]
-                totalQteMagasin += ligne[11]
+            print(f'              {ligne[8]} {ligne[9]} {ligne[10]}', end= ' ')
+            print(f'{ligne[11]} {ligne[12]} {ligne[11]*ligne[12]}')
+            totalCommande += ligne[11]*ligne[12]
+            totalQteMagasin += ligne[11]
+        premierTour = False
         client_prec = ({ligne[1]},{ligne[2]})
         magasin_prec = ligne[0]
-        totalPrixMagasin += totalCommande
-        nbFactureMag += 1
-        cptMag += 1
-        
 
-
-    #ici fin du traitement
-    # fermeture de la requête
+    totalPrixGlobal += totalCommande
+    print(f'                                                                                     --------')
+    print(f'                                                                               Total    {totalCommande}')
+    totalCommande = 0
+    nbFactureMag += 1
+    print("---------------------------------------------------------------------------------------------")
+    print(f'{nbFactureMag} factures éditées')
+    print(f'{totalQteMagasin} livres vendus')
+    print('*********************************************************************************************')
+    print(f"Chiffre d'affaire global: {totalPrixGlobal}")
+    print(f'Nombre de livres vendus: {totalQteGlobal}')
     curseur.close()
         
 
@@ -111,4 +126,4 @@ if __name__ == '__main__':
     annee=int(aaaa)
     with open(args.fichierRequete) as fic_req:
         requete=fic_req.read()
-    print(faire_factures(requete,mois,annee,ms))
+    faire_factures(requete,mois,annee,ms)
