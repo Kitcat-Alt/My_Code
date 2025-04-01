@@ -1,0 +1,23 @@
+1.1)
+Le curseur à droite sert à agrandir la taille du stylo, il est fonctionnel
+
+1.2)
+Le boutton quitter sert à quitter l'application, il n'est pas fonctionnel
+
+1.3)
+le bouton annuler sert à enlever le dernier dessin que l'on a fait, il est fonctionnel
+
+1.4)
+Quand je clique sur la boite grise au centre, un rond d'une couleur apparait.
+
+3.1) 
+Les params sont le min, le mex et la valeur
+
+3.2)
+Les params sont : le ventre du cercle en X, le centre du cercle en Y et le rayon du cercle
+
+3.3)
+Les params sont :double red, double green, double blue, double opacity (RGB)
+
+3.4)
+Controleur quitter est instancié dans controleur quitter. Il est associé au boutton quitter, à l'aide de handle
