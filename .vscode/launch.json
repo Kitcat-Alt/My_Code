@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Executable",
+            "request": "launch",
+            "mainClass": "Executable",
+            "projectName": "My_Code-1_2d36ed50"
+        },
+        {
+            "type": "java",
             "name": "ExecutableVaisseau",
             "request": "launch",
             "mainClass": "src.ExecutableVaisseau",
