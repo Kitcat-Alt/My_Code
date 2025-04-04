@@ -9,6 +9,11 @@ public class ControleurAdditionner implements EventHandler<ActionEvent>{
     }
     
     public void handle(ActionEvent e){
-        System.out.println("Addition");
+        try{
+            this.appli.additionne();
+            System.out.println("Addition");
+        }catch(NumberFormatException y){
+            System.out.println("Veuillez entrer uniquement des nombres");
+        }
     }
 }

@@ -50,7 +50,8 @@ public class AppliSomme extends Application {
         pane.getChildren().addAll(boutonA, boutonR, boutonQ);
         pane.setAlignment(Pos.CENTER);  
         boutonA.setOnAction(new ControleurAdditionner(this));
-        boutonQ.setOnAction(new ControleurQuitter(this));       
+        boutonQ.setOnAction(new ControleurQuitter(this));
+        boutonR.setOnAction(new ControleurReset(this));       
         return pane;
     }
 
@@ -77,7 +78,9 @@ public class AppliSomme extends Application {
      * en y mettant une chaine de caractère vide
      */
     public void efface(){
-        // A FAIRE
+        this.tf1.setText(" ");
+        this.tf2.setText(" ");
+        this.resultat.setText(" ");
     }
 
     public void quitte(){
@@ -89,6 +92,7 @@ public class AppliSomme extends Application {
      * deux nombres qu'on peut récupérer dans les deux textfields
      */
     public void additionne(){
-        this.resultat.setText("A FAIRE");
+        double res = Double.parseDouble(tf1.getText()) + Double.parseDouble(tf2.getText());
+        this.resultat.setText(String.valueOf(res));
     }
 }
