@@ -1,0 +1,3 @@
+Quand on fait un ping : 1er message -> ICMP echo request
+                        2ème message -> ICMP echo reply    
+quand in branche un pc sur le port d'un switch, le port garde en mémoire l'adresse mac du pc branché
